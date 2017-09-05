@@ -1,0 +1,23 @@
+Requisito,Nome,Descrição
+RF01,Gerenciar Vagas,"O sistema deve monitorar cada uma das vagas do estacionamento e sinalizar o status da vaga por meio de lâmpadas, diferenciando as vagas destinadas a idosos e deficientes físicos das demais"
+RF01.1,Sinalizar Status da Vaga,"O status da vaga deve ser representado pela cor da lâmpada associada a ela, a cor vermelha indica que a vaga está ocupada, a cor verde indica que a vaga está disponível, a cor amarela indica que a vaga está disponível e que é destinada a idosos, a cor azul indica que a vaga está disponível e que é destinada à deficientes físicos."
+RF01.2,Detectar Status da Vaga,O sistema deve detectar para cada vaga do estacionamento se existe ou não um veículo estacionado
+RF01.3,"Sinalizar Quantidade de
+Vagas Disponíveis",O sistema deve indicar em painéis a quantidade de vagas disponíveis em cada ala do estacionamento.
+RF02,"Gerenciar Entrada de
+Veículos",O sistema deve controlar a entrada de veículos por meio de uma cancela eletrônica. Um ticket com código de barras deve ser impresso para cada motorista antes de  o mesmo entrar no estacionamento.
+RF02.1,Imprimir Ticket,Antes de o motorista entrar no estacionamento um ticket com código de barras deve ser impresso e recolhido pelo motorista. Associado ao código de barras impresso no ticket o sistema deve armazenar a hora em que o ticket foi gerado .
+RF03,Gerenciar Saída de veículos,O sistema deve gerenciar a saída de veículos por meio de uma cancela eletrônica. Os veículos poderão deixar o estacionamento apenas após o pagamento da taxa de estacionamento.
+RF03.1,Ler Ticket,"A partir da leitura do código de barras impresso no ticket o sistema deve recuperar todas as informações associadas ao ticket (horário de entrada
+no estacionamento, valor da taxa de estacionamento,  se a taxa foi ou não paga, se foi paga o horário de pagamento )."
+RF04,Detectar Veículo,Ao se se aproximar com o veículo da cancela eletrônica a presença do veículo deve ser detectada de forma automática.
+RF05,"Abrir Cancela
+Eletrônica",A cancela eletrônica deve abrir automaticamente após o motorista recolher o ticket impresso na entrada e no momento em que o motorista apresentar o ticket devidamente paga na saída do estacionamento
+RF06,Gerenciar Pagamento,O sistema deve permitir ao usuário realizar o pagamento da taxa de estacionamento. O pagamento deve ser calculado com base no tempo em que o veículo esteve no estacionamento.
+RF06.1,Realizar Pagamento,O sistema deve permitir ao usuário realizar o pagamento em caixas automáticos com cartão ou dinheiro.
+RF07,Gerar Relatórios,O sistema deve permitir ao gerente consultar a ocupação do estacionamento e gerar relatórios financeiros.
+RF07.1,"Gerar Relatório
+Financeiro",O sistema deve permitir ao gerente gerar relatórios que detalhem a arrecadação do estacionamento em períodos de tempo informados pelo gerente.
+RF07.2,Consultar Ocupação,"O sistema deve permitir ao gerente consultar a ocupação do estacionamento por dia, hora, semana e mês."
+RF08,"Abrir Cancela
+Emergencial",Em casos de emergência o operador do estacionamento poderá abrir a cancela de emergência.
