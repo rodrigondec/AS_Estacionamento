@@ -18,8 +18,6 @@ for requisito in tmp:
 
 # # print(requisitos)
 # for requisito in requisitos:
-layout = "Requirement {0} ( {1} ) [\n"\
-"\ttext = {2}\n"\
-"]"
+layout = "Requirement {0} ( {1} ) {{\n\ttext = {2}\n}}"
 print(layout.format('Nome', 'Codigo', 'Texto'))
 
