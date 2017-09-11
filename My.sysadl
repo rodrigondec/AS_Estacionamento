@@ -127,4 +127,10 @@ port def CorIPT {
 	port def CancelaOPT {
 		flow out valor : "SysADL.types.ComandoCancela"
 	}
+	port def RelatorioIPT {
+		flow in relatorio : "SysADL.types.Relatorio"
+	}
+	port def RelatorioOPT {
+		flow out relatorio : "SysADL.types.Relatorio"
+	}
 }
