@@ -29,10 +29,10 @@ package SysADL.types {
 	datatype qtVagas {
 		attributes valor : Int
 	}
-	datatype Commands {
-		attributes cancela : Command
+	datatype ComandoCancela {
+		attributes valor : AcoesCancela
 	}
-	enum Command {
+	enum AcoesCancela {
 		Abrir, Fechar
 	}
 	datatype Relatorio {
@@ -109,4 +109,22 @@ package Components {
 package Connectors {
 }
 package Ports {
+port def CorIPT {
+		flow in valor : "SysADL.types.Cor"
+	}
+	port def CorOPT {
+		flow out valor : "SysADL.types.Cor"
+	}
+	port def PresencaIPT {
+		flow in valor : "SysADL.types.Presenca"
+	}
+	port def PresencaOPT {
+		flow out valor : "SysADL.types.Presenca"
+	}
+	port def CancelaIPT {
+		flow in valor : "SysADL.types.ComandoCancela"
+	}
+	port def CancelaOPT {
+		flow out valor : "SysADL.types.ComandoCancela"
+	}
 }
