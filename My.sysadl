@@ -10,6 +10,37 @@ package SysADL.types {
 	}
 	value type Real {
 	}
+	datatype Cor {
+			attributes valor : Cores
+		}
+	datatype Presenca {
+		attributes valor : Boolean
+	}
+	datatype Ticket {
+		attributes codigo : CodBarras hora : Hora
+	}
+	value type CodBarras {
+	}
+	value type Hora {
+	}
+	enum Cores {
+		Azul, Verde, Amarelo, Vermelho
+	}
+	datatype qtVagas {
+		attributes valor : Int
+	}
+	datatype Commands {
+		attributes cancela : Command
+	}
+	enum Command {
+		Abrir, Fechar
+	}
+	datatype Relatorio {
+	}
+	datatype RelatorioFinanceiro extends Relatorio {
+	}
+	datatype RelatorioOcupacao extends Relatorio {
+	}
 }
 Requirement GerenciarVagas ( 01 ) {
 	text = "O sistema deve monitorar cada uma das vagas do estacionamento e sinalizar o status da vaga por meio de lâmpadas, diferenciando as vagas destinadas a idosos e deficientes físicos das demais"
@@ -72,4 +103,10 @@ Requirement DetectarVeivulo ( 4.0 ) {
 Requirement AbrirCancelaEmergencial ( 8.0 ) {
 	text =
 	"Em casos de emergência o operador do estacionamento poderá abrir a cancela de emergência."
+}
+package Components {
+}
+package Connectors {
+}
+package Ports {
 }
