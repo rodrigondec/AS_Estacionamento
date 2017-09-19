@@ -41,6 +41,14 @@ package SysADL.types {
 	}
 	datatype RelatorioOcupacao extends Relatorio {
 	}
+datatype ValorPagamento {
+		attributes Valor : Dinheiro
+	}
+	value type Dinheiro {
+	}
+	datatype ConfirmacaoPagamento {
+		attributes valor : Boolean
+	}
 }
 Requirement GerenciarVagas ( 01 ) {
 	text = "O sistema deve monitorar cada uma das vagas do estacionamento e sinalizar o status da vaga por meio de lâmpadas, diferenciando as vagas destinadas a idosos e deficientes físicos das demais"
