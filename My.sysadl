@@ -116,14 +116,15 @@ package Components {
 }
 package Connectors {
 import SysADL.types;
+	import Ports;
 connector def CodBarrasCNT {
-		participants ~ p1 : "Ports.CodigoTicketOPT" {
+		participants ~ p1 : Ports.CodigoTicketOPT {
 		}
-		~ p2 : "Ports.CodigoTicketIPT" {
+		~ p2 : Ports.CodigoTicketIPT {
 		}
-		flows "SysADL.types.CodBarras" from p1 to p2
+		flows SysADL.types.CodBarras from p1 to p2
 	}
-}
+	}
 package Ports {
 import SysADL.types;
 	port def CorIPT {
