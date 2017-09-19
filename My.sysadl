@@ -127,40 +127,48 @@ connector def CodBarrasCNT {
 	}
 package Ports {
 import SysADL.types;
-	port def CorIPT {
-		flow in valor : "SysADL.types.Cor"
-	}
-	port def CorOPT {
-		flow out valor : "SysADL.types.Cor"
-	}
+	
+	
 	port def PresencaIPT {
-		flow in valor : "SysADL.types.Presenca"
+		flow in SysADL.types.Presenca
 	}
 	port def PresencaOPT {
-		flow out valor : "SysADL.types.Presenca"
+		flow out SysADL.types.Presenca
 	}
 	port def CancelaIPT {
-		flow in valor : "SysADL.types.ComandoCancela"
+		flow in SysADL.types.ComandoCancela
 	}
 	port def CancelaOPT {
-		flow out valor : "SysADL.types.ComandoCancela"
+		flow out SysADL.types.ComandoCancela
 	}
 	port def RelatorioIPT {
-		flow in relatorio : "SysADL.types.Relatorio"
+		flow in SysADL.types.Relatorio
 	}
 	port def RelatorioOPT {
-		flow out relatorio : "SysADL.types.Relatorio"
+		flow out SysADL.types.Relatorio
 	}
 port def ValorPagamentoIPT {
-		flow in valor : "SysADL.types.ValorPagamento"
+		flow in SysADL.types.ValorPagamento
 	}
 	port def ValorPagamentoOPT {
-		flow out valor : "SysADL.types.ValorPagamento"
+		flow out SysADL.types.ValorPagamento
 	}
 	port def CodigoTicketIPT {
-		flow in valor : "SysADL.types.CodBarras"
+		flow in SysADL.types.CodBarras
 	}
 	port def CodigoTicketOPT {
-		flow out valor : "SysADL.types.CodBarras"
+		flow out SysADL.types.CodBarras
+	}
+port def TicketIPT {
+		flow in SysADL.types.Ticket
+	}
+	port def CorIPT {
+		flow in SysADL.types.Cor
+	}
+	port def CorOPT {
+		flow out SysADL.types.Cor
+	}
+	port def TicketOPT {
+		flow out SysADL.types.Ticket
 	}
 }
