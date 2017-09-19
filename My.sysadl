@@ -143,4 +143,16 @@ import SysADL.types;
 	port def RelatorioOPT {
 		flow out relatorio : "SysADL.types.Relatorio"
 	}
+port def ValorPagamentoIPT {
+		flow in valor : "SysADL.types.ValorPagamento"
+	}
+	port def ValorPagamentoOPT {
+		flow out valor : "SysADL.types.ValorPagamento"
+	}
+	port def CodigoTicketIPT {
+		flow in valor : "SysADL.types.CodBarras"
+	}
+	port def CodigoTicketOPT {
+		flow out valor : "SysADL.types.CodBarras"
+	}
 }
