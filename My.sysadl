@@ -107,9 +107,11 @@ Requirement AbrirCancelaEmergencial ( 8.0 ) {
 package Components {
 }
 package Connectors {
+import SysADL.types;
 }
 package Ports {
-port def CorIPT {
+import SysADL.types;
+	port def CorIPT {
 		flow in valor : "SysADL.types.Cor"
 	}
 	port def CorOPT {
