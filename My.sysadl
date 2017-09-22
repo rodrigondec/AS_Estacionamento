@@ -10,9 +10,7 @@ package SysADL.types {
 	}
 	value type Real {
 	}
-	datatype Cor {
-			attributes valor : Cores
-		}
+	
 	datatype Presenca {
 		attributes valor : Boolean
 	}
@@ -23,15 +21,11 @@ package SysADL.types {
 	}
 	value type Hora {
 	}
-	enum Cores {
-		Azul, Verde, Amarelo, Vermelho
+	enum Cor {
+		Verde, Amarelo, Azul, Vermelho
 	}
-	datatype qtVagas {
-		attributes valor : Int
-	}
-	datatype ComandoCancela {
-		attributes valor : AcoesCancela
-	}
+	
+	
 	enum AcoesCancela {
 		Abrir, Fechar
 	}
@@ -48,6 +42,12 @@ datatype ValorPagamento {
 	}
 	datatype ConfirmacaoPagamento {
 		attributes valor : Boolean
+	}
+enum TipoVaga {
+		Normal, Idoso, Deficiente
+	}
+	enum StatusVaga {
+		"Disponível", Ocupada
 	}
 }
 Requirement GerenciarVagas ( 01 ) {
@@ -113,18 +113,68 @@ Requirement AbrirCancelaEmergencial ( 8.0 ) {
 	"Em casos de emergência o operador do estacionamento poderá abrir a cancela de emergência."
 }
 package Components {
+import Ports;
+	import Connectors;
+	import SysADL.types;
+	component def ControladorCorCP {
+		
+	}
+component def SensorPresencaCP {
+		ports p5 : Ports.PresencaOPT {
+		}
+	}
+	component def LedVagaCP {
+	}
 }
 package Connectors {
 import SysADL.types;
 	import Ports;
-connector def CodBarrasCNT {
-		participants ~ p1 : Ports.CodigoTicketOPT {
+connector def CodigoTickerCNT {
+		participants ~ p11 : Ports.CodigoTicketOPT {
 		}
-		~ p2 : Ports.CodigoTicketIPT {
+		~ p12 : Ports.CodigoTicketIPT {
 		}
-		flows SysADL.types.CodBarras from p1 to p2
+		flows SysADL.types.CodBarras from p11 to p12
 	}
+	
+	connector def RelatorioCNT {
+		participants ~ p3 : Ports.RelatorioOPT {
+		}
+		~ p4 : Ports.RelatorioIPT {
+		}
+	flows SysADL.types.Relatorio from p3 to p4
 	}
+	connector def PresencaCNT {
+		participants ~ p5 : Ports.PresencaOPT {
+		}
+		~ p6 : Ports.PresencaIPT {
+		}
+		flows SysADL.types.Presenca from p5 to p6
+	}
+	connector def CancelaCNT {
+		participants ~ p9 : Ports.CancelaOPT {
+		}
+		~ p10 : Ports.CancelaIPT {
+		}
+		flows 
+	SysADL.types.AcoesCancela from p9 to p10
+	}
+	connector def TicketCNT {
+		participants ~ p7 : Ports.TicketOPT {
+		}
+		~ p8 : Ports.TicketIPT {
+		}
+		flows 
+	SysADL.types.Ticket from p7 to p8
+	}
+	connector def ValorPagamentoCNT {
+		participants ~ p13 : Ports.ValorPagamentoOPT {
+		}
+		~ p14 : Ports.ValorPagamentoIPT {
+		}
+		flows SysADL.types.ValorPagamento from p13 to p14
+	}
+}
 package Ports {
 import SysADL.types;
 	
@@ -136,10 +186,10 @@ import SysADL.types;
 		flow out SysADL.types.Presenca
 	}
 	port def CancelaIPT {
-		flow in SysADL.types.ComandoCancela
+		flow in SysADL.types.AcoesCancela
 	}
 	port def CancelaOPT {
-		flow out SysADL.types.ComandoCancela
+		flow out SysADL.types.AcoesCancela
 	}
 	port def RelatorioIPT {
 		flow in SysADL.types.Relatorio
@@ -162,13 +212,21 @@ port def ValorPagamentoIPT {
 port def TicketIPT {
 		flow in SysADL.types.Ticket
 	}
+	
+	
+	port def TicketOPT {
+		flow out SysADL.types.Ticket
+	}
+port def QtVagasIPT {
+		flow in SysADL.types.Int
+	}
+	port def QtVagasOPT {
+		flow out SysADL.types.Int
+	}
 	port def CorIPT {
 		flow in SysADL.types.Cor
 	}
 	port def CorOPT {
 		flow out SysADL.types.Cor
-	}
-	port def TicketOPT {
-		flow out SysADL.types.Ticket
 	}
 }
