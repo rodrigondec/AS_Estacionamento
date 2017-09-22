@@ -49,6 +49,11 @@ enum TipoVaga {
 	enum StatusVaga {
 		"Disponível", Ocupada
 	}
+enum TipoRelatorio {
+		RelatorioOcupacao, RelatorioFinanceiro
+	}
+	value type DateTime {
+	}
 }
 Requirement GerenciarVagas ( 01 ) {
 	text = "O sistema deve monitorar cada uma das vagas do estacionamento e sinalizar o status da vaga por meio de lâmpadas, diferenciando as vagas destinadas a idosos e deficientes físicos das demais"
@@ -239,6 +244,39 @@ component def SensorPresencaCP {
 			}
 		}
 	}
+component def GerenciadorRelatorioCP {
+		configuration {
+			components:
+			newControladorRelatorioCP : ControladorRelatorioCP {
+			}
+			newInterfaceUsuarioRelatorioCP : InterfaceUsuarioRelatorioCP {
+			}
+		}
+	}
+	component def InterfaceUsuarioRelatorioCP {
+		ports p22 : Ports.TipoRelatorioIPT {
+		}
+		p24 : Ports.DateTimeIPT {
+		}
+		p24 : Ports.DateTimeIPT {
+		}
+		p21 : Ports.TipoRelatorioOPT {
+		}
+		p23 : Ports.DateTimeOPT {
+		}
+		p23 : Ports.DateTimeOPT {
+		}
+	}
+	component def ControladorRelatorioCP {
+		ports p22 : Ports.TipoRelatorioIPT {
+		}
+		p24 : Ports.DateTimeIPT {
+		}
+		p24 : Ports.DateTimeIPT {
+		}
+		p19 : Ports.RelatorioOPT {
+		}
+	}
 }
 package Connectors {
 import SysADL.types;
@@ -311,6 +349,20 @@ connector def ConfPagCNT {
 		}
 		flows SysADL.types.TipoVaga from p15 to p16
 	}
+connector def TipoRelatorioCNT {
+		participants ~ p21 : Ports.TipoRelatorioOPT {
+		}
+		~ p22 : Ports.TipoRelatorioIPT {
+		}
+		flows SysADL.types.TipoRelatorio from p21 to p22
+	}
+	connector def DateTimeCNT {
+		participants ~ p23 : Ports.DateTimeOPT {
+		}
+		~ p24 : Ports.DateTimeIPT {
+		}
+		flows SysADL.types.DateTime from p23 to p24
+	}
 }
 package Ports {
 import SysADL.types;
@@ -378,5 +430,17 @@ port def PagamentoIPT {
 	}
 	port def TipoVagaOPT {
 		flow out SysADL.types.TipoVaga
+	}
+port def TipoRelatorioIPT {
+		flow in SysADL.types.TipoRelatorio
+	}
+	port def TipoRelatorioOPT {
+		flow out SysADL.types.TipoRelatorio
+	}
+	port def DateTimeIPT {
+		flow in SysADL.types.DateTime
+	}
+	port def DateTimeOPT {
+		flow out SysADL.types.DateTime
 	}
 }
