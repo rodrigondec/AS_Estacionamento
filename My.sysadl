@@ -243,13 +243,7 @@ component def SensorPresencaCP {
 package Connectors {
 import SysADL.types;
 	import Ports;
-connector def CodigoTickerCNT {
-		participants ~ p3 : Ports.CodigoTicketOPT {
-		}
-		~ p4 : Ports.CodigoTicketIPT {
-		}
-		flows SysADL.types.CodBarras from p3 to p4
-	}
+
 	
 	connector def RelatorioCNT {
 		participants ~ p19 : Ports.RelatorioOPT {
@@ -349,9 +343,7 @@ port def ValorPagIPT {
 	port def CodigoTicketIPT {
 		flow in SysADL.types.CodBarras
 	}
-	port def CodigoTicketOPT {
-		flow out SysADL.types.CodBarras
-	}
+	
 port def TicketIPT {
 		flow in SysADL.types.Ticket
 	}
