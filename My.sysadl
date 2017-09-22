@@ -35,12 +35,12 @@ package SysADL.types {
 	}
 	datatype RelatorioOcupacao extends Relatorio {
 	}
-datatype ValorPagamento {
+datatype ValorPag {
 		attributes Valor : Dinheiro
 	}
 	value type Dinheiro {
 	}
-	datatype ConfirmacaoPagamento {
+	datatype ConfPag {
 		attributes valor : Boolean
 	}
 enum TipoVaga {
@@ -130,11 +130,11 @@ package Connectors {
 import SysADL.types;
 	import Ports;
 connector def CodigoTickerCNT {
-		participants ~ p11 : Ports.CodigoTicketOPT {
+		participants ~ p3 : Ports.CodigoTicketOPT {
 		}
-		~ p12 : Ports.CodigoTicketIPT {
+		~ p4 : Ports.CodigoTicketIPT {
 		}
-		flows SysADL.types.CodBarras from p11 to p12
+		flows SysADL.types.CodBarras from p3 to p4
 	}
 	
 	connector def RelatorioCNT {
@@ -145,11 +145,11 @@ connector def CodigoTickerCNT {
 	flows SysADL.types.Relatorio from p3 to p4
 	}
 	connector def PresencaCNT {
-		participants ~ p5 : Ports.PresencaOPT {
+		participants ~ p11 : Ports.PresencaOPT {
 		}
-		~ p6 : Ports.PresencaIPT {
+		~ p12 : Ports.PresencaIPT {
 		}
-		flows SysADL.types.Presenca from p5 to p6
+		flows SysADL.types.Presenca from p11 to p12
 	}
 	connector def CancelaCNT {
 		participants ~ p9 : Ports.CancelaOPT {
@@ -160,19 +160,41 @@ connector def CodigoTickerCNT {
 	SysADL.types.AcoesCancela from p9 to p10
 	}
 	connector def TicketCNT {
-		participants ~ p7 : Ports.TicketOPT {
+		participants ~ p1 : Ports.TicketOPT {
 		}
-		~ p8 : Ports.TicketIPT {
+		~ p2 : Ports.TicketIPT {
 		}
 		flows 
-	SysADL.types.Ticket from p7 to p8
+	SysADL.types.Ticket from p1 to p2
 	}
-	connector def ValorPagamentoCNT {
-		participants ~ p13 : Ports.ValorPagamentoOPT {
+	connector def ValorPagCNT {
+		participants ~ p5 : Ports.ValorPagOPT {
 		}
-		~ p14 : Ports.ValorPagamentoIPT {
+		~ p6 : Ports.ValorPagIPT {
 		}
-		flows SysADL.types.ValorPagamento from p13 to p14
+		flows 
+	SysADL.types.ValorPag from p5 to p6
+	}
+connector def ConfPagCNT {
+		participants ~ p7 : Ports.ConfPagOPT {
+		}
+		~ p8 : Ports.ConfPagIPT {
+		}
+		flows SysADL.types.ConfPag from p7 to p8
+	}
+	connector def CorCNT {
+		participants ~ p13 : Ports.CorOPT {
+		}
+		~ p14 : Ports.CorIPT {
+		}
+		flows SysADL.types.Cor from p13 to p14
+	}
+	connector def QtVagasCNT {
+		participants ~ p15 : Ports.QtVagasOPT {
+		}
+		~ p16 : Ports.QtVagasIPT {
+		}
+		flows SysADL.types.Int from p15 to p16
 	}
 }
 package Ports {
@@ -197,11 +219,11 @@ import SysADL.types;
 	port def RelatorioOPT {
 		flow out SysADL.types.Relatorio
 	}
-port def ValorPagamentoIPT {
-		flow in SysADL.types.ValorPagamento
+port def ValorPagIPT {
+		flow in SysADL.types.ValorPag
 	}
-	port def ValorPagamentoOPT {
-		flow out SysADL.types.ValorPagamento
+	port def ValorPagOPT {
+		flow out SysADL.types.ValorPag
 	}
 	port def CodigoTicketIPT {
 		flow in SysADL.types.CodBarras
@@ -228,5 +250,14 @@ port def QtVagasIPT {
 	}
 	port def CorOPT {
 		flow out SysADL.types.Cor
+	}
+port def PagamentoIPT {
+		flow in SysADL.types.Dinheiro
+	}
+	port def ConfPagOPT {
+		flow out SysADL.types.ConfPag
+	}
+	port def ConfPagIPT {
+		flow in SysADL.types.ConfPag
 	}
 }
