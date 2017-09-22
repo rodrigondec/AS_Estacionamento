@@ -135,6 +135,15 @@ component def SensorPresencaCP {
 	}
 	component def GerenciadorEstacionamento {
 		configuration {
+			components:
+			newGerenciadorVagasCP : GerenciadorVagasCP {
+			}
+			newGerenciadorSaidaCP : GerenciadorSaidaCP {
+			}
+			newGerenciadorEntradaCP : GerenciadorEntradaCP {
+			}
+			newControladorCancelaEmergencialCP : ControladorCancelaEmergencialCP {
+			}
 		}
 	}
 	component def PainelLedCP {
@@ -142,10 +151,16 @@ component def SensorPresencaCP {
 		}
 	}
 	component def CancelaCP {
-		ports p8 : Ports.ComCancelaIPT {
+		ports p10 : Ports.ComCancelaIPT {
 		}
 	}
 	component def ImpressoraTicketCP {
+		ports p12 : Ports.PresencaIPT {
+		}
+		p1 : Ports.TicketOPT {
+		}
+		p10 : Ports.ComCancelaOPT {
+		}
 	}
 	boundary component def LeitorTicketCP {
 		ports pcod : Ports.CodigoTicketIPT {
@@ -177,6 +192,51 @@ component def SensorPresencaCP {
 		ports p5 : Ports.ValorPagOPT {
 		}
 		p2 : Ports.TicketIPT {
+		}
+	}
+	component def GerenciadorSaidaCP {
+		configuration {
+			components:
+			newLeitorTicketCP : LeitorTicketCP {
+			}
+			newControladorCancelaCN : ControladorCancelaCN {
+			}
+			newCalculadorPrecoPagamentoCP : CalculadorPrecoPagamentoCP {
+			}
+			newCancelaCP : CancelaCP {
+			}
+			newCaixaPagCP : CaixaPagCP {
+			}
+		}
+	}
+	component def GerenciadorEntradaCP {
+		configuration {
+			components:
+			newImpressoraTicketCP : ImpressoraTicketCP {
+			}
+			newCancelaCP : CancelaCP {
+			}
+		}
+	}
+	boundary component def ControladorCancelaEmergencialCP {
+		ports p10 : Ports.ComCancelaIPT {
+		}
+		p9 : Ports.ComCancelaOPT {
+		}
+	}
+	component def GerenciadorVagasCP {
+		configuration {
+			components:
+			newSensorPresencaCP : SensorPresencaCP {
+			}
+			newBdVagaCP : BdVagaCP {
+			}
+			newControladorCorCP : ControladorCorCP {
+			}
+			newLedVagaCP : LedVagaCP {
+			}
+			newPainelLedCP : PainelLedCP {
+			}
 		}
 	}
 }
