@@ -54,6 +54,8 @@ enum TipoRelatorio {
 	}
 	value type DateTime {
 	}
+	datatype Log {
+	}
 }
 Requirement GerenciarVagas ( 01 ) {
 	text = "O sistema deve monitorar cada uma das vagas do estacionamento e sinalizar o status da vaga por meio de lâmpadas, diferenciando as vagas destinadas a idosos e deficientes físicos das demais"
@@ -148,6 +150,8 @@ component def SensorPresencaCP {
 			newGerenciadorEntradaCP : GerenciadorEntradaCP {
 			}
 			newControladorCancelaEmergencialCP : ControladorCancelaEmergencialCP {
+			}
+		newGerenciadorRelatorioCP : GerenciadorRelatorioCP {
 			}
 		}
 	}
@@ -247,9 +251,11 @@ component def SensorPresencaCP {
 component def GerenciadorRelatorioCP {
 		configuration {
 			components:
-			newControladorRelatorioCP : ControladorRelatorioCP {
+			newControladorRelatorioCP : BdUsoCP {
 			}
 			newInterfaceUsuarioRelatorioCP : InterfaceUsuarioRelatorioCP {
+			}
+			newGeradorRelatorioCP : GeradorRelatorioCP {
 			}
 		}
 	}
@@ -267,12 +273,18 @@ component def GerenciadorRelatorioCP {
 		p23 : Ports.DateTimeOPT {
 		}
 	}
-	component def ControladorRelatorioCP {
+	component def BdUsoCP {
 		ports p22 : Ports.TipoRelatorioIPT {
 		}
 		p24 : Ports.DateTimeIPT {
 		}
 		p24 : Ports.DateTimeIPT {
+		}
+		p25 : Ports.LogUsoOPT {
+		}
+	}
+	component def GeradorRelatorioCP {
+		ports p26 : Ports.LogUsoIPT {
 		}
 		p19 : Ports.RelatorioOPT {
 		}
@@ -363,6 +375,13 @@ connector def TipoRelatorioCNT {
 		}
 		flows SysADL.types.DateTime from p23 to p24
 	}
+	connector def LogUsoCNT {
+		participants ~ p25 : Ports.LogUsoOPT {
+		}
+		~ p26 : Ports.LogUsoIPT {
+		}
+		flows SysADL.types.Log from p25 to p26
+	}
 }
 package Ports {
 import SysADL.types;
@@ -442,5 +461,11 @@ port def TipoRelatorioIPT {
 	}
 	port def DateTimeOPT {
 		flow out SysADL.types.DateTime
+	}
+	port def LogUsoIPT {
+		flow in SysADL.types.Log
+	}
+	port def LogUsoOPT {
+		flow out SysADL.types.Log
 	}
 }
