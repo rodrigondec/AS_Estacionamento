@@ -118,12 +118,66 @@ import Ports;
 	import SysADL.types;
 	component def ControladorCorCP {
 		
+	ports p12 : Ports.PresencaIPT {
+		}
+		p16 : Ports.TipoVagaIPT {
+		}
+		p13 : Ports.CorOPT {
+		}
 	}
 component def SensorPresencaCP {
-		ports p5 : Ports.PresencaOPT {
+		ports p11 : Ports.PresencaOPT {
 		}
 	}
 	component def LedVagaCP {
+	ports P14 : Ports.CorIPT {
+		}
+	}
+	component def GerenciadorEstacionamento {
+		configuration {
+		}
+	}
+	component def PainelLedCP {
+		ports p18 : Ports.QtVagasIPT {
+		}
+	}
+	component def CancelaCP {
+		ports p8 : Ports.ComCancelaIPT {
+		}
+	}
+	component def ImpressoraTicketCP {
+	}
+	boundary component def LeitorTicketCP {
+		ports pcod : Ports.CodigoTicketIPT {
+		}
+		p1 : Ports.TicketOPT {
+		}
+	}
+	boundary component def CaixaPagCP {
+		ports p6 : Ports.ValorPagIPT {
+		}
+		ppag : Ports.PagamentoIPT {
+		}
+		p7 : Ports.ConfPagOPT {
+		}
+	}
+	component def ControladorCancelaCN {
+		ports p8 : Ports.ConfPagIPT {
+		}
+		p9 : Ports.ComCancelaOPT {
+		}
+	}
+	component def BdVagaCP {
+		ports p15 : Ports.TipoVagaOPT {
+		}
+		p17 : Ports.QtVagasOPT {
+		}
+	}
+	component def CalculadorPrecoPagamentoCP {
+		ports p5 : Ports.ValorPagOPT {
+		}
+		p2 : Ports.TicketIPT {
+		}
 	}
 }
 package Connectors {
@@ -138,11 +192,11 @@ connector def CodigoTickerCNT {
 	}
 	
 	connector def RelatorioCNT {
-		participants ~ p3 : Ports.RelatorioOPT {
+		participants ~ p19 : Ports.RelatorioOPT {
 		}
-		~ p4 : Ports.RelatorioIPT {
+		~ p20 : Ports.RelatorioIPT {
 		}
-	flows SysADL.types.Relatorio from p3 to p4
+	flows SysADL.types.Relatorio from p19 to p20
 	}
 	connector def PresencaCNT {
 		participants ~ p11 : Ports.PresencaOPT {
@@ -151,10 +205,10 @@ connector def CodigoTickerCNT {
 		}
 		flows SysADL.types.Presenca from p11 to p12
 	}
-	connector def CancelaCNT {
-		participants ~ p9 : Ports.CancelaOPT {
+	connector def ComCancelaCNT {
+		participants ~ p9 : Ports.ComCancelaOPT {
 		}
-		~ p10 : Ports.CancelaIPT {
+		~ p10 : Ports.ComCancelaIPT {
 		}
 		flows 
 	SysADL.types.AcoesCancela from p9 to p10
@@ -190,11 +244,18 @@ connector def ConfPagCNT {
 		flows SysADL.types.Cor from p13 to p14
 	}
 	connector def QtVagasCNT {
-		participants ~ p15 : Ports.QtVagasOPT {
+		participants ~ p17 : Ports.QtVagasOPT {
 		}
-		~ p16 : Ports.QtVagasIPT {
+		~ p18 : Ports.QtVagasIPT {
 		}
-		flows SysADL.types.Int from p15 to p16
+		flows SysADL.types.Int from p17 to p18
+	}
+	connector def TipoVagaCNT {
+		participants ~ p15 : Ports.TipoVagaOPT {
+		}
+		~ p16 : Ports.TipoVagaIPT {
+		}
+		flows SysADL.types.TipoVaga from p15 to p16
 	}
 }
 package Ports {
@@ -207,10 +268,10 @@ import SysADL.types;
 	port def PresencaOPT {
 		flow out SysADL.types.Presenca
 	}
-	port def CancelaIPT {
+	port def ComCancelaIPT {
 		flow in SysADL.types.AcoesCancela
 	}
-	port def CancelaOPT {
+	port def ComCancelaOPT {
 		flow out SysADL.types.AcoesCancela
 	}
 	port def RelatorioIPT {
@@ -259,5 +320,11 @@ port def PagamentoIPT {
 	}
 	port def ConfPagIPT {
 		flow in SysADL.types.ConfPag
+	}
+	port def TipoVagaIPT {
+		flow in SysADL.types.TipoVaga
+	}
+	port def TipoVagaOPT {
+		flow out SysADL.types.TipoVaga
 	}
 }
