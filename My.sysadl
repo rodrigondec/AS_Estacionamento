@@ -13,6 +13,7 @@ package SysADL.types {
 	
 	datatype Presenca {
 		attributes valor : Boolean
+	id_sensor : Int
 	}
 	datatype Ticket {
 		attributes codigo : CodBarras hora : Hora
