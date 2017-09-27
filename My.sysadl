@@ -148,7 +148,7 @@ component def SensorPresencaCP {
 	component def GerenciadorEstacionamento {
 		configuration {
 			components:
-			newGerenciadorVagasCP : GerenciadorVagasCP {
+			newGerenciadorVagasCP : GerenciadorVagaCP {
 			}
 			newGerenciadorSaidaCP : GerenciadorSaidaCP {
 			}
@@ -212,16 +212,47 @@ component def SensorPresencaCP {
 	component def GerenciadorSaidaCP {
 		configuration {
 			components:
-			newLeitorTicketCP : LeitorTicketCP {
+			
+			
+			
+			
+			
+		LeitorTicket1 : LeitorTicketCP {
+				using ports pcod : Ports.CodigoTicketIPT {
+				}
+				p1 : Ports.TicketOPT {
+				}
 			}
-			newControladorCancelaCN : ControladorCancelaSaidaCP {
+			ControladorCancelaSaida : ControladorCancelaSaidaCP {
+				using ports p8 : Ports.ConfPagIPT {
+				}
+				p9 : Ports.ComCancelaOPT {
+				}
 			}
-			newCalculadorPrecoPagamentoCP : CalculadorPrecoPagamentoCP {
+			CalculadorPrecoPagamento : CalculadorPrecoPagamentoCP {
+				using ports p5 : Ports.ValorPagOPT {
+				}
+				p2 : Ports.TicketIPT {
+				}
 			}
-			newCancelaCP : CancelaCP {
+			CaixaPag1 : CaixaPagCP {
+				using ports p6 : Ports.ValorPagIPT {
+				}
+				ppag : Ports.PagamentoIPT {
+				}
+				p7 : Ports.ConfPagOPT {
+				}
 			}
-			newCaixaPagCP : CaixaPagCP {
+			Cancela1 : CancelaCP {
+				using ports p10 : Ports.ComCancelaIPT {
+				}
 			}
+			connectors:
+			c1 : Connectors.TicketCNT bindings LeitorTicket1.p1 =
+			CalculadorPrecoPagamento.p2 c2 : Connectors.ValorPagCNT bindings
+			CalculadorPrecoPagamento.p5 = CaixaPag1.p6 c3 : Connectors.ConfPagCNT
+			bindings CaixaPag1.p7 = ControladorCancelaSaida.p8 c4 :
+			Connectors.ComCancelaCNT bindings ControladorCancelaSaida.p9 = Cancela1.p10
 		}
 	}
 	component def GerenciadorEntradaCP {
@@ -280,7 +311,7 @@ component def SensorPresencaCP {
 				using ports p10 : Ports.ComCancelaIPT {
 				}
 			}
-			CancelaCP : CancelaCP {
+			Cancela3 : CancelaCP {
 				using ports p10 : Ports.ComCancelaIPT {
 				}
 			}
@@ -297,7 +328,7 @@ component def SensorPresencaCP {
 			ImpressoraTicket3.p27 = ControladorCancelaEntrada1.p28 c6 :
 			Connectors.ComCancelaCNT bindings ControladorCancelaEntrada1.p9 =
 			Cancela2.p10 c6 : Connectors.ComCancelaCNT bindings
-			ControladorCancelaEntrada1.p9 = CancelaCP.p10
+			ControladorCancelaEntrada1.p9 = Cancela3.p10
 		}
 	}
 	boundary component def ControladorCancelaEmergencialCP {
@@ -306,30 +337,87 @@ component def SensorPresencaCP {
 		p9 : Ports.ComCancelaOPT {
 		}
 	}
-	component def GerenciadorVagasCP {
+	component def GerenciadorVagaCP {
 		configuration {
 			components:
-			newSensorPresencaCP : SensorPresencaCP {
+			
+			
+			
+			
+			
+		SensorPresenca1 : SensorPresencaCP {
+				using ports p11 : Ports.PresencaOPT {
+				}
 			}
-			newBdVagaCP : BdVagaCP {
+			BdVagaCP : BdVagaCP {
+				using ports p15 : Ports.TipoVagaOPT {
+				}
+				p17 : Ports.QtVagasOPT {
+				}
 			}
-			newControladorCorCP : ControladorCorCP {
+			ControladorCorCP : ControladorCorCP {
+				using ports p12 : Ports.PresencaIPT {
+				}
+				p16 : Ports.TipoVagaIPT {
+				}
+				p13 : Ports.CorOPT {
+				}
 			}
-			newLedVagaCP : LedVagaCP {
+			LedVaga1 : LedVagaCP {
+				using ports P14 : Ports.CorIPT {
+				}
 			}
-			newPainelLedCP : PainelLedCP {
+			PainelLed1 : PainelLedCP {
+				using ports p18 : Ports.QtVagasIPT {
+				}
 			}
+			connectors:
+			c3 : Connectors.PresencaCNT bindings SensorPresenca1.p11 =
+			ControladorCorCP.p12 c1 : Connectors.TipoVagaCNT bindings
+			ControladorCorCP.p16 = BdVagaCP.p15 c2 : Connectors.QtVagasCNT bindings
+			BdVagaCP.p17 = PainelLed1.p18 c4 : Connectors.CorCNT bindings
+			ControladorCorCP.p13 = LedVaga1.P14
 		}
 	}
 component def GerenciadorRelatorioCP {
 		configuration {
 			components:
-			newControladorRelatorioCP : BdUsoCP {
+			
+			
+			
+		BdUsoCP : BdUsoCP {
+				using ports p22 : Ports.TipoRelatorioIPT {
+				}
+				p24 : Ports.DateTimeIPT {
+				}
+				p24 : Ports.DateTimeIPT {
+				}
+				p25 : Ports.LogUsoOPT {
+				}
 			}
-			newInterfaceUsuarioRelatorioCP : InterfaceUsuarioRelatorioCP {
+			InterfaceUsuarioRelatorio : InterfaceUsuarioRelatorioCP {
+				using ports p22 : Ports.TipoRelatorioIPT {
+				}
+				p24 : Ports.DateTimeIPT {
+				}
+				p24 : Ports.DateTimeIPT {
+				}
+				p21 : Ports.TipoRelatorioOPT {
+				}
+				p23 : Ports.DateTimeOPT {
+				}
+				p23 : Ports.DateTimeOPT {
+				}
 			}
-			newGeradorRelatorioCP : GeradorRelatorioCP {
+			GeradorRelatorioCP : GeradorRelatorioCP {
+				using ports p26 : Ports.LogUsoIPT {
+				}
+				p19 : Ports.RelatorioOPT {
+				}
 			}
+			connectors:
+			c1 : Connectors.TipoRelatorioCNT bindings InterfaceUsuarioRelatorio.p21 =
+			BdUsoCP.p22
 		}
 	}
 	component def InterfaceUsuarioRelatorioCP {
