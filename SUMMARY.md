@@ -10,9 +10,7 @@
 * [3 IBD Comportamental](doc/3-ibd.md)
   * [3.1 Gerenciador Entrada](doc/3.1-entrada.md)
   * [3.2 Gerenciador Saída](doc/3.2-saida.md)
-  * [3.3 Gerenciador Vagas](doc/3.3-vagas.md)
+  * [3.3 Gerenciador Vaga](doc/3.3-vagas.md)
   * [3.4 Gerenciador Relatório](doc/3.4-relatorio.md)
   * [3.5 Gerenciador Estacionamento](doc/3.5-estacionamento.md)
-
-
 
