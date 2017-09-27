@@ -43,6 +43,7 @@ datatype ValorPag {
 	}
 	datatype ConfPag {
 		attributes valor : Boolean
+	id_cancela : Int
 	}
 enum TipoVaga {
 		Normal, Idoso, Deficiente
@@ -56,6 +57,9 @@ enum TipoRelatorio {
 	value type DateTime {
 	}
 	datatype Log {
+	}
+datatype ConfImpTicket {
+		attributes id_cancela : Int
 	}
 }
 Requirement GerenciarVagas ( 01 ) {
@@ -169,7 +173,8 @@ component def SensorPresencaCP {
 		}
 		p1 : Ports.TicketOPT {
 		}
-		p10 : Ports.ComCancelaOPT {
+		
+	p27 : Ports.ConfImpTicketOPT {
 		}
 	}
 	boundary component def LeitorTicketCP {
@@ -186,7 +191,7 @@ component def SensorPresencaCP {
 		p7 : Ports.ConfPagOPT {
 		}
 	}
-	component def ControladorCancelaCN {
+	component def ControladorCancelaSaidaCP {
 		ports p8 : Ports.ConfPagIPT {
 		}
 		p9 : Ports.ComCancelaOPT {
@@ -209,7 +214,7 @@ component def SensorPresencaCP {
 			components:
 			newLeitorTicketCP : LeitorTicketCP {
 			}
-			newControladorCancelaCN : ControladorCancelaCN {
+			newControladorCancelaCN : ControladorCancelaSaidaCP {
 			}
 			newCalculadorPrecoPagamentoCP : CalculadorPrecoPagamentoCP {
 			}
@@ -220,12 +225,79 @@ component def SensorPresencaCP {
 		}
 	}
 	component def GerenciadorEntradaCP {
-		configuration {
+		
+	configuration {
 			components:
-			newImpressoraTicketCP : ImpressoraTicketCP {
+			
+			
+		SensorPresenca1 : SensorPresencaCP {
+				using ports p11 : Ports.PresencaOPT {
+				}
 			}
-			newCancelaCP : CancelaCP {
+			ImpressoraTicket1 : ImpressoraTicketCP {
+				using ports p12 : Ports.PresencaIPT {
+				}
+				p1 : Ports.TicketOPT {
+				}
+				p27 : Ports.ConfImpTicketOPT {
+				}
 			}
+			Cancela1 : CancelaCP {
+				using ports p10 : Ports.ComCancelaIPT {
+				}
+			}
+			ControladorCancelaEntrada1 : ControladorCancelaEntradaCP {
+				using ports p28 : Ports.ConfImpTicketIPT {
+				}
+				p9 : Ports.ComCancelaOPT {
+				}
+			}
+			SensorPresenca2 : SensorPresencaCP {
+				using ports p11 : Ports.PresencaOPT {
+				}
+			}
+			SensorPresenca3 : SensorPresencaCP {
+				using ports p11 : Ports.PresencaOPT {
+				}
+			}
+			ImpressoraTicket2 : ImpressoraTicketCP {
+				using ports p12 : Ports.PresencaIPT {
+				}
+				p1 : Ports.TicketOPT {
+				}
+				p27 : Ports.ConfImpTicketOPT {
+				}
+			}
+			ImpressoraTicket3 : ImpressoraTicketCP {
+				using ports p12 : Ports.PresencaIPT {
+				}
+				p1 : Ports.TicketOPT {
+				}
+				p27 : Ports.ConfImpTicketOPT {
+				}
+			}
+			Cancela2 : CancelaCP {
+				using ports p10 : Ports.ComCancelaIPT {
+				}
+			}
+			CancelaCP : CancelaCP {
+				using ports p10 : Ports.ComCancelaIPT {
+				}
+			}
+			connectors:
+			c1 : Connectors.PresencaCNT bindings SensorPresenca1.p11 =
+			ImpressoraTicket1.p12 c2 : Connectors.ConfImpTicketCNT bindings
+			ImpressoraTicket1.p27 = ControladorCancelaEntrada1.p28 c3 :
+			Connectors.ComCancelaCNT bindings ControladorCancelaEntrada1.p9 =
+			Cancela1.p10 c4 : Connectors.PresencaCNT bindings SensorPresenca2.p11 =
+			ImpressoraTicket2.p12 c7 : Connectors.PresencaCNT bindings
+			SensorPresenca3.p11 = ImpressoraTicket3.p12 c5 :
+			Connectors.ConfImpTicketCNT bindings ImpressoraTicket2.p27 =
+			ControladorCancelaEntrada1.p28 c8 : Connectors.ConfImpTicketCNT bindings
+			ImpressoraTicket3.p27 = ControladorCancelaEntrada1.p28 c6 :
+			Connectors.ComCancelaCNT bindings ControladorCancelaEntrada1.p9 =
+			Cancela2.p10 c6 : Connectors.ComCancelaCNT bindings
+			ControladorCancelaEntrada1.p9 = CancelaCP.p10
 		}
 	}
 	boundary component def ControladorCancelaEmergencialCP {
@@ -288,6 +360,12 @@ component def GerenciadorRelatorioCP {
 		ports p26 : Ports.LogUsoIPT {
 		}
 		p19 : Ports.RelatorioOPT {
+		}
+	}
+component def ControladorCancelaEntradaCP {
+		ports p28 : Ports.ConfImpTicketIPT {
+		}
+		p9 : Ports.ComCancelaOPT {
 		}
 	}
 }
@@ -383,6 +461,13 @@ connector def TipoRelatorioCNT {
 		}
 		flows SysADL.types.Log from p25 to p26
 	}
+connector def ConfImpTicketCNT {
+		participants ~ p27 : Ports.ConfImpTicketOPT {
+		}
+		~ p28 : Ports.ConfImpTicketIPT {
+		}
+		flows SysADL.types.ConfImpTicket from p27 to p28
+	}
 }
 package Ports {
 import SysADL.types;
@@ -468,5 +553,11 @@ port def TipoRelatorioIPT {
 	}
 	port def LogUsoOPT {
 		flow out SysADL.types.Log
+	}
+port def ConfImpTicketIPT {
+		flow in SysADL.types.ConfImpTicket
+	}
+	port def ConfImpTicketOPT {
+		flow out SysADL.types.ConfImpTicket
 	}
 }
