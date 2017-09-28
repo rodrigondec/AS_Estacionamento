@@ -17,6 +17,7 @@ package SysADL.types {
 	}
 	datatype Ticket {
 		attributes codigo : CodBarras hora : Hora
+	status : StatusTicket
 	}
 	value type CodBarras {
 	}
@@ -43,7 +44,6 @@ datatype ValorPag {
 	}
 	datatype ConfPag {
 		attributes valor : Boolean
-	id_cancela : Int
 	}
 enum TipoVaga {
 		Normal, Idoso, Deficiente
@@ -59,28 +59,13 @@ enum TipoRelatorio {
 	datatype Log {
 	}
 datatype ConfImpTicket {
-		attributes id_cancela : Int
+		attributes id_impressora : Int
 	}
-}
-Requirement GerarRelatorio ( 7.0 ) {
-	text =
-	"O sistema deve permitir ao gerente consultar a ocupação do estacionamento e gerar relatórios financeiros."
-	Requirement GerarRelatorioFinanceiro ( 7.1 ) {
-		text =
-		"O sistema deve permitir ao gerente gerar relatórios que detalhem a arrecadação do estacionamento em períodos de tempo informados pelo gerente."
+enum StatusTicket {
+		Pago, Pendente
 	}
-	Requirement ConsultarOcupacao ( 7.2 ) {
-		text =
-		"O sistema deve permitir ao gerente consultar a ocupação do estacionamento por dia, hora, semana e mês."
-	}
-}
-
-Requirement GerenciarPagamento ( 6.0 ) {
-	text =
-	"O sistema deve permitir ao usuário realizar o pagamento da taxa de estacionamento. O pagamento deve ser calculado com base no tempo em que o veículo esteve no estacionamento."
-	Requirement RealizarPagamento ( 6.1 ) {
-		text =
-		"O sistema deve permitir ao usuário realizar o pagamento em caixas automáticos com cartão ou dinheiro."
+	datatype ComandoCancela {
+		attributes Acao : AcoesCancela id_cancela : Int
 	}
 }
 Requirement AbrirCancelaEletronica ( 5.0 ) {
@@ -130,6 +115,26 @@ Requirement SinalizarQuantidadedeVagasDisponiveis ( 1.3 ) {
 	text =
 	"Em casos de emergência o operador do estacionamento poderá abrir a cancela de emergência."
 }
+Requirement GerarRelatorio ( 7.0 ) {
+	text =
+	"O sistema deve permitir ao gerente consultar a ocupação do estacionamento e gerar relatórios financeiros."
+	Requirement GerarRelatorioFinanceiro ( 7.1 ) {
+		text =
+		"O sistema deve permitir ao gerente gerar relatórios que detalhem a arrecadação do estacionamento em períodos de tempo informados pelo gerente."
+	}
+	Requirement ConsultarOcupacao ( 7.2 ) {
+		text =
+		"O sistema deve permitir ao gerente consultar a ocupação do estacionamento por dia, hora, semana e mês."
+	}
+}
+	Requirement GerenciarPagamento ( 6.0 ) {
+	text =
+	"O sistema deve permitir ao usuário realizar o pagamento da taxa de estacionamento. O pagamento deve ser calculado com base no tempo em que o veículo esteve no estacionamento."
+	Requirement RealizarPagamento ( 6.1 ) {
+		text =
+		"O sistema deve permitir ao usuário realizar o pagamento em caixas automáticos com cartão ou dinheiro."
+	}
+}
 }
 package Components {
 import Ports;
@@ -164,7 +169,7 @@ component def SensorPresencaCP {
 			
 		newGerenciadorRelatorioCP : GerenciadorRelatorioCP {
 			}
-		newGerenciadorCancelaEmergCP : GerenciadorCancelaEmergCP {
+		newGerenciadorCancelaEmergCP : GerenciadorCancelaCP {
 			}
 		}
 	}
@@ -199,12 +204,7 @@ component def SensorPresencaCP {
 		p7 : Ports.ConfPagOPT {
 		}
 	}
-	component def ControladorCancelaSaidaCP {
-		ports p8 : Ports.ConfPagIPT {
-		}
-		p9 : Ports.ComCancelaOPT {
-		}
-	}
+	
 	component def BdVagaCP {
 		ports p15 : Ports.TipoVagaOPT {
 		}
@@ -226,22 +226,11 @@ component def SensorPresencaCP {
 			
 			
 		
-			ControladorCancelaSaida : ControladorCancelaSaidaCP {
-				using ports p8 : Ports.ConfPagIPT {
-				}
-				p9 : Ports.ComCancelaOPT {
-				}
-			}
-			CalculadorPrecoPagamento : CalculadorPrecoPagamentoCP {
-				using ports p5 : Ports.ValorPagOPT {
-				}
-				p2 : Ports.TicketIPT {
-				}
-			}
 			
 			
-			newSaidaCP : SaidaCP {
-			}
+			
+			
+			
 		}
 	}
 	component def GerenciadorEntradaCP {
@@ -253,28 +242,29 @@ component def SensorPresencaCP {
 		
 			
 			
-			ControladorCancelaEntrada1 : ControladorCancelaEntradaCP {
-				using ports p28 : Ports.ConfImpTicketIPT {
-				}
-				p9 : Ports.ComCancelaOPT {
+			
+			
+			
+			
+			
+			
+			
+			
+		SensorPresencaCP : SensorPresencaCP {
+				using ports p11 : Ports.PresencaOPT {
 				}
 			}
-			
-			
-			
-			
-			
-			
-			newEntradaCP : EntradaCP {
+			ImpressoraTicketCP : ImpressoraTicketCP {
+				using ports p12 : Ports.PresencaIPT {
+				}
+				p1 : Ports.TicketOPT {
+				}
+				p27 : Ports.ConfImpTicketOPT {
+				}
 			}
 		}
 	}
-	boundary component def ControladorCancelaEmergencialCP {
-		ports p10 : Ports.ComCancelaIPT {
-		}
-		p9 : Ports.ComCancelaOPT {
-		}
-	}
+	
 	component def GerenciadorVagaCP {
 		configuration {
 			components:
@@ -377,12 +367,7 @@ component def GerenciadorRelatorioCP {
 		p19 : Ports.RelatorioOPT {
 		}
 	}
-component def ControladorCancelaEntradaCP {
-		ports p28 : Ports.ConfImpTicketIPT {
-		}
-		p9 : Ports.ComCancelaOPT {
-		}
-	}
+
 component def AndarCP {
 		configuration {
 			components:
@@ -400,62 +385,22 @@ component def AndarCP {
 			}
 		}
 	}
-	component def SaidaCP {
+	
+	
+	component def GerenciadorCancelaCP {
 		configuration {
 			components:
-			CancelaCP : CancelaCP {
-				using ports p10 : Ports.ComCancelaIPT {
-				}
-			}
-			LeitorTicketCP : LeitorTicketCP {
-				using ports pcod : Ports.CodigoTicketIPT {
-				}
-				p1 : Ports.TicketOPT {
-				}
-			}
-			CaixaPagCP : CaixaPagCP {
-				using ports p6 : Ports.ValorPagIPT {
-				}
-				ppag : Ports.PagamentoIPT {
-				}
-				p7 : Ports.ConfPagOPT {
-				}
-			}
-		}
-	}
-	component def EntradaCP {
-		configuration {
-			components:
-			CancelaCP : CancelaCP {
-				using ports p10 : Ports.ComCancelaIPT {
-				}
-			}
-			ImpressoraTicketCP : ImpressoraTicketCP {
-				using ports p12 : Ports.PresencaIPT {
-				}
-				p1 : Ports.TicketOPT {
-				}
-				p27 : Ports.ConfImpTicketOPT {
-				}
-			}
-		}
-	}
-	component def GerenciadorCancelaEmergCP {
-		configuration {
-			components:
-			ControladorCancelaEmergencialCP : ControladorCancelaEmergencialCP {
-				using ports p10 : Ports.ComCancelaIPT {
-				}
-				p9 : Ports.ComCancelaOPT {
-				}
-			}
+			
 			CancelaCP : CancelaCP {
 				using ports p10 : Ports.ComCancelaIPT {
 				}
 			}
 			connectors:
-			c1 : Connectors.ComCancelaCNT bindings ControladorCancelaEmergencialCP.p9 =
-			CancelaCP.p10
+			
+		}
+	}
+component def GerenciadorPagamentoCP {
+		configuration {
 		}
 	}
 }
