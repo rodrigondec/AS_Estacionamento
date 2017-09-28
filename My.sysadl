@@ -160,17 +160,33 @@ component def SensorPresencaCP {
 	component def GerenciadorEstacionamento {
 		configuration {
 			components:
-			newGerenciadorVagasCP : GerenciadorVagaCP {
-			}
-			newGerenciadorSaidaCP : GerenciadorSaidaCP {
-			}
-			newGerenciadorEntradaCP : GerenciadorEntradaCP {
-			}
 			
-		newGerenciadorRelatorioCP : GerenciadorRelatorioCP {
+			
+			
+			
+		
+		
+		GerenciadorPagamento : GerenciadorPagamentoCP {
+				using ports p7 : Ports.ConfPagOPT {
+				}
 			}
-		newGerenciadorCancelaEmergCP : GerenciadorCancelaCP {
+			GerenciadorCancelaCP : GerenciadorCancelaCP {
+				using ports p10 : Ports.ComandoCancelaIPT {
+				}
 			}
+			Saida : SaidaCP [ 1, 6 ] {
+				using ports p1 : Ports.TicketOPT {
+				}
+			}
+			EntradaCP : EntradaCP {
+				using ports p27 : Ports.ConfImpTicketOPT {
+				}
+			}
+			connectors:
+			c1 : Connectors.ConfPagToComCancelaCNT bindings GerenciadorPagamento.p7 =
+			GerenciadorCancelaCP.p10 c2 : Connectors.TicketToComCancelaCNT bindings
+			Saida.p1 = GerenciadorCancelaCP.p10 c3 : Connectors.ConfImpToComCancelaCNT
+			bindings EntradaCP.p27 = GerenciadorCancelaCP.p10
 		}
 	}
 	component def PainelLedCP {
@@ -178,7 +194,7 @@ component def SensorPresencaCP {
 		}
 	}
 	component def CancelaCP {
-		ports p10 : Ports.ComCancelaIPT {
+		ports p10 : Ports.ComandoCancelaIPT {
 		}
 	}
 	component def ImpressoraTicketCP {
@@ -196,7 +212,7 @@ component def SensorPresencaCP {
 		p1 : Ports.TicketOPT {
 		}
 	}
-	boundary component def CaixaPagCP {
+	boundary component def CaixaPagamentoCP {
 		ports p6 : Ports.ValorPagIPT {
 		}
 		ppag : Ports.PagamentoIPT {
@@ -217,7 +233,9 @@ component def SensorPresencaCP {
 		p2 : Ports.TicketIPT {
 		}
 	}
-	component def GerenciadorSaidaCP {
+	component def SaidaCP {
+		ports p1 : Ports.TicketOPT {
+		}
 		configuration {
 			components:
 			
@@ -231,9 +249,19 @@ component def SensorPresencaCP {
 			
 			
 			
+		LeitorTicketCP : LeitorTicketCP {
+				using ports pcod : Ports.CodigoTicketIPT {
+				}
+				p1 : Ports.TicketOPT {
+				}
+			}
+			delegations:
+			LeitorTicketCP.p1 to p1
 		}
 	}
-	component def GerenciadorEntradaCP {
+	component def EntradaCP {
+		ports p27 : Ports.ConfImpTicketOPT {
+		}
 		
 	configuration {
 			components:
@@ -262,6 +290,10 @@ component def SensorPresencaCP {
 				p27 : Ports.ConfImpTicketOPT {
 				}
 			}
+		connectors:
+			c1 : Connectors.PresencaCNT bindings SensorPresencaCP.p11 =
+			ImpressoraTicketCP.p12 delegations:
+			ImpressoraTicketCP.p27 to p27
 		}
 	}
 	
@@ -388,19 +420,72 @@ component def AndarCP {
 	
 	
 	component def GerenciadorCancelaCP {
+		ports p10 : Ports.ComandoCancelaIPT {
+		}
 		configuration {
 			components:
 			
 			CancelaCP : CancelaCP {
-				using ports p10 : Ports.ComCancelaIPT {
+				using ports p10 : Ports.ComandoCancelaIPT {
 				}
 			}
 			connectors:
 			
+		delegations:
+			CancelaCP.p10 to p10
 		}
 	}
 component def GerenciadorPagamentoCP {
+		ports p7 : Ports.ConfPagOPT {
+		}
 		configuration {
+		components:
+			CalculadorPrecoPagamentoCP : CalculadorPrecoPagamentoCP {
+				using ports p5 : Ports.ValorPagOPT {
+				}
+				p2 : Ports.TicketIPT {
+				}
+			}
+			CentralPagamentoCP : CentralPagamentoCP [ 1, 10 ] {
+				using ports p1 : Ports.TicketOPT {
+				}
+				p7 : Ports.ConfPagOPT {
+				}
+				p6 : Ports.ValorPagIPT {
+				}
+			}
+			connectors:
+			c1 : Connectors.TicketCNT bindings CentralPagamentoCP.p1 =
+			CalculadorPrecoPagamentoCP.p2 c2 : Connectors.ValorPagCNT bindings
+			CalculadorPrecoPagamentoCP.p5 = CentralPagamentoCP.p6 delegations:
+			CentralPagamentoCP.p7 to p7
+		}
+	}
+component def CentralPagamentoCP {
+		ports p1 : Ports.TicketOPT {
+		}
+		p7 : Ports.ConfPagOPT {
+		}
+		p6 : Ports.ValorPagIPT {
+		}
+		configuration {
+			components:
+			LeitorTicketCP : LeitorTicketCP {
+				using ports pcod : Ports.CodigoTicketIPT {
+				}
+				p1 : Ports.TicketOPT {
+				}
+			}
+			CaixaPagamentoCP : CaixaPagamentoCP {
+				using ports p6 : Ports.ValorPagIPT {
+				}
+				ppag : Ports.PagamentoIPT {
+				}
+				p7 : Ports.ConfPagOPT {
+				}
+			}
+			delegations:
+			LeitorTicketCP.p1 to p1 CaixaPagamentoCP.p7 to p7 CaixaPagamentoCP.p6 to p6
 		}
 	}
 }
@@ -424,9 +509,9 @@ import SysADL.types;
 		flows SysADL.types.Presenca from p11 to p12
 	}
 	connector def ComCancelaCNT {
-		participants ~ p9 : Ports.ComCancelaOPT {
+		participants ~ p9 : Ports.ComandoCancelaOPT {
 		}
-		~ p10 : Ports.ComCancelaIPT {
+		~ p10 : Ports.ComandoCancelaIPT {
 		}
 		flows 
 	SysADL.types.AcoesCancela from p9 to p10
@@ -503,6 +588,33 @@ connector def ConfImpTicketCNT {
 		}
 		flows SysADL.types.ConfImpTicket from p27 to p28
 	}
+connector def ConfPagToComCancelaCNT {
+		participants ~ p10 : Ports.ComandoCancelaIPT {
+		}
+		~ p7 : Ports.ConfPagOPT {
+		}
+		configuration {
+		}
+		flows SysADL.types.ConfPag from p7 to p10
+	}
+	connector def TicketToComCancelaCNT {
+		participants ~ p1 : Ports.TicketOPT {
+		}
+		~ p10 : Ports.ComandoCancelaIPT {
+		}
+		configuration {
+		}
+		flows SysADL.types.Ticket from p1 to p10
+	}
+	connector def ConfImpToComCancelaCNT {
+		participants ~ p27 : Ports.ConfImpTicketOPT {
+		}
+		~ p10 : Ports.ComandoCancelaIPT {
+		}
+		configuration {
+		}
+		flows SysADL.types.ConfImpTicket from p27 to p10
+	}
 }
 package Ports {
 import SysADL.types;
@@ -514,11 +626,11 @@ import SysADL.types;
 	port def PresencaOPT {
 		flow out SysADL.types.Presenca
 	}
-	port def ComCancelaIPT {
-		flow in SysADL.types.AcoesCancela
+	port def ComandoCancelaIPT {
+		flow in SysADL.types.ComandoCancela
 	}
-	port def ComCancelaOPT {
-		flow out SysADL.types.AcoesCancela
+	port def ComandoCancelaOPT {
+		flow out SysADL.types.ComandoCancela
 	}
 	port def RelatorioIPT {
 		flow in SysADL.types.Relatorio
