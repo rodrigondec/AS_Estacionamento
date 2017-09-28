@@ -44,6 +44,7 @@ datatype ValorPag {
 	}
 	datatype ConfPag {
 		attributes valor : Boolean
+	id_ticket : Int
 	}
 enum TipoVaga {
 		Normal, Idoso, Deficiente
@@ -66,6 +67,9 @@ enum StatusTicket {
 	}
 	datatype ComandoCancela {
 		attributes Acao : AcoesCancela id_cancela : Int
+	}
+datatype CorLed {
+		attributes cor : Cor id_led : Int
 	}
 }
 Requirement AbrirCancelaEletronica ( 5.0 ) {
@@ -146,7 +150,7 @@ import Ports;
 		}
 		p16 : Ports.TipoVagaIPT {
 		}
-		p13 : Ports.CorOPT {
+		p13 : Ports.CorLedOPT {
 		}
 	}
 component def SensorPresencaCP {
@@ -154,7 +158,7 @@ component def SensorPresencaCP {
 		}
 	}
 	component def LedVagaCP {
-	ports P14 : Ports.CorIPT {
+	ports P14 : Ports.CorLedIPT {
 		}
 	}
 	component def GerenciadorEstacionamento {
@@ -166,27 +170,46 @@ component def SensorPresencaCP {
 			
 		
 		
-		GerenciadorPagamento : GerenciadorPagamentoCP {
-				using ports p7 : Ports.ConfPagOPT {
-				}
-			}
-			GerenciadorCancelaCP : GerenciadorCancelaCP {
+		GerenciadorCancelaCP : GerenciadorCancelaCP {
 				using ports p10 : Ports.ComandoCancelaIPT {
-				}
-			}
-			Saida : SaidaCP [ 1, 6 ] {
-				using ports p1 : Ports.TicketOPT {
 				}
 			}
 			EntradaCP : EntradaCP {
 				using ports p27 : Ports.ConfImpTicketOPT {
 				}
 			}
+			GerenciadorVagaCP : GerenciadorVagaCP {
+			}
+			BdUsoCP : BdUsoCP {
+				using ports p22 : Ports.TipoRelatorioIPT {
+				}
+				p24 : Ports.DateTimeIPT {
+				}
+				p25 : Ports.LogUsoOPT {
+				}
+			}
+			SaidaCP : SaidaCP {
+				using ports p29 : Ports.CodigoTicketOPT {
+				}
+			}
+			BdTicket : BdTicketCP {
+				using ports p30 : Ports.CodigoTicketIPT {
+				}
+				p1 : Ports.TicketOPT {
+				}
+				p7 : Ports.ConfPagIPT {
+				}
+			}
+			GerenciadorPagamento : GerenciadorPagamentoCP {
+				using ports p7 : Ports.ConfPagOPT {
+				}
+			}
 			connectors:
-			c1 : Connectors.ConfPagToComCancelaCNT bindings GerenciadorPagamento.p7 =
-			GerenciadorCancelaCP.p10 c2 : Connectors.TicketToComCancelaCNT bindings
-			Saida.p1 = GerenciadorCancelaCP.p10 c3 : Connectors.ConfImpToComCancelaCNT
-			bindings EntradaCP.p27 = GerenciadorCancelaCP.p10
+			c3 : Connectors.ConfImpToComCancelaCNT bindings EntradaCP.p27 =
+			GerenciadorCancelaCP.p10 c1 : Connectors.CodigoTicketCNT bindings
+			SaidaCP.p29 = BdTicket.p30 c2 : Connectors.TicketToComCancelaCNT bindings
+			BdTicket.p1 = GerenciadorCancelaCP.p10 c4 : Connectors.ConfPagCNT bindings
+			GerenciadorPagamento.p7 = BdTicket.p7
 		}
 	}
 	component def PainelLedCP {
@@ -207,9 +230,9 @@ component def SensorPresencaCP {
 		}
 	}
 	boundary component def LeitorTicketCP {
-		ports pcod : Ports.CodigoTicketIPT {
+		ports p30 : Ports.CodigoTicketIPT {
 		}
-		p1 : Ports.TicketOPT {
+		p29 : Ports.CodigoTicketOPT {
 		}
 	}
 	boundary component def CaixaPagamentoCP {
@@ -234,7 +257,7 @@ component def SensorPresencaCP {
 		}
 	}
 	component def SaidaCP {
-		ports p1 : Ports.TicketOPT {
+		ports p29 : Ports.CodigoTicketOPT {
 		}
 		configuration {
 			components:
@@ -250,13 +273,13 @@ component def SensorPresencaCP {
 			
 			
 		LeitorTicketCP : LeitorTicketCP {
-				using ports pcod : Ports.CodigoTicketIPT {
+				using ports p30 : Ports.CodigoTicketIPT {
 				}
-				p1 : Ports.TicketOPT {
+				p29 : Ports.CodigoTicketOPT {
 				}
 			}
 			delegations:
-			LeitorTicketCP.p1 to p1
+			LeitorTicketCP.p29 to p29
 		}
 	}
 	component def EntradaCP {
@@ -278,11 +301,11 @@ component def SensorPresencaCP {
 			
 			
 			
-		SensorPresencaCP : SensorPresencaCP {
+		SensorPresenca : SensorPresencaCP {
 				using ports p11 : Ports.PresencaOPT {
 				}
 			}
-			ImpressoraTicketCP : ImpressoraTicketCP {
+			ImpressoraTicket : ImpressoraTicketCP {
 				using ports p12 : Ports.PresencaIPT {
 				}
 				p1 : Ports.TicketOPT {
@@ -291,9 +314,9 @@ component def SensorPresencaCP {
 				}
 			}
 		connectors:
-			c1 : Connectors.PresencaCNT bindings SensorPresencaCP.p11 =
-			ImpressoraTicketCP.p12 delegations:
-			ImpressoraTicketCP.p27 to p27
+			c1 : Connectors.PresencaCNT bindings SensorPresenca.p11 =
+			ImpressoraTicket.p12 delegations:
+			ImpressoraTicket.p27 to p27
 		}
 	}
 	
@@ -317,15 +340,25 @@ component def SensorPresencaCP {
 				}
 				p16 : Ports.TipoVagaIPT {
 				}
-				p13 : Ports.CorOPT {
+				p13 : Ports.CorLedOPT {
 				}
 			}
 			
 			
-			AndarID : AndarCP {
+			
+			Andar : AndarCP [ 1, 5 ] {
+				using ports p18 : Ports.QtVagasIPT {
+				}
+				p14 : Ports.CorLedIPT {
+				}
+				p11 : Ports.PresencaOPT {
+				}
 			}
-			connectors: c1 : Connectors.TipoVagaCNT bindings
-			ControladorCor.p16 = BdVaga.p15  
+			connectors:   
+		c1 : Connectors.PresencaCNT bindings Andar.p11 = ControladorCor.p12 c3 :
+			Connectors.TipoVagaCNT bindings BdVaga.p15 = ControladorCor.p16 c2 :
+			Connectors.CorLedCNT bindings ControladorCor.p13 = Andar.p14 c4 :
+			Connectors.QtVagasCNT bindings BdVaga.p17 = Andar.p18
 		}
 	}
 component def GerenciadorRelatorioCP {
@@ -334,16 +367,7 @@ component def GerenciadorRelatorioCP {
 			
 			
 			
-		BdUsoCP : BdUsoCP {
-				using ports p22 : Ports.TipoRelatorioIPT {
-				}
-				p24 : Ports.DateTimeIPT {
-				}
-				p24 : Ports.DateTimeIPT {
-				}
-				p25 : Ports.LogUsoOPT {
-				}
-			}
+		
 			InterfaceUsuarioRelatorio : InterfaceUsuarioRelatorioCP {
 				using ports p22 : Ports.TipoRelatorioIPT {
 				}
@@ -365,30 +389,26 @@ component def GerenciadorRelatorioCP {
 				}
 			}
 			connectors:
-			c1 : Connectors.TipoRelatorioCNT bindings InterfaceUsuarioRelatorio.p21 =
-			BdUsoCP.p22
+			
 		}
 	}
 	component def InterfaceUsuarioRelatorioCP {
 		ports p22 : Ports.TipoRelatorioIPT {
 		}
-		p24 : Ports.DateTimeIPT {
-		}
-		p24 : Ports.DateTimeIPT {
+		
+		p24 : Ports.DateTimeIPT [ 2, 2 ] {
 		}
 		p21 : Ports.TipoRelatorioOPT {
 		}
-		p23 : Ports.DateTimeOPT {
-		}
-		p23 : Ports.DateTimeOPT {
+		
+		p23 : Ports.DateTimeOPT [ 2, 2 ] {
 		}
 	}
 	component def BdUsoCP {
 		ports p22 : Ports.TipoRelatorioIPT {
 		}
-		p24 : Ports.DateTimeIPT {
-		}
-		p24 : Ports.DateTimeIPT {
+		
+		p24 : Ports.DateTimeIPT [ 2, 2 ] {
 		}
 		p25 : Ports.LogUsoOPT {
 		}
@@ -401,20 +421,28 @@ component def GerenciadorRelatorioCP {
 	}
 
 component def AndarCP {
+		ports p18 : Ports.QtVagasIPT {
+		}
+		p14 : Ports.CorLedIPT {
+		}
+		p11 : Ports.PresencaOPT {
+		}
 		configuration {
 			components:
-			SensorPresencaID : SensorPresencaCP {
+			SensorPresenca : SensorPresencaCP [ 1, 6 ] {
 				using ports p11 : Ports.PresencaOPT {
 				}
 			}
-			LedVagaID : LedVagaCP {
-				using ports P14 : Ports.CorIPT {
+			LedVaga : LedVagaCP [ 1, 6 ] {
+				using ports P14 : Ports.CorLedIPT {
 				}
 			}
 			PainelLed : PainelLedCP {
 				using ports p18 : Ports.QtVagasIPT {
 				}
 			}
+		delegations:
+			SensorPresenca.p11 to p11 PainelLed.p18 to p18 LedVaga.P14 to p14
 		}
 	}
 	
@@ -488,6 +516,14 @@ component def CentralPagamentoCP {
 			LeitorTicketCP.p1 to p1 CaixaPagamentoCP.p7 to p7 CaixaPagamentoCP.p6 to p6
 		}
 	}
+	component def BdTicketCP {
+		ports p30 : Ports.CodigoTicketIPT {
+		}
+		p1 : Ports.TicketOPT {
+		}
+		p7 : Ports.ConfPagIPT {
+		}
+	}
 }
 package Connectors {
 import SysADL.types;
@@ -514,7 +550,7 @@ import SysADL.types;
 		~ p10 : Ports.ComandoCancelaIPT {
 		}
 		flows 
-	SysADL.types.AcoesCancela from p9 to p10
+	SysADL.types.ComandoCancela from p9 to p10
 	}
 	connector def TicketCNT {
 		participants ~ p1 : Ports.TicketOPT {
@@ -539,12 +575,12 @@ connector def ConfPagCNT {
 		}
 		flows SysADL.types.ConfPag from p7 to p8
 	}
-	connector def CorCNT {
-		participants ~ p13 : Ports.CorOPT {
+	connector def CorLedCNT {
+		participants ~ p13 : Ports.CorLedOPT {
 		}
-		~ p14 : Ports.CorIPT {
+		~ p14 : Ports.CorLedIPT {
 		}
-		flows SysADL.types.Cor from p13 to p14
+		flows SysADL.types.CorLed from p13 to p14
 	}
 	connector def QtVagasCNT {
 		participants ~ p17 : Ports.QtVagasOPT {
@@ -588,16 +624,7 @@ connector def ConfImpTicketCNT {
 		}
 		flows SysADL.types.ConfImpTicket from p27 to p28
 	}
-connector def ConfPagToComCancelaCNT {
-		participants ~ p10 : Ports.ComandoCancelaIPT {
-		}
-		~ p7 : Ports.ConfPagOPT {
-		}
-		configuration {
-		}
-		flows SysADL.types.ConfPag from p7 to p10
-	}
-	connector def TicketToComCancelaCNT {
+connector def TicketToComCancelaCNT {
 		participants ~ p1 : Ports.TicketOPT {
 		}
 		~ p10 : Ports.ComandoCancelaIPT {
@@ -614,6 +641,13 @@ connector def ConfPagToComCancelaCNT {
 		configuration {
 		}
 		flows SysADL.types.ConfImpTicket from p27 to p10
+	}
+	connector def CodigoTicketCNT {
+		participants ~ p29 : Ports.CodigoTicketOPT {
+		}
+		~ p31 : Ports.CodigoTicketIPT {
+		}
+		flows SysADL.types.CodBarras from p29 to p31
 	}
 }
 package Ports {
@@ -662,11 +696,11 @@ port def QtVagasIPT {
 	port def QtVagasOPT {
 		flow out SysADL.types.Int
 	}
-	port def CorIPT {
-		flow in SysADL.types.Cor
+	port def CorLedIPT {
+		flow in SysADL.types.CorLed
 	}
-	port def CorOPT {
-		flow out SysADL.types.Cor
+	port def CorLedOPT {
+		flow out SysADL.types.CorLed
 	}
 port def PagamentoIPT {
 		flow in SysADL.types.Dinheiro
@@ -706,5 +740,8 @@ port def ConfImpTicketIPT {
 	}
 	port def ConfImpTicketOPT {
 		flow out SysADL.types.ConfImpTicket
+	}
+port def CodigoTicketOPT {
+		flow out SysADL.types.CodBarras
 	}
 }
