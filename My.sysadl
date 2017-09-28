@@ -17,6 +17,7 @@ package SysADL.types {
 	}
 	datatype Ticket {
 		attributes codigo : CodBarras hora : Hora
+	status : StatusTicket
 	}
 	value type CodBarras {
 	}
@@ -60,6 +61,9 @@ enum TipoRelatorio {
 	}
 datatype ConfImpTicket {
 		attributes id_cancela : Int
+	}
+enum StatusTicket {
+		Pago, Pendente
 	}
 }
 Requirement GerenciarVagas ( 01 ) {
@@ -157,7 +161,7 @@ component def SensorPresencaCP {
 			
 		newGerenciadorRelatorioCP : GerenciadorRelatorioCP {
 			}
-		newGerenciadorCancelaEmergCP : GerenciadorCancelaEmergCP {
+		newGerenciadorCancelaEmergCP : GerenciadorCancelaCP {
 			}
 		}
 	}
@@ -192,12 +196,7 @@ component def SensorPresencaCP {
 		p7 : Ports.ConfPagOPT {
 		}
 	}
-	component def ControladorCancelaSaidaCP {
-		ports p8 : Ports.ConfPagIPT {
-		}
-		p9 : Ports.ComCancelaOPT {
-		}
-	}
+	
 	component def BdVagaCP {
 		ports p15 : Ports.TipoVagaOPT {
 		}
@@ -219,21 +218,16 @@ component def SensorPresencaCP {
 			
 			
 		
-			ControladorCancelaSaida : ControladorCancelaSaidaCP {
-				using ports p8 : Ports.ConfPagIPT {
-				}
-				p9 : Ports.ComCancelaOPT {
-				}
-			}
-			CalculadorPrecoPagamento : CalculadorPrecoPagamentoCP {
-				using ports p5 : Ports.ValorPagOPT {
-				}
-				p2 : Ports.TicketIPT {
-				}
-			}
 			
 			
-			newSaidaCP : SaidaCP {
+			
+			
+			
+		LeitorTicketCP : LeitorTicketCP {
+				using ports pcod : Ports.CodigoTicketIPT {
+				}
+				p1 : Ports.TicketOPT {
+				}
 			}
 		}
 	}
@@ -246,28 +240,32 @@ component def SensorPresencaCP {
 		
 			
 			
-			ControladorCancelaEntrada1 : ControladorCancelaEntradaCP {
-				using ports p28 : Ports.ConfImpTicketIPT {
+			
+			
+			
+			
+			
+			
+			
+			
+		ImpressoraTicketCP : ImpressoraTicketCP {
+				using ports p12 : Ports.PresencaIPT {
 				}
-				p9 : Ports.ComCancelaOPT {
+				p1 : Ports.TicketOPT {
+				}
+				p27 : Ports.ConfImpTicketOPT {
 				}
 			}
-			
-			
-			
-			
-			
-			
-			newEntradaCP : EntradaCP {
+			SensorPresencaCP : SensorPresencaCP {
+				using ports p11 : Ports.PresencaOPT {
+				}
 			}
+			connectors:
+			c1 : Connectors.PresencaCNT bindings SensorPresencaCP.p11 =
+			ImpressoraTicketCP.p12
 		}
 	}
-	boundary component def ControladorCancelaEmergencialCP {
-		ports p10 : Ports.ComCancelaIPT {
-		}
-		p9 : Ports.ComCancelaOPT {
-		}
-	}
+	
 	component def GerenciadorVagaCP {
 		configuration {
 			components:
@@ -370,12 +368,7 @@ component def GerenciadorRelatorioCP {
 		p19 : Ports.RelatorioOPT {
 		}
 	}
-component def ControladorCancelaEntradaCP {
-		ports p28 : Ports.ConfImpTicketIPT {
-		}
-		p9 : Ports.ComCancelaOPT {
-		}
-	}
+
 component def AndarCP {
 		configuration {
 			components:
@@ -393,19 +386,23 @@ component def AndarCP {
 			}
 		}
 	}
-	component def SaidaCP {
+	
+	
+	component def GerenciadorCancelaCP {
 		configuration {
 			components:
+			
 			CancelaCP : CancelaCP {
 				using ports p10 : Ports.ComCancelaIPT {
 				}
 			}
-			LeitorTicketCP : LeitorTicketCP {
-				using ports pcod : Ports.CodigoTicketIPT {
-				}
-				p1 : Ports.TicketOPT {
-				}
-			}
+			connectors:
+			
+		}
+	}
+component def GerenciadorPagamentoCP {
+		configuration {
+			components:
 			CaixaPagCP : CaixaPagCP {
 				using ports p6 : Ports.ValorPagIPT {
 				}
@@ -414,41 +411,6 @@ component def AndarCP {
 				p7 : Ports.ConfPagOPT {
 				}
 			}
-		}
-	}
-	component def EntradaCP {
-		configuration {
-			components:
-			CancelaCP : CancelaCP {
-				using ports p10 : Ports.ComCancelaIPT {
-				}
-			}
-			ImpressoraTicketCP : ImpressoraTicketCP {
-				using ports p12 : Ports.PresencaIPT {
-				}
-				p1 : Ports.TicketOPT {
-				}
-				p27 : Ports.ConfImpTicketOPT {
-				}
-			}
-		}
-	}
-	component def GerenciadorCancelaEmergCP {
-		configuration {
-			components:
-			ControladorCancelaEmergencialCP : ControladorCancelaEmergencialCP {
-				using ports p10 : Ports.ComCancelaIPT {
-				}
-				p9 : Ports.ComCancelaOPT {
-				}
-			}
-			CancelaCP : CancelaCP {
-				using ports p10 : Ports.ComCancelaIPT {
-				}
-			}
-			connectors:
-			c1 : Connectors.ComCancelaCNT bindings ControladorCancelaEmergencialCP.p9 =
-			CancelaCP.p10
 		}
 	}
 }
@@ -550,6 +512,15 @@ connector def ConfImpTicketCNT {
 		~ p28 : Ports.ConfImpTicketIPT {
 		}
 		flows SysADL.types.ConfImpTicket from p27 to p28
+	}
+connector def ConfImpTicketCancelaCNT {
+		participants ~ p29 : Ports.ConfImpTicketOPT {
+		}
+		~ p30 : Ports.ComCancelaIPT {
+		}
+		configuration {
+		}
+		flows SysADL.types.ConfImpTicket from p29 to p30
 	}
 }
 package Ports {
