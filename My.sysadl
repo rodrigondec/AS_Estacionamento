@@ -154,9 +154,10 @@ component def SensorPresencaCP {
 			}
 			newGerenciadorEntradaCP : GerenciadorEntradaCP {
 			}
-			newControladorCancelaEmergencialCP : ControladorCancelaEmergencialCP {
-			}
+			
 		newGerenciadorRelatorioCP : GerenciadorRelatorioCP {
+			}
+		newGerenciadorCancelaEmergCP : GerenciadorCancelaEmergCP {
 			}
 		}
 	}
@@ -217,12 +218,7 @@ component def SensorPresencaCP {
 			
 			
 			
-		LeitorTicket1 : LeitorTicketCP {
-				using ports pcod : Ports.CodigoTicketIPT {
-				}
-				p1 : Ports.TicketOPT {
-				}
-			}
+		
 			ControladorCancelaSaida : ControladorCancelaSaidaCP {
 				using ports p8 : Ports.ConfPagIPT {
 				}
@@ -235,24 +231,10 @@ component def SensorPresencaCP {
 				p2 : Ports.TicketIPT {
 				}
 			}
-			CaixaPag1 : CaixaPagCP {
-				using ports p6 : Ports.ValorPagIPT {
-				}
-				ppag : Ports.PagamentoIPT {
-				}
-				p7 : Ports.ConfPagOPT {
-				}
+			
+			
+			newSaidaCP : SaidaCP {
 			}
-			Cancela1 : CancelaCP {
-				using ports p10 : Ports.ComCancelaIPT {
-				}
-			}
-			connectors:
-			c1 : Connectors.TicketCNT bindings LeitorTicket1.p1 =
-			CalculadorPrecoPagamento.p2 c2 : Connectors.ValorPagCNT bindings
-			CalculadorPrecoPagamento.p5 = CaixaPag1.p6 c3 : Connectors.ConfPagCNT
-			bindings CaixaPag1.p7 = ControladorCancelaSaida.p8 c4 :
-			Connectors.ComCancelaCNT bindings ControladorCancelaSaida.p9 = Cancela1.p10
 		}
 	}
 	component def GerenciadorEntradaCP {
@@ -261,74 +243,23 @@ component def SensorPresencaCP {
 			components:
 			
 			
-		SensorPresenca1 : SensorPresencaCP {
-				using ports p11 : Ports.PresencaOPT {
-				}
-			}
-			ImpressoraTicket1 : ImpressoraTicketCP {
-				using ports p12 : Ports.PresencaIPT {
-				}
-				p1 : Ports.TicketOPT {
-				}
-				p27 : Ports.ConfImpTicketOPT {
-				}
-			}
-			Cancela1 : CancelaCP {
-				using ports p10 : Ports.ComCancelaIPT {
-				}
-			}
+		
+			
+			
 			ControladorCancelaEntrada1 : ControladorCancelaEntradaCP {
 				using ports p28 : Ports.ConfImpTicketIPT {
 				}
 				p9 : Ports.ComCancelaOPT {
 				}
 			}
-			SensorPresenca2 : SensorPresencaCP {
-				using ports p11 : Ports.PresencaOPT {
-				}
+			
+			
+			
+			
+			
+			
+			newEntradaCP : EntradaCP {
 			}
-			SensorPresenca3 : SensorPresencaCP {
-				using ports p11 : Ports.PresencaOPT {
-				}
-			}
-			ImpressoraTicket2 : ImpressoraTicketCP {
-				using ports p12 : Ports.PresencaIPT {
-				}
-				p1 : Ports.TicketOPT {
-				}
-				p27 : Ports.ConfImpTicketOPT {
-				}
-			}
-			ImpressoraTicket3 : ImpressoraTicketCP {
-				using ports p12 : Ports.PresencaIPT {
-				}
-				p1 : Ports.TicketOPT {
-				}
-				p27 : Ports.ConfImpTicketOPT {
-				}
-			}
-			Cancela2 : CancelaCP {
-				using ports p10 : Ports.ComCancelaIPT {
-				}
-			}
-			Cancela3 : CancelaCP {
-				using ports p10 : Ports.ComCancelaIPT {
-				}
-			}
-			connectors:
-			c1 : Connectors.PresencaCNT bindings SensorPresenca1.p11 =
-			ImpressoraTicket1.p12 c2 : Connectors.ConfImpTicketCNT bindings
-			ImpressoraTicket1.p27 = ControladorCancelaEntrada1.p28 c3 :
-			Connectors.ComCancelaCNT bindings ControladorCancelaEntrada1.p9 =
-			Cancela1.p10 c4 : Connectors.PresencaCNT bindings SensorPresenca2.p11 =
-			ImpressoraTicket2.p12 c7 : Connectors.PresencaCNT bindings
-			SensorPresenca3.p11 = ImpressoraTicket3.p12 c5 :
-			Connectors.ConfImpTicketCNT bindings ImpressoraTicket2.p27 =
-			ControladorCancelaEntrada1.p28 c8 : Connectors.ConfImpTicketCNT bindings
-			ImpressoraTicket3.p27 = ControladorCancelaEntrada1.p28 c6 :
-			Connectors.ComCancelaCNT bindings ControladorCancelaEntrada1.p9 =
-			Cancela2.p10 c6 : Connectors.ComCancelaCNT bindings
-			ControladorCancelaEntrada1.p9 = Cancela3.p10
 		}
 	}
 	boundary component def ControladorCancelaEmergencialCP {
@@ -345,17 +276,14 @@ component def SensorPresencaCP {
 			
 			
 			
-		SensorPresenca1 : SensorPresencaCP {
-				using ports p11 : Ports.PresencaOPT {
-				}
-			}
-			BdVagaCP : BdVagaCP {
+		
+			BdVaga : BdVagaCP {
 				using ports p15 : Ports.TipoVagaOPT {
 				}
 				p17 : Ports.QtVagasOPT {
 				}
 			}
-			ControladorCorCP : ControladorCorCP {
+			ControladorCor : ControladorCorCP {
 				using ports p12 : Ports.PresencaIPT {
 				}
 				p16 : Ports.TipoVagaIPT {
@@ -363,20 +291,12 @@ component def SensorPresencaCP {
 				p13 : Ports.CorOPT {
 				}
 			}
-			LedVaga1 : LedVagaCP {
-				using ports P14 : Ports.CorIPT {
-				}
+			
+			
+			AndarID : AndarCP {
 			}
-			PainelLed1 : PainelLedCP {
-				using ports p18 : Ports.QtVagasIPT {
-				}
-			}
-			connectors:
-			c3 : Connectors.PresencaCNT bindings SensorPresenca1.p11 =
-			ControladorCorCP.p12 c1 : Connectors.TipoVagaCNT bindings
-			ControladorCorCP.p16 = BdVagaCP.p15 c2 : Connectors.QtVagasCNT bindings
-			BdVagaCP.p17 = PainelLed1.p18 c4 : Connectors.CorCNT bindings
-			ControladorCorCP.p13 = LedVaga1.P14
+			connectors: c1 : Connectors.TipoVagaCNT bindings
+			ControladorCor.p16 = BdVaga.p15  
 		}
 	}
 component def GerenciadorRelatorioCP {
@@ -454,6 +374,81 @@ component def ControladorCancelaEntradaCP {
 		ports p28 : Ports.ConfImpTicketIPT {
 		}
 		p9 : Ports.ComCancelaOPT {
+		}
+	}
+component def AndarCP {
+		configuration {
+			components:
+			SensorPresencaID : SensorPresencaCP {
+				using ports p11 : Ports.PresencaOPT {
+				}
+			}
+			LedVagaID : LedVagaCP {
+				using ports P14 : Ports.CorIPT {
+				}
+			}
+			PainelLed : PainelLedCP {
+				using ports p18 : Ports.QtVagasIPT {
+				}
+			}
+		}
+	}
+	component def SaidaCP {
+		configuration {
+			components:
+			CancelaCP : CancelaCP {
+				using ports p10 : Ports.ComCancelaIPT {
+				}
+			}
+			LeitorTicketCP : LeitorTicketCP {
+				using ports pcod : Ports.CodigoTicketIPT {
+				}
+				p1 : Ports.TicketOPT {
+				}
+			}
+			CaixaPagCP : CaixaPagCP {
+				using ports p6 : Ports.ValorPagIPT {
+				}
+				ppag : Ports.PagamentoIPT {
+				}
+				p7 : Ports.ConfPagOPT {
+				}
+			}
+		}
+	}
+	component def EntradaCP {
+		configuration {
+			components:
+			CancelaCP : CancelaCP {
+				using ports p10 : Ports.ComCancelaIPT {
+				}
+			}
+			ImpressoraTicketCP : ImpressoraTicketCP {
+				using ports p12 : Ports.PresencaIPT {
+				}
+				p1 : Ports.TicketOPT {
+				}
+				p27 : Ports.ConfImpTicketOPT {
+				}
+			}
+		}
+	}
+	component def GerenciadorCancelaEmergCP {
+		configuration {
+			components:
+			ControladorCancelaEmergencialCP : ControladorCancelaEmergencialCP {
+				using ports p10 : Ports.ComCancelaIPT {
+				}
+				p9 : Ports.ComCancelaOPT {
+				}
+			}
+			CancelaCP : CancelaCP {
+				using ports p10 : Ports.ComCancelaIPT {
+				}
+			}
+			connectors:
+			c1 : Connectors.ComCancelaCNT bindings ControladorCancelaEmergencialCP.p9 =
+			CancelaCP.p10
 		}
 	}
 }
