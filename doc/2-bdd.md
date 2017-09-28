@@ -1,8 +1,11 @@
-# BDD
+# BDD Estrutural
 
-bla
+Nessa parte do projeto é descrita a visão estrutural do software. Possuindo os diagramas de:
 
-bla
+* **Tipos**
+* **Portas**
+* **Conectores**
+* **Componentes**
 
-bla
+
 
