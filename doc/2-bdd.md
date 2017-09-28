@@ -1,8 +1,0 @@
-# BDD
-
-bla
-
-bla
-
-bla
-
