@@ -174,13 +174,13 @@ component def SensorPresencaCP {
 				using ports p10 : Ports.ComandoCancelaIPT {
 				}
 			}
-			EntradaCP : EntradaCP {
+			Entrada : EntradaCP [ 1, 6 ] {
 				using ports p27 : Ports.ConfImpTicketOPT {
 				}
 			}
-			GerenciadorVagaCP : GerenciadorVagaCP {
+			GerenciadorVaga : GerenciadorVagaCP {
 			}
-			BdUsoCP : BdUsoCP {
+			BdUso : BdUsoCP {
 				using ports p22 : Ports.TipoRelatorioIPT {
 				}
 				p24 : Ports.DateTimeIPT {
@@ -188,7 +188,7 @@ component def SensorPresencaCP {
 				p25 : Ports.LogUsoOPT {
 				}
 			}
-			SaidaCP : SaidaCP {
+			SaidaCP : SaidaCP [ 1, 8 ] {
 				using ports p29 : Ports.CodigoTicketOPT {
 				}
 			}
@@ -204,12 +204,23 @@ component def SensorPresencaCP {
 				using ports p7 : Ports.ConfPagOPT {
 				}
 			}
+			GerenciadorRelatorioCP : GerenciadorRelatorioCP {
+				using ports p23 : Ports.DateTimeOPT {
+				}
+				p21 : Ports.TipoRelatorioOPT {
+				}
+				p26 : Ports.LogUsoIPT {
+				}
+			}
 			connectors:
-			c3 : Connectors.ConfImpToComCancelaCNT bindings EntradaCP.p27 =
+			c3 : Connectors.ConfImpToComCancelaCNT bindings Entrada.p27 =
 			GerenciadorCancelaCP.p10 c1 : Connectors.CodigoTicketCNT bindings
 			SaidaCP.p29 = BdTicket.p30 c2 : Connectors.TicketToComCancelaCNT bindings
 			BdTicket.p1 = GerenciadorCancelaCP.p10 c4 : Connectors.ConfPagCNT bindings
-			GerenciadorPagamento.p7 = BdTicket.p7
+			GerenciadorPagamento.p7 = BdTicket.p7 c5 : Connectors.DateTimeCNT bindings
+			GerenciadorRelatorioCP.p23 = BdUso.p24 c6 : Connectors.TipoRelatorioCNT
+			bindings GerenciadorRelatorioCP.p21 = BdUso.p22 c7 : Connectors.LogUsoCNT
+			bindings BdUso.p25 = GerenciadorRelatorioCP.p26
 		}
 	}
 	component def PainelLedCP {
@@ -362,16 +373,27 @@ component def SensorPresencaCP {
 		}
 	}
 component def GerenciadorRelatorioCP {
+		ports p23 : Ports.DateTimeOPT [ 2, 2 ] {
+		}
+		p21 : Ports.TipoRelatorioOPT {
+		}
+		p26 : Ports.LogUsoIPT {
+		}
 		configuration {
 			components:
 			
 			
 			
 		
+			
+			GeradorRelatorioCP : GeradorRelatorioCP {
+				using ports p26 : Ports.LogUsoIPT {
+				}
+				p19 : Ports.RelatorioOPT {
+				}
+			}
 			InterfaceUsuarioRelatorio : InterfaceUsuarioRelatorioCP {
 				using ports p22 : Ports.TipoRelatorioIPT {
-				}
-				p24 : Ports.DateTimeIPT {
 				}
 				p24 : Ports.DateTimeIPT {
 				}
@@ -379,17 +401,10 @@ component def GerenciadorRelatorioCP {
 				}
 				p23 : Ports.DateTimeOPT {
 				}
-				p23 : Ports.DateTimeOPT {
-				}
 			}
-			GeradorRelatorioCP : GeradorRelatorioCP {
-				using ports p26 : Ports.LogUsoIPT {
-				}
-				p19 : Ports.RelatorioOPT {
-				}
-			}
-			connectors:
-			
+			delegations:
+			InterfaceUsuarioRelatorio.p21 to p21 InterfaceUsuarioRelatorio.p23 to p23
+			GeradorRelatorioCP.p26 to p26
 		}
 	}
 	component def InterfaceUsuarioRelatorioCP {
@@ -413,7 +428,7 @@ component def GerenciadorRelatorioCP {
 		p25 : Ports.LogUsoOPT {
 		}
 	}
-	component def GeradorRelatorioCP {
+	boundary component def GeradorRelatorioCP {
 		ports p26 : Ports.LogUsoIPT {
 		}
 		p19 : Ports.RelatorioOPT {
