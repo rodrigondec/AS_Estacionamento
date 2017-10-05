@@ -271,18 +271,7 @@ component def SensorPresencaCP {
 		ports p29 : Ports.CodigoTicketOPT {
 		}
 		configuration {
-			components:
-			
-			
-			
-			
-			
-		
-			
-			
-			
-			
-			
+			components:			
 		LeitorTicketCP : LeitorTicketCP {
 				using ports p30 : Ports.CodigoTicketIPT {
 				}
@@ -298,20 +287,7 @@ component def SensorPresencaCP {
 		}
 		
 	configuration {
-			components:
-			
-			
-		
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+			components:			
 		SensorPresenca : SensorPresencaCP {
 				using ports p11 : Ports.PresencaOPT {
 				}
