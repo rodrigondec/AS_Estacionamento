@@ -1,2 +1,2 @@
-![](/doc/img/BDD/componentes.png)
+![](/doc/img/Components.jpg)
 

@@ -1,2 +1,2 @@
-![](/doc/img/requisitos.png)
+![](/doc/img/Requirements Diagram.jpg)
 

@@ -1,2 +1,2 @@
-![](/doc/img/IBD/GerenciadorCancela.png)
+![](/doc/img/GerenciadorCancelaCP.jpg)
 

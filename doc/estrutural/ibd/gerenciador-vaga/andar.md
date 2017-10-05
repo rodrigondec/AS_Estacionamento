@@ -1,2 +1,2 @@
-![](/doc/img/IBD/AndarCP.png)
+![](/doc/img/AndarCP.jpg)
 

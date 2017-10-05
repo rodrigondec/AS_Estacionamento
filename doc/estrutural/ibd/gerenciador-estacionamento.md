@@ -1,2 +1,2 @@
-![](/doc/img/IBD/GerenciadorEstacionamento.png)
+![](/doc/img/GerenciadorEstacionamento.jpg)
 

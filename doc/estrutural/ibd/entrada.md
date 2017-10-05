@@ -1,2 +1,2 @@
-![](/doc/img/IBD/EntradaCP.png)
+![](/doc/img/EntradaCP.jpg)
 
