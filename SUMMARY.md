@@ -1,6 +1,7 @@
 # Summary
 
 * [Introdução](README.md)
+* [Requisitos](/doc/requisitos.md)
 * [Estrutural](doc/estrutural.md)
   * [BDD](doc/estrutural/bdd.md)
     * [Tipos](doc/estrutural/bdd/tipos.md)
