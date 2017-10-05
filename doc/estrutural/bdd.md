@@ -1,6 +1,6 @@
 # BDD
 
-Descrição dos:
+Diagramas de descrição com as seguintes partes do projeto:
 
 * [Tipos](/doc/estrutural/bdd/tipos.md)
 * [Portas](/doc/estrutural/bdd/portas.md)
