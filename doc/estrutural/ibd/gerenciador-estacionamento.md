@@ -1,12 +1,12 @@
 ![](/doc/img/GerenciadorEstacionamento.jpg)
 
----
+```
+<div class="pagebreak"></div>
+```
 
 # **GerenciadorEstacionamento**
 
 No **GerenciadorEstacionamento** temos componentes tanto simples, quanto compostos.
-
-
 
 ## Simples
 
