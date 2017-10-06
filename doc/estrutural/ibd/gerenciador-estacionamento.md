@@ -1,8 +1,12 @@
 ![](/doc/img/GerenciadorEstacionamento.jpg)
 
+---
+
 # **GerenciadorEstacionamento**
 
 No **GerenciadorEstacionamento** temos componentes tanto simples, quanto compostos.
+
+
 
 ## Simples
 
@@ -17,6 +21,8 @@ O **ControladorRelatorioCP** age como uma interface e filtro para o banco de dad
 ### ControladorTicketCP
 
 O **ControladorTicketCP** age tanto como uma interface para o banco de dados, quanto um processador de dados para o funcionamento das entradas, saídas e pagamentos.
+
+
 
 ## Compostos
 
