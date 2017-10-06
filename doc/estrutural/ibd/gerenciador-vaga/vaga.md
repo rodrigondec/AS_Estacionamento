@@ -1,0 +1,2 @@
+![](/doc/img/VagaCP.jpg)
+

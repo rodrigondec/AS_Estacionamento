@@ -16,6 +16,6 @@
     * [Gerenciador Pagamento](doc/estrutural/ibd/gerenciador-pagamento.md)
       * [Central Pagamento](doc/estrutural/ibd/gerenciador-pagamento/central-pagamento.md)
     * [Gerenciador Vaga](doc/estrutural/ibd/gerenciador-vaga.md)
-      * [Andar](doc/estrutural/ibd/gerenciador-vaga/andar.md)
+      * [Vaga](doc/estrutural/ibd/gerenciador-vaga/vaga.md)
     * [Gerenciador Relatorio](doc/estrutural/ibd/gerenciador-relatorio.md)
 

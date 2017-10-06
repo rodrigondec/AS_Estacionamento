@@ -1,2 +1,0 @@
-![](/doc/img/AndarCP.jpg)
-
