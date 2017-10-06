@@ -68,9 +68,6 @@
         <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Structural']/@ownedRepresentations[name='SysADL.IBD']"/>
         <target xmi:type="sysADL_Sintax:Configuration" href="My.sysadl#//@packages[name='Connectors']/@architectures.14/@composite"/>
       </ownedRepresentationDescriptors>
-      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" xmi:id="_VryeUKoQEeelqqLEseFWpQ" name="ControladorGeralCP" representation="_VsELIKoQEeelqqLEseFWpQ">
-        <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Structural']/@ownedRepresentations[name='SysADL.IBD']"/>
-      </ownedRepresentationDescriptors>
     </ownedViews>
     <ownedViews xmi:type="viewpoint:DView" xmi:id="_Nf1McJJJEeetBbttl3I_rw">
       <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Requirements']"/>
@@ -3445,18 +3442,18 @@
         </edges>
         <edges xmi:type="notation:Edge" xmi:id="_Iv4MUKSQEeebY537YPDwLw" type="4001" element="_IvGwQKSQEeebY537YPDwLw" source="_tJwpsJ9REeeXQvsjFtm1fQ" target="_0RnD4J9WEeeXQvsjFtm1fQ">
           <children xmi:type="notation:Node" xmi:id="_Iv4MVKSQEeebY537YPDwLw" type="6001">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Iv4MVaSQEeebY537YPDwLw" y="-10"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Iv4MVaSQEeebY537YPDwLw" x="-10" y="-2"/>
           </children>
           <children xmi:type="notation:Node" xmi:id="_Iv4zYKSQEeebY537YPDwLw" type="6002">
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Iv4zYaSQEeebY537YPDwLw" y="10"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Iv4zYaSQEeebY537YPDwLw" x="10" y="2"/>
           </children>
           <children xmi:type="notation:Node" xmi:id="_Iv4zYqSQEeebY537YPDwLw" type="6003">
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Iv4zY6SQEeebY537YPDwLw" y="10"/>
           </children>
           <styles xmi:type="notation:ConnectorStyle" xmi:id="_Iv4MUaSQEeebY537YPDwLw"/>
           <styles xmi:type="notation:FontStyle" xmi:id="_Iv4MUqSQEeebY537YPDwLw" fontName="Segoe UI" fontHeight="8"/>
-          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Iv4MU6SQEeebY537YPDwLw" points="[547, 318, 547, 318]$[679, 450, 679, 450]"/>
-          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Iv4zZKSQEeebY537YPDwLw" id="(0.5,0.5)"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Iv4MU6SQEeebY537YPDwLw" points="[4, 2, -80, -104]$[4, 106, -80, 0]$[28, 106, -56, 0]"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Iv4zZKSQEeebY537YPDwLw" id="(0.6309523809523809,0.9649122807017544)"/>
           <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Iv4zZaSQEeebY537YPDwLw" id="(0.5,0.5)"/>
         </edges>
         <edges xmi:type="notation:Edge" xmi:id="_SNen0KSTEeebY537YPDwLw" type="4001" element="_SMxdMKSTEeebY537YPDwLw" source="_tJwpsJ9REeeXQvsjFtm1fQ" target="_-DTMsJ_gEeelQotpWf1YvA">
@@ -7620,7 +7617,7 @@
         </ownedStyle>
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Structural']/@ownedRepresentations[name='SysADL.IBD']/@defaultLayer/@containerMappings[name='IBD.Config']/@subNodeMappings[name='IBD.Component%20']"/>
       </ownedDiagramElements>
-      <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_vzuloKoSEeelqqLEseFWpQ" name="&lt;&lt;component>>&#xA;EntradaCP:EntradaCP [1..1]" width="15" height="7" resizeKind="NSEW">
+      <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_vzuloKoSEeelqqLEseFWpQ" name="&lt;&lt;component>>&#xA;EntradaCP:EntradaCP [1..8]" width="15" height="7" resizeKind="NSEW">
         <target xmi:type="sysADL_Sintax:ComponentUse" href="My.sysadl#//@packages[name='Components']/@architectures.3/@composite/@components.5"/>
         <semanticElements xmi:type="sysADL_Sintax:ComponentUse" href="My.sysadl#//@packages[name='Components']/@architectures.3/@composite/@components.5"/>
         <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_vzvMsKoSEeelqqLEseFWpQ" name="p27 : ConfImpTicketOPT" outgoingEdges="_V8TfMKoTEeelqqLEseFWpQ" width="2" height="2" resizeKind="NSEW">
@@ -10109,36 +10106,5 @@
     <filterVariableHistory xmi:type="diagram:FilterVariableHistory" xmi:id="_O1Zn2aSKEeebY537YPDwLw"/>
     <activatedLayers xmi:type="description_1:Layer" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Structural']/@ownedRepresentations[name='SysADL.IBD']/@defaultLayer"/>
     <target xmi:type="sysADL_Sintax:Configuration" href="My.sysadl#//@packages[name='Connectors']/@architectures.14/@composite"/>
-  </diagram:DSemanticDiagram>
-  <diagram:DSemanticDiagram xmi:id="_VsELIKoQEeelqqLEseFWpQ" name="ControladorGeralCP">
-    <ownedAnnotationEntries xmi:type="description:AnnotationEntry" xmi:id="_VsELIaoQEeelqqLEseFWpQ" source="DANNOTATION_CUSTOMIZATION_KEY">
-      <data xmi:type="diagram:ComputedStyleDescriptionRegistry" xmi:id="_VsELIqoQEeelqqLEseFWpQ"/>
-    </ownedAnnotationEntries>
-    <ownedAnnotationEntries xmi:type="description:AnnotationEntry" xmi:id="_VsdzwKoQEeelqqLEseFWpQ" source="GMF_DIAGRAMS">
-      <data xmi:type="notation:Diagram" xmi:id="_VsdzwaoQEeelqqLEseFWpQ" type="Sirius" element="_VsELIKoQEeelqqLEseFWpQ" measurementUnit="Pixel">
-        <children xmi:type="notation:Node" xmi:id="_Vsea0KoQEeelqqLEseFWpQ" type="2002" element="_VsELI6oQEeelqqLEseFWpQ">
-          <children xmi:type="notation:Node" xmi:id="_VsfB4KoQEeelqqLEseFWpQ" type="5006"/>
-          <children xmi:type="notation:Node" xmi:id="_Vsfo8KoQEeelqqLEseFWpQ" type="7001">
-            <styles xmi:type="notation:SortingStyle" xmi:id="_Vsfo8aoQEeelqqLEseFWpQ"/>
-            <styles xmi:type="notation:FilteringStyle" xmi:id="_Vsfo8qoQEeelqqLEseFWpQ"/>
-          </children>
-          <styles xmi:type="notation:ShapeStyle" xmi:id="_Vsea0aoQEeelqqLEseFWpQ" fontName="Segoe UI" fontHeight="8"/>
-          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Vsea0qoQEeelqqLEseFWpQ" y="48" height="364"/>
-        </children>
-        <styles xmi:type="notation:DiagramStyle" xmi:id="_VsdzwqoQEeelqqLEseFWpQ"/>
-      </data>
-    </ownedAnnotationEntries>
-    <ownedDiagramElements xmi:type="diagram:DNodeContainer" xmi:id="_VsELI6oQEeelqqLEseFWpQ" name=" ibd [Component] ControladorGeralCP" width="60" height="40">
-      <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
-      <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
-      <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
-      <ownedStyle xmi:type="diagram:FlatContainerStyle" xmi:id="_VsELNKoQEeelqqLEseFWpQ" showIcon="false" labelAlignment="LEFT" borderSize="1" borderSizeComputationExpression="1" foregroundColor="255,255,255">
-        <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Structural']/@ownedRepresentations[name='SysADL.IBD']/@defaultLayer/@containerMappings[name='IBD.Config']/@style"/>
-      </ownedStyle>
-      <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Structural']/@ownedRepresentations[name='SysADL.IBD']/@defaultLayer/@containerMappings[name='IBD.Config']"/>
-    </ownedDiagramElements>
-    <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Structural']/@ownedRepresentations[name='SysADL.IBD']"/>
-    <filterVariableHistory xmi:type="diagram:FilterVariableHistory" xmi:id="_VsELNaoQEeelqqLEseFWpQ"/>
-    <activatedLayers xmi:type="description_1:Layer" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Structural']/@ownedRepresentations[name='SysADL.IBD']/@defaultLayer"/>
   </diagram:DSemanticDiagram>
 </xmi:XMI>

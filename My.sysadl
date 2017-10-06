@@ -200,7 +200,7 @@ component def SensorPresencaCP {
 				p18 : Ports.QtVagasIPT {
 				}
 			}
-			EntradaCP : EntradaCP {
+			EntradaCP : EntradaCP [ 1, 8 ] {
 				using ports p27 : Ports.ConfImpTicketOPT {
 				}
 				p1 : Ports.TicketOPT {
