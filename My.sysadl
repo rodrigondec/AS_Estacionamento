@@ -257,7 +257,7 @@ import Ports;
 		ports p10 : Ports.ComandoCancelaIPT {
 		}
 	}
-	boundary component def ImpressoraTicketCP {
+	component def ImpressoraTicketCP {
 		ports p12 : Ports.PresencaIPT {
 		}
 		p1 : Ports.TicketOPT {
@@ -278,7 +278,7 @@ import Ports;
 		p7 : Ports.ConfPagOPT {
 		}
 	}
-	boundary component def CalculadorPrecoPagamentoCP {
+	component def CalculadorPrecoPagamentoCP {
 		ports p5 : Ports.ValorPagOPT {
 		}
 		p2 : Ports.TicketIPT {
@@ -534,6 +534,8 @@ component def ControladorTicketCP {
 		}
 		p7 : Ports.ConfPagIPT {
 		}
+	configuration {
+		}
 	}
 	
 	component def ControladorVagaCP {
@@ -565,53 +567,10 @@ component def ControladorRelatorioCP {
 		}
 		p24 : Ports.DateTimeIPT [ 2, 2 ] {
 		}
-	}
-activity def BDVagaAC {
-		inParameters {
-			Presenca : SysADL.types.Presenca
-		}
-		outParameters {
-			Vaga : SysADL.types.Vaga
-		, QTVagas : SysADL.types.Int
-		}
-		acbody body {
-			actions : ActionUse AlterarVaga {
-				definition AlterarVaga pinIn {
-					presenca : SysADL.types.Presenca
-				}
+	configuration {
+			components:
+			BDTicketCP : BDTicketCP {
 			}
-			, ActionUse CalcularVagas {
-				definition CalcularVagas pinIn {
-					qtvagas : SysADL.types.Int
-				}
-			}
-			flows : ActivityDelegation {
-				source Presenca target "AlterarVaga.presenca"
-			}, ActivityDelegation {
-				source Vaga target AlterarVaga
-			}
-		, ActivityDelegation {
-				source QTVagas target "CalcularVagas.qtvagas"
-			}, ActivityDelegation {
-				source QTVagas target CalcularVagas
-			}
-		}
-	}
-	action def AlterarVaga ( Presenca : SysADL.types.Presenca ) : SysADL.types.Vaga {
-		postCondition AtualizarVagaEQ ( ) {
-			delegations:
-			ActivityDelegation {
-				source Presenca target "AtualizarVagaEQ.Presenca"
-			}
-		}
-	}
-	
-	ConstraintDef AtualizarVagaEQ {
-		paramIn {
-			Presenca : SysADL.types.Presenca
-		}
-		paramOut {
-			Vaga : SysADL.types.Vaga
 		}
 	}
 	activity def ControladorCorAC {
@@ -682,21 +641,7 @@ action def GerarCor ( Vaga : SysADL.types.Vaga ) : SysADL.types.CorLed {
 			}
 		}
 	}
-	activity def SensorPrecencaAC {
-		outParameters {
-			Presenca : SysADL.types.Presenca
-		}
-		acbody body {
-			actions : ActionUse IdentificarPresenca {
-				definition IdentificarPresenca pinIn {
-					pre : SysADL.types.Boolean
-				}
-			}
-			flows : ActivityDelegation {
-				source Presenca target IdentificarPresenca
-			}
-		}
-	}
+	
 	activity def LedVagaAC {
 		inParameters {
 			Cor : SysADL.types.CorLed
@@ -717,11 +662,7 @@ action def GerarCor ( Vaga : SysADL.types.Vaga ) : SysADL.types.CorLed {
 	action def AtualizarPainel ( QTVagas : SysADL.types.Int ) :
 	SysADL.types.Boolean {
 	}
-	action def IdentificarPresenca ( Presenca : SysADL.types.Boolean ) :
-	SysADL.types.Presenca {
-		postCondition BooleanToPresenca ( ) {
-		}
-	}
+	
 	boundary component def BDVagaCP {
 		ports p17 : Ports.QtVagasOPT {
 		}
@@ -730,8 +671,7 @@ action def GerarCor ( Vaga : SysADL.types.Vaga ) : SysADL.types.CorLed {
 		p32 : Ports.VagaOPT {
 		}
 	}
-	action def CalcularVagas ( QTVagas : SysADL.types.Int ) : SysADL.types.Int {
-	}
+	
 	action def ImprimirTicket ( Presenca : SysADL.types.Presenca ) :
 	SysADL.types.Ticket {
 	}
@@ -748,14 +688,7 @@ action def GerarCor ( Vaga : SysADL.types.Vaga ) : SysADL.types.CorLed {
 			ConfImp : SysADL.types.ConfImpTicket
 		}
 	}
-	ConstraintDef BooleanToPresenca {
-		paramIn {
-			Bool : SysADL.types.Boolean
-		}
-		paramOut {
-			Presenca : SysADL.types.Presenca
-		}
-	}
+	
 	ConstraintDef VagaToCor {
 		paramIn {
 			Vaga : SysADL.types.Vaga
@@ -764,34 +697,9 @@ action def GerarCor ( Vaga : SysADL.types.Vaga ) : SysADL.types.CorLed {
 			Cor : SysADL.types.CorLed
 		}
 	}
-	activity def LeitorTicketAC {
-		outParameters {
-			CodigoTicket : SysADL.types.CodBarras
-		}
-		acbody body {
-			actions : ActionUse LerTicket {
-				definition LerTicket pinIn {
-					Ticket : SysADL.types.Ticket
-				}
-			}
-			flows : ActivityDelegation {
-				source CodigoTicket target LerTicket
-			}
-		}
-	}
-	action def LerTicket ( Ticket : SysADL.types.Ticket ) :
-	SysADL.types.CodBarras {
-		postCondition TicketToCodBarras ( ) {
-		}
-	}
-	ConstraintDef TicketToCodBarras {
-		paramIn {
-			Ticket : SysADL.types.Ticket
-		}
-		paramOut {
-			CodigoTicket : SysADL.types.CodBarras
-		}
-	}
+	
+	
+	
 	activity def CaixaPagamentoAC {
 		inParameters {
 			Valor : SysADL.types.ValorPag
@@ -860,57 +768,7 @@ action def GerarCor ( Vaga : SysADL.types.Vaga ) : SysADL.types.CorLed {
 			Valor : SysADL.types.ValorPag
 		}
 	}
-	activity def ControladorTicketAC {
-		inParameters {
-			CodigoTicket : SysADL.types.CodBarras, ConfPag : SysADL.types.ConfPag,
-			InTicket : SysADL.types.Ticket
-		}
-		outParameters {
-			OutTicket : SysADL.types.Ticket
-		}
-		acbody body {
-			actions : ActionUse AtualizarTicket {
-				definition AtualizarTicket pinIn {
-					ConfPag : SysADL.types.ConfPag
-				}
-			}, ActionUse PegarTicket {
-				definition PegarTicket pinIn {
-					CodigoTicket : SysADL.types.CodBarras
-				}
-			}, ActionUse SalvarTicket {
-				definition SalvarTicket pinIn {
-					InTicket : SysADL.types.Ticket
-				}
-			}
-			flows : ActivityDelegation {
-				source CodigoTicket target "PegarTicket.CodigoTicket"
-			}, ActivityDelegation {
-				source ConfPag target "AtualizarTicket.ConfPag"
-			}, ActivityDelegation {
-				source InTicket target "SalvarTicket.InTicket"
-			}, ActivityDelegation {
-				source OutTicket target PegarTicket
-			}
-		}
-	}
-	action def SalvarTicket ( InTicket : SysADL.types.Ticket ) :
-	SysADL.types.Boolean {
-	}
-	action def PegarTicket ( CodigoTicket : SysADL.types.CodBarras ) :
-	SysADL.types.Ticket {
-		postCondition CodBarrasToTicket ( ) {
-		}
-	}
-	action def AtualizarTicket ( ConfPag : SysADL.types.ConfPag ) :
-	SysADL.types.Boolean {
-	}
-	ConstraintDef CodBarrasToTicket {
-		paramIn {
-			CodigoTicket : SysADL.types.CodBarras
-		}
-		paramOut {
-			Ticket : SysADL.types.Ticket
-		}
+	boundary component def BDTicketCP {
 	}
 }
 package Connectors {
