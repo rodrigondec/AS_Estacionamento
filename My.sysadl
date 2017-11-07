@@ -49,9 +49,7 @@ datatype ValorPag {
 enum TipoVaga {
 		Normal, Idoso, Deficiente
 	}
-	enum StatusVaga {
-		"Disponível", Ocupada
-	}
+	
 enum TipoRelatorio {
 		RelatorioOcupacao, RelatorioFinanceiro
 	}
@@ -70,6 +68,9 @@ enum StatusTicket {
 	}
 datatype CorLed {
 		attributes cor : Cor id_led : Int
+	}
+datatype Vaga {
+		attributes id_vaga : Int tipo : TipoVaga ocupada : Boolean
 	}
 }
 Requirement AbrirCancelaEletronica ( 5.0 ) {
@@ -146,11 +147,11 @@ import Ports;
 	import SysADL.types;
 	component def ControladorCorCP {
 		
-	ports p12 : Ports.PresencaIPT {
-		}
-		p16 : Ports.TipoVagaIPT {
-		}
+	ports 
+		
 		p13 : Ports.CorLedOPT {
+		}
+	p33 : Ports.VagaIPT {
 		}
 	}
 component def SensorPresencaCP {
@@ -195,10 +196,8 @@ component def SensorPresencaCP {
 				}
 			}
 			GerenciadorVagaCP : GerenciadorVagaCP {
-				using ports p16 : Ports.TipoVagaIPT {
-				}
-				p18 : Ports.QtVagasIPT {
-				}
+				using ports 
+				
 			}
 			EntradaCP : EntradaCP [ 1, 8 ] {
 				using ports p27 : Ports.ConfImpTicketOPT {
@@ -217,12 +216,7 @@ component def SensorPresencaCP {
 				p7 : Ports.ConfPagIPT {
 				}
 			}
-			ControladorVagaCP : ControladorVagaCP {
-				using ports p17 : Ports.QtVagasOPT {
-				}
-				p15 : Ports.TipoVagaOPT {
-				}
-			}
+			
 			ControladorRelatorioCP : ControladorRelatorioCP {
 				using ports p22 : Ports.TipoRelatorioIPT {
 				}
@@ -237,10 +231,7 @@ component def SensorPresencaCP {
 			c2 : Connectors.ConfPagCNT bindings GerenciadorPagamento.p7 =
 			ControladorTicketCP.p7 c3 : Connectors.TicketCNT bindings EntradaCP.p1 =
 			ControladorTicketCP.p2 c4 : Connectors.TicketToComCancelaCNT bindings
-			ControladorTicketCP.p1 = GerenciadorCancelaCP.p10 c6 :
-			Connectors.QtVagasCNT bindings ControladorVagaCP.p17 =
-			GerenciadorVagaCP.p18 c7 : Connectors.TipoVagaCNT bindings
-			ControladorVagaCP.p15 = GerenciadorVagaCP.p16 c8 :
+			ControladorTicketCP.p1 = GerenciadorCancelaCP.p10   c8 :
 			Connectors.TipoRelatorioCNT bindings GerenciadorRelatorioCP.p21 =
 			ControladorRelatorioCP.p22 c10 : Connectors.LogUsoCNT bindings
 			ControladorRelatorioCP.p25 = GerenciadorRelatorioCP.p26 c9 :
@@ -329,10 +320,8 @@ component def SensorPresencaCP {
 	}
 	
 	component def GerenciadorVagaCP {
-		ports p16 : Ports.TipoVagaIPT {
-		}
-		p18 : Ports.QtVagasIPT {
-		}
+		ports 
+		
 		configuration {
 			components:
 			
@@ -342,14 +331,7 @@ component def SensorPresencaCP {
 			
 		
 			
-			ControladorCor : ControladorCorCP {
-				using ports p12 : Ports.PresencaIPT {
-				}
-				p16 : Ports.TipoVagaIPT {
-				}
-				p13 : Ports.CorLedOPT {
-				}
-			}
+			
 			
 			
 			
@@ -364,11 +346,25 @@ component def SensorPresencaCP {
 				using ports p18 : Ports.QtVagasIPT {
 				}
 			}
-			connectors:   
-		c1 : Connectors.PresencaCNT bindings vagas.p11 = ControladorCor.p12  c2 :
-			Connectors.CorLedCNT bindings ControladorCor.p13 = vagas.p14 
-		delegations:
-			ControladorCor.p16 to p16 PainelLedCP.p18 to p18
+			ControladorVagaCP : ControladorVagaCP {
+				using ports p17 : Ports.QtVagasOPT {
+				}
+				p12 : Ports.PresencaIPT {
+				}
+				p32 : Ports.VagaOPT {
+				}
+			}
+			ControladorCorCP : ControladorCorCP {
+				using ports p13 : Ports.CorLedOPT {
+				}
+				p33 : Ports.VagaIPT {
+				}
+			}
+			connectors:
+			c4 : Connectors.QtVagasCNT bindings ControladorVagaCP.p17 = PainelLedCP.p18
+			c1 : Connectors.PresencaCNT bindings vagas.p11 = ControladorVagaCP.p12 c2 :
+			Connectors.VagaCNT bindings ControladorVagaCP.p32 = ControladorCorCP.p33 c3
+			: Connectors.CorLedCNT bindings ControladorCorCP.p13 = vagas.p14
 		}
 	}
 component def GerenciadorRelatorioCP {
@@ -528,7 +524,10 @@ component def ControladorTicketCP {
 	component def ControladorVagaCP {
 		ports p17 : Ports.QtVagasOPT {
 		}
-		p15 : Ports.TipoVagaOPT {
+		
+	p12 : Ports.PresencaIPT {
+		}
+		p32 : Ports.VagaOPT {
 		}
 	}
 component def ControladorRelatorioCP {
@@ -538,6 +537,71 @@ component def ControladorRelatorioCP {
 		}
 		p24 : Ports.DateTimeIPT [ 2, 2 ] {
 		}
+	}
+activity def ControladorVagaAC {
+		inParameters {
+			pre : SysADL.types.Presenca
+		}
+		outParameters {
+			data : SysADL.types.Vaga
+		}
+		acbody body {
+			actions : ActionUse AlterarVaga {
+				definition AlterarVaga pinIn {
+					presenca : SysADL.types.Presenca
+				}
+			}
+			flows : ActivityDelegation {
+				source pre target "AlterarVaga.presenca"
+			}, ActivityDelegation {
+				source data target AlterarVaga
+			}
+		}
+	}
+	action def AlterarVaga ( pre : SysADL.types.Presenca ) : SysADL.types.Vaga {
+		postCondition AttVagaEQ ( ) {
+			delegations:
+			ActivityDelegation {
+				source pre target "AttVagaEQ.pre"
+			}
+		}
+	}
+	activity def VagaAC {
+		inParameters {
+			cor : SysADL.types.CorLed
+		}
+		outParameters {
+			pre : SysADL.types.Presenca
+		}
+		acbody body {
+		actions : ActionUse NotificarPresenca {
+				definition NotificarPresenca
+			}
+			, ActionUse AlterarLed {
+				definition AlterarLed pinIn {
+					cor : SysADL.types.CorLed
+				}
+			}
+			flows : ActivityDelegation {
+				source pre target NotificarPresenca
+			}
+		, ActivityDelegation {
+				source cor target "AlterarLed.cor"
+			}
+		}
+	}
+	ConstraintDef AttVagaEQ {
+		paramIn {
+			pre : SysADL.types.Presenca
+		}
+		paramOut {
+			vaga : SysADL.types.Vaga
+		}
+	}
+action def AlterarLed ( cor : SysADL.types.CorLed ) : SysADL.types.CorLed {
+	}
+	action def NotificarPresenca ( cor : SysADL.types.CorLed ) :
+	SysADL.types.Presenca {
 	}
 }
 package Connectors {
@@ -664,6 +728,13 @@ connector def TicketToComCancelaCNT {
 		}
 		flows SysADL.types.CodBarras from p29 to p31
 	}
+connector def VagaCNT {
+		participants ~ p32 : Ports.VagaOPT {
+		}
+		~ p33 : Ports.VagaIPT {
+		}
+		flows SysADL.types.Vaga from p32 to p33
+	}
 }
 package Ports {
 import SysADL.types;
@@ -758,5 +829,11 @@ port def ConfImpTicketIPT {
 	}
 port def CodigoTicketOPT {
 		flow out SysADL.types.CodBarras
+	}
+port def VagaIPT {
+		flow in SysADL.types.Vaga
+	}
+	port def VagaOPT {
+		flow out SysADL.types.Vaga
 	}
 }
