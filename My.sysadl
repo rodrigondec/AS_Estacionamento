@@ -543,7 +543,7 @@ activity def ControladorVagaAC {
 			pre : SysADL.types.Presenca
 		}
 		outParameters {
-			data : SysADL.types.Vaga
+			vaga : SysADL.types.Vaga
 		}
 		acbody body {
 			actions : ActionUse AlterarVaga {
@@ -554,7 +554,7 @@ activity def ControladorVagaAC {
 			flows : ActivityDelegation {
 				source pre target "AlterarVaga.presenca"
 			}, ActivityDelegation {
-				source data target AlterarVaga
+				source vaga target AlterarVaga
 			}
 		}
 	}

@@ -10307,7 +10307,7 @@
           </ownedStyle>
           <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='BDD.Behavior']/@defaultLayer/@containerMappings[name='BDD.Behavior.Self']/@subContainerMappings[name='BDD.Activity']/@subNodeMappings[name='BDD.Activity.InParams']"/>
         </ownedElements>
-        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_tSkvUMA-EeedesMyaKeh0g" name="out data : Vaga">
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_tSkvUMA-EeedesMyaKeh0g" name="out vaga : Vaga">
           <target xmi:type="sysADL_Sintax:Pin" href="My.sysadl#//@packages[name='Components']/@architectures.23/@outParameters.0"/>
           <semanticElements xmi:type="sysADL_Sintax:Pin" href="My.sysadl#//@packages[name='Components']/@architectures.23/@outParameters.0"/>
           <ownedStyle xmi:type="diagram:Dot" xmi:id="_tSnyoMA-EeedesMyaKeh0g" showIcon="false">
@@ -10629,7 +10629,7 @@
         </ownedStyle>
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='SysADL.AD']/@defaultLayer/@containerMappings[name='ADNew.Self']/@borderedNodeMappings[name='ADNew.Pins.In']"/>
       </ownedBorderedNodes>
-      <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_tTGTwMA-EeedesMyaKeh0g" name="data : Vaga" outgoingEdges="_1f-1oMA-EeedesMyaKeh0g" width="3" height="3" resizeKind="NSEW">
+      <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_tTGTwMA-EeedesMyaKeh0g" name="vaga : Vaga" outgoingEdges="_1f-1oMA-EeedesMyaKeh0g" width="3" height="3" resizeKind="NSEW">
         <target xmi:type="sysADL_Sintax:Pin" href="My.sysadl#//@packages[name='Components']/@architectures.23/@outParameters.0"/>
         <semanticElements xmi:type="sysADL_Sintax:Pin" href="My.sysadl#//@packages[name='Components']/@architectures.23/@outParameters.0"/>
         <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
