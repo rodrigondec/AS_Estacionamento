@@ -73,6 +73,9 @@ datatype CorLed {
 datatype Vaga {
 		attributes id_vaga : Int tipo : TipoVaga ocupada : Boolean
 	}
+datatype LeitTicket {
+		attributes codigo : CodBarras id_leitora : Int
+	}
 }
 Requirement AbrirCancelaEletronica ( 5.0 ) {
 	text =
@@ -172,71 +175,84 @@ import Ports;
 			
 		
 		
-		GerenciadorCancelaCP : GerenciadorCancelaCP {
-				using ports p10 : Ports.ComandoCancelaIPT {
-				}
-			}
+		
 			
 			
 			
-			SaidaCP : SaidaCP [ 1, 8 ] {
-				using ports p29 : Ports.CodigoTicketOPT {
-				}
-			}
-			
-			
-			GerenciadorRelatorioCP : GerenciadorRelatorioCP {
-				using ports p23 : Ports.DateTimeOPT {
-				}
-				p21 : Ports.TipoRelatorioOPT {
-				}
-				p26 : Ports.LogUsoIPT {
-				}
-			}
 			GerenciadorVagaCP : GerenciadorVagaCP {
 				using ports 
 				
 			}
-			EntradaCP : EntradaCP [ 1, 8 ] {
-				using ports p27 : Ports.ConfImpTicketOPT {
-				}
-				p1 : Ports.TicketOPT {
+			
+			
+			GerenciadorCancelaCP : GerenciadorCancelaCP {
+				using ports Comando : Ports.ComandoCancelaIPT {
 				}
 			}
-			
-			ControladorTicketCP : ControladorTicketCP {
-				using ports p30 : Ports.CodigoTicketIPT {
+			EntradaCP : EntradaCP {
+				using ports ConfImp : Ports.ConfImpTicketOPT {
 				}
-				p1 : Ports.TicketOPT {
-				}
-				p2 : Ports.TicketIPT {
-				}
-				p7 : Ports.ConfPagIPT {
+				Ticket : Ports.TicketOPT {
 				}
 			}
-			
-			
+			SaidaCP : SaidaCP {
+				using ports LeitTicket : Ports.CodigoTicketOPT {
+				}
+			}
 			GerenciadorPagamentoCP : GerenciadorPagamentoCP {
-				using ports p7 : Ports.ConfPagOPT {
+				using ports ConfPag : Ports.ConfPagOPT {
 				}
-				p29 : Ports.CodigoTicketOPT {
+				CodTicket : Ports.CodigoTicketOPT {
 				}
-				p2 : Ports.TicketIPT {
+				Ticket : Ports.TicketIPT {
 				}
 			}
-			BDTicketCP : BDTicketCP {
+			GerenciadorRelatorioCP : GerenciadorRelatorioCP {
+				using ports p21 : Ports.TipoRelatorioOPT {
+				}
+				p26 : Ports.LogUsoIPT {
+				}
+				DataFiltro : Ports.DataFiltroOPT {
+				}
 			}
-			connectors: c5 : Connectors.ConfImpToComCancelaCNT bindings
-			EntradaCP.p27 = GerenciadorCancelaCP.p10    
-		c1 : Connectors.CodigoTicketCNT bindings SaidaCP.p29 = ControladorTicketCP.p30
-			 c3 : Connectors.TicketCNT bindings EntradaCP.p1 =
-			ControladorTicketCP.p2 c4 : Connectors.TicketToComCancelaCNT bindings
-			ControladorTicketCP.p1 = GerenciadorCancelaCP.p10     
-		c2 : Connectors.CodigoTicketCNT bindings GerenciadorPagamentoCP.p29 =
-			ControladorTicketCP.p30 c6 : Connectors.ConfPagCNT bindings
-			GerenciadorPagamentoCP.p7 = ControladorTicketCP.p7 c7 :
-			Connectors.TicketCNT bindings ControladorTicketCP.p1 =
-			GerenciadorPagamentoCP.p2
+			ControladorGeralCP : ControladorGeralCP {
+				using ports CodTicket : Ports.CodigoTicketIPT {
+				}
+				TicketOut : Ports.TicketOPT {
+				}
+				TicketIn : Ports.TicketIPT {
+				}
+				ConfPag : Ports.ConfPagIPT {
+				}
+				LeitTicket : Ports.LeitTicketIPT {
+				}
+				ConfImp : Ports.ConfImpTicketIPT {
+				}
+				Comando : Ports.ComandoCancelaOPT {
+				}
+				TipoRelat : Ports.TipoRelatorioIPT {
+				}
+				DataFiltro : Ports.DataFiltroIPT {
+				}
+				Uso : Ports.LogUsoOPT {
+				}
+			}
+			connectors:
+			LeitTicket : Connectors.LeitTicketCNT bindings SaidaCP.LeitTicket =
+			ControladorGeralCP.LeitTicket ConfImp : Connectors.ConfImpTicketCNT
+			bindings EntradaCP.ConfImp = ControladorGeralCP.ConfImp Ticket :
+			Connectors.TicketCNT bindings EntradaCP.Ticket =
+			ControladorGeralCP.TicketIn Ticket : Connectors.TicketCNT bindings
+			ControladorGeralCP.TicketOut = GerenciadorPagamentoCP.Ticket ConfPag :
+			Connectors.ConfPagCNT bindings GerenciadorPagamentoCP.ConfPag =
+			ControladorGeralCP.ConfPag CodTicket : Connectors.CodigoTicketCNT bindings
+			GerenciadorPagamentoCP.CodTicket = ControladorGeralCP.CodTicket Comando :
+			Connectors.ComCancelaCNT bindings ControladorGeralCP.Comando =
+			GerenciadorCancelaCP.Comando DadosUso : Connectors.LogUsoCNT bindings
+			ControladorGeralCP.Uso = GerenciadorRelatorioCP.p26 TipoRelat :
+			Connectors.TipoRelatorioCNT bindings GerenciadorRelatorioCP.p21 =
+			ControladorGeralCP.TipoRelat DataFiltro : Connectors.DataFiltroCNT bindings
+			GerenciadorRelatorioCP.DataFiltro = ControladorGeralCP.DataFiltro
 		}
 	}
 	component def PainelLedCP {
@@ -258,7 +274,7 @@ import Ports;
 	}
 	boundary component def LeitorTicketCP {
 		ports 
-		CodTicket : Ports.CodigoTicketOPT {
+		LeitTicket : Ports.LeitTicketOPT {
 		}
 	}
 	component def ValidadorPagamentoCP {
@@ -277,18 +293,18 @@ import Ports;
 		}
 	}
 	component def SaidaCP {
-		ports CodTicket : Ports.CodigoTicketOPT {
+		ports LeitTicket : Ports.LeitTicketOPT {
 		}
 		configuration {
 			components:			
 		
 			LeitorTicketCP : LeitorTicketCP {
-				using ports p29 : Ports.CodigoTicketOPT {
+				using ports CodTicket : Ports.LeitTicketOPT {
 				}
 			}
 			delegations:
 			
-		LeitorTicketCP.p29 to CodTicket
+		LeitorTicketCP.CodTicket to LeitTicket
 		}
 	}
 	component def EntradaCP {
@@ -300,22 +316,22 @@ import Ports;
 	configuration {
 			components:			
 		SensorPresenca : SensorPresencaCP {
-				using ports p11 : Ports.PresencaOPT {
+				using ports Presenca : Ports.PresencaOPT {
 				}
 			}
 			ImpressoraTicket : ImpressoraTicketCP {
-				using ports p12 : Ports.PresencaIPT {
+				using ports Presenca : Ports.PresencaIPT {
 				}
-				p1 : Ports.TicketOPT {
+				Ticket : Ports.TicketOPT {
 				}
-				p27 : Ports.ConfImpTicketOPT {
+				ConfImp : Ports.ConfImpTicketOPT {
 				}
 			}
 		connectors:
-			c1 : Connectors.PresencaCNT bindings SensorPresenca.p11 =
-			ImpressoraTicket.p12 delegations:
-			ImpressoraTicket.p27 to ConfImp
-		ImpressoraTicket.p1 to Ticket
+			c1 : Connectors.PresencaCNT bindings SensorPresenca.Presenca =
+			ImpressoraTicket.Presenca delegations:
+			ImpressoraTicket.ConfImp to ConfImp
+		ImpressoraTicket.Ticket to Ticket
 		}
 	}
 	
@@ -371,12 +387,15 @@ import Ports;
 		}
 	}
 component def GerenciadorRelatorioCP {
-		ports p23 : Ports.DateTimeOPT [ 2, 2 ] {
-		}
+		ports 
 		p21 : Ports.TipoRelatorioOPT {
 		}
 		p26 : Ports.LogUsoIPT {
 		}
+		
+	DataFiltro : Ports.DataFiltroOPT {
+		}
+		
 		configuration {
 			components:
 			
@@ -384,23 +403,23 @@ component def GerenciadorRelatorioCP {
 			
 		
 			
+			
+			
+			InterfaceUsuarioRelatorioCP : InterfaceUsuarioRelatorioCP {
+				using ports p21 : Ports.TipoRelatorioOPT {
+				}
+				DataFiltro : Ports.DataFiltroOPT {
+				}
+			}
 			GeradorRelatorioCP : GeradorRelatorioCP {
 				using ports p26 : Ports.LogUsoIPT {
 				}
 				p19 : Ports.RelatorioOPT {
 				}
 			}
-			InterfaceUsuarioRelatorio : InterfaceUsuarioRelatorioCP {
-				using ports 
-				
-				p21 : Ports.TipoRelatorioOPT {
-				}
-				p23 : Ports.DateTimeOPT {
-				}
-			}
 			delegations:
-			InterfaceUsuarioRelatorio.p21 to p21 InterfaceUsuarioRelatorio.p23 to p23
-			GeradorRelatorioCP.p26 to p26
+			InterfaceUsuarioRelatorioCP.DataFiltro to DataFiltro
+			InterfaceUsuarioRelatorioCP.p21 to p21 GeradorRelatorioCP.p26 to p26
 		}
 	}
 	boundary component def InterfaceUsuarioRelatorioCP {
@@ -410,7 +429,8 @@ component def GerenciadorRelatorioCP {
 		p21 : Ports.TipoRelatorioOPT {
 		}
 		
-		p23 : Ports.DateTimeOPT [ 2, 2 ] {
+		
+	DataFiltro : Ports.DataFiltroOPT {
 		}
 	}
 	
@@ -470,25 +490,25 @@ component def GerenciadorPagamentoCP {
 		configuration {
 		components:
 			CalculadorPrecoPagamentoCP : CalculadorPrecoPagamentoCP {
-				using ports p5 : Ports.ValorPagOPT {
+				using ports ValorTicket : Ports.ValorPagOPT {
 				}
-				p2 : Ports.TicketIPT {
+				Ticket : Ports.TicketIPT {
 				}
 			}
 			
 			CentralPagamentoCP : CentralPagamentoCP {
-				using ports p7 : Ports.ConfPagOPT {
+				using ports ConfPag : Ports.ConfPagOPT {
 				}
-				p6 : Ports.ValorPagIPT {
+				ValorTicket : Ports.ValorPagIPT {
 				}
-				p29 : Ports.CodigoTicketOPT {
+				CodTicket : Ports.CodigoTicketOPT {
 				}
 			}
 			connectors:
-			  c1 : Connectors.ValorPagCNT bindings CalculadorPrecoPagamentoCP.p5 =
-			CentralPagamentoCP.p6 delegations:
-			CalculadorPrecoPagamentoCP.p2 to Ticket CentralPagamentoCP.p29 to CodTicket
-			CentralPagamentoCP.p7 to ConfPag
+			  ValorTicket : Connectors.ValorPagCNT bindings CalculadorPrecoPagamentoCP.ValorTicket =
+			CentralPagamentoCP.ValorTicket delegations:
+			CalculadorPrecoPagamentoCP.Ticket to Ticket CentralPagamentoCP.CodTicket to CodTicket
+			CentralPagamentoCP.ConfPag to ConfPag
 		}
 	}
 component def CentralPagamentoCP {
@@ -504,13 +524,10 @@ component def CentralPagamentoCP {
 			
 			
 			LeitorTicketCP : LeitorTicketCP {
-				using ports p29 : Ports.CodigoTicketOPT {
+				using ports CodTicket : Ports.CodigoTicketOPT {
 				}
 			}
-			CaixaPagamentoCP : CaixaPagamentoCP {
-				using ports ValorPago : Ports.ValorPagOPT {
-				}
-			}
+			
 			ValidadorPagamentoCP : ValidadorPagamentoCP {
 				using ports ValorPago : Ports.ValorPagIPT {
 				}
@@ -519,17 +536,21 @@ component def CentralPagamentoCP {
 				ValorTicket : Ports.ValorPagIPT {
 				}
 			}
+			CaixaPagamentoCP : CaixaPagamentoCP {
+				using ports ValorPago : Ports.ValorPagOPT {
+				}
+			}
 			connectors:
-			ValorPago : Connectors.ValorPagCNT bindings CaixaPagamentoCP.ValorPago =
+			 pagamento : Connectors.ValorPagCNT bindings CaixaPagamentoCP.ValorPago =
 			ValidadorPagamentoCP.ValorPago delegations:
-			LeitorTicketCP.p29 to p29
+			LeitorTicketCP.CodTicket to p29
 		ValidadorPagamentoCP.ValorTicket to ValorTicket ValidadorPagamentoCP.ConfPag
 			to ConfPag
 		}
 	}
 	
 
-component def ControladorTicketCP {
+component def ControladorGeralCP {
 		ports CodTicket : Ports.CodigoTicketIPT {
 		}
 		TicketOut : Ports.TicketOPT {
@@ -539,6 +560,29 @@ component def ControladorTicketCP {
 		ConfPag : Ports.ConfPagIPT {
 		}
 	
+	LeitTicket : Ports.LeitTicketIPT {
+		}
+		ConfImp : Ports.ConfImpTicketIPT {
+		}
+		Comando : Ports.ComandoCancelaOPT {
+		}
+		TipoRelat : Ports.TipoRelatorioIPT {
+		}
+		DataFiltro : Ports.DataFiltroIPT {
+		}
+		Uso : Ports.LogUsoOPT {
+		}
+		configuration {
+			components:
+			BDTicketCP : BDTicketCP {
+			}
+			ControladorCancelaCP : ControladorCancelaCP {
+			}
+			ControladorPagamentoCP : ControladorPagamentoCP {
+			}
+			ControladorRelatorioCP : ControladorRelatorioCP {
+			}
+		}
 	}
 	
 	
@@ -556,176 +600,9 @@ component def ControladorTicketCP {
 					vaga : SysADL.types.Vaga
 				}
 			}
-			flows : ActivityDelegation {
-				source Cor target GerarCor
-			}, ActivityDelegation {
-				source Vaga target "GerarCor.vaga"
 			}
-		}
-	}
-
-action def GerarCor ( Vaga : SysADL.types.Vaga ) : SysADL.types.CorLed {
-		postCondition VagaToCor ( ) {
-		}
-	}
-	activity def PainelLedAC {
-		inParameters {
-			QTVagas : SysADL.types.Int
-		}
-		acbody body {
-			actions : ActionUse AtualizarPainel {
-				definition AtualizarPainel pinIn {
-					qtvagas : SysADL.types.Int
-				}
 			}
-			flows : ActivityDelegation {
-				source QTVagas target "AtualizarPainel.qtvagas"
-			}
-		}
-	}
-	activity def ImpressoraTicketAC {
-		inParameters {
-			Presenca : SysADL.types.Presenca
-		}
-		outParameters {
-			Ticket : SysADL.types.Ticket, ConfImp : SysADL.types.ConfImpTicket
-		}
-		acbody body {
-			actions : ActionUse ImprimirTicket {
-				definition ImprimirTicket pinIn {
-					pre : SysADL.types.Presenca
-				}
-			}, ActionUse ConfirmarImpressao {
-				definition ConfirmarImpressao pinIn {
-					pre : SysADL.types.Presenca
-				}
-			}
-			flows : ActivityDelegation {
-				source Presenca target "ImprimirTicket.pre"
-			}, ActivityDelegation {
-				source Ticket target ImprimirTicket
-			}, ActivityDelegation {
-				source Presenca target "ConfirmarImpressao.pre"
-			}, ActivityDelegation {
-				source ConfImp target ConfirmarImpressao
-			}
-		}
-	}
-	
-	
-	
-	action def AtualizarPainel ( QTVagas : SysADL.types.Int ) :
-	SysADL.types.Boolean {
-	}
-	
-	boundary component def BDVagaCP {
-		ports QtVagas : Ports.QtVagasOPT {
-		}
-		Presenca : Ports.PresencaIPT {
-		}
-		Vaga : Ports.VagaOPT {
-		}
-	}
-	
-	action def ImprimirTicket ( Presenca : SysADL.types.Presenca ) :
-	SysADL.types.Ticket {
-	}
-	action def ConfirmarImpressao ( Presenca : SysADL.types.Presenca ) :
-	SysADL.types.ConfImpTicket {
-		postCondition PresencaToConfImp ( ) {
-		}
-	}
-	ConstraintDef PresencaToConfImp {
-		paramIn {
-			Presenca : SysADL.types.Presenca
-		}
-		paramOut {
-			ConfImp : SysADL.types.ConfImpTicket
-		}
-	}
-	
-	ConstraintDef VagaToCor {
-		paramIn {
-			Vaga : SysADL.types.Vaga
-		}
-		paramOut {
-			Cor : SysADL.types.CorLed
-		}
-	}
-	
-	
-	
-	activity def CaixaPagamentoAC {
-		inParameters {
-			Valor : SysADL.types.ValorPag
-		}
-		outParameters {
-			ConfPag : SysADL.types.ConfPag
-		}
-		acbody body {
-			actions : ActionUse RealizarPag {
-				definition RealizarPag pinIn {
-					pagamento : SysADL.types.Dinheiro, Valor : SysADL.types.ValorPag
-				}
-			}
-			flows : ActivityDelegation {
-				source ConfPag target RealizarPag
-			}, ActivityDelegation {
-				source Valor target "RealizarPag.Valor"
-			}
-		}
-	}
-	action def RealizarPag ( pagamento : SysADL.types.Dinheiro, Valor :
-	SysADL.types.ValorPag ) : SysADL.types.ConfPag {
-		postCondition AvaliarPagamento ( ) {
-		}
-	}
-	ConstraintDef AvaliarPagamento {
-		paramIn {
-			Pagamento : SysADL.types.Dinheiro, Valor : SysADL.types.ValorPag
-		}
-		paramOut {
-			ConfPag : SysADL.types.ConfPag
-		}
-	}
-	activity def CalculadorPrecoPagamentoAC {
-		inParameters {
-			Ticket : SysADL.types.Ticket, HoraAtual : SysADL.types.Hora
-		}
-		outParameters {
-			Valor : SysADL.types.ValorPag
-		}
-		acbody body {
-			actions : ActionUse CalcularPreco {
-				definition CalcularPreco pinIn {
-					Ticket : SysADL.types.Ticket, HoraAtual : SysADL.types.Hora
-				}
-			}
-			flows : ActivityDelegation {
-				source HoraAtual target "CalcularPreco.HoraAtual"
-			}, ActivityDelegation {
-				source Ticket target "CalcularPreco.Ticket"
-			}, ActivityDelegation {
-				source Valor target CalcularPreco
-			}
-		}
-	}
-	action def CalcularPreco ( Ticket : SysADL.types.Ticket, HoraAtual :
-	SysADL.types.Hora ) : SysADL.types.ValorPag {
-		postCondition TabelaPreco ( ) {
-		}
-	}
-	ConstraintDef TabelaPreco {
-		paramIn {
-			Ticket : SysADL.types.Ticket, HoraAtual : SysADL.types.Hora
-		}
-		paramOut {
-			Valor : SysADL.types.ValorPag
-		}
-	}
-	boundary component def BDTicketCP {
-	}
-component def CaixaPagamentoCP {
+	component def CaixaPagamentoCP {
 		ports ValorPago : Ports.ValorPagOPT {
 		}
 		configuration {
@@ -739,7 +616,7 @@ component def CaixaPagamentoCP {
 				}
 			}
 			delegations:
-			ReceptorDinheiroCP.ValorPago to ValorPago ReceptorCartaoCP.ValorPago to
+			ReceptorCartaoCP.ValorPago to ValorPago ReceptorDinheiroCP.ValorPago to
 			ValorPago
 		}
 	}
@@ -750,6 +627,16 @@ component def CaixaPagamentoCP {
 	boundary component def ReceptorCartaoCP {
 		ports ValorPago : Ports.ValorPagOPT {
 		}
+	}
+	component def BDTicketCP {
+	}
+	component def BDVagaCP {
+	}
+	component def ControladorCancelaCP {
+	}
+	component def ControladorPagamentoCP {
+	}
+	component def ControladorRelatorioCP {
 	}
 }
 package Connectors {
@@ -883,6 +770,24 @@ connector def VagaCNT {
 		}
 		flows SysADL.types.Vaga from p32 to p33
 	}
+connector def LeitTicketCNT {
+		participants ~ p34 : Ports.LeitTicketOPT {
+		}
+		~ p35 : Ports.LeitTicketIPT {
+		}
+		flows SysADL.types.LeitTicket from p34 to p35
+	}
+	connector def DataFiltroCNT {
+		participants ~ p36 : Ports.DataFiltroOPT {
+		}
+		~ p37 : Ports.DataFiltroIPT {
+		}
+		configuration {
+		}
+		flows SysADL.types.DateTime from Ports.DataFiltroOPT.data_inicioOPT to
+		Ports.DataFiltroIPT.data_inicioIPT SysADL.types.DateTime from
+		Ports.DataFiltroOPT.data_fimOPT to Ports.DataFiltroIPT.data_fimIPT
+	}
 }
 package Ports {
 import SysADL.types;
@@ -989,5 +894,23 @@ port def BooleanIPT {
 	}
 	port def BooleanOPT {
 		flow in SysADL.types.Boolean
+	}
+port def LeitTicketIPT {
+		flow in SysADL.types.LeitTicket
+	}
+	port def LeitTicketOPT {
+		flow out SysADL.types.LeitTicket
+	}
+	port def DataFiltroOPT {
+		ports data_inicioOPT : DateTimeOPT {
+		}
+		data_fimOPT : DateTimeOPT {
+		}
+	}
+	port def DataFiltroIPT {
+		ports data_inicioIPT : DateTimeIPT {
+		}
+		data_fimIPT : DateTimeIPT {
+		}
 	}
 }
