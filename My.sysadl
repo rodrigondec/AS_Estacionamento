@@ -404,8 +404,10 @@ component def GerenciadorRelatorioCP {
 				}
 			}
 			delegations:
-			InterfaceUsuarioRelatorioCP.DataFiltro to DataFiltro
+			
 			InterfaceUsuarioRelatorioCP.p21 to p21 GeradorRelatorioCP.p26 to p26
+		InterfaceUsuarioRelatorioCP.DataFiltro to Ports.DataFiltroOPT.data_inicioOPT
+			InterfaceUsuarioRelatorioCP.DataFiltro to Ports.DataFiltroOPT.data_fimOPT
 		}
 	}
 	boundary component def InterfaceUsuarioRelatorioCP {
@@ -682,9 +684,9 @@ boundary component def ScannerTicketCP {
 	}
 	action def GerarVagaParcial ( Presenca : SysADL.types.Presenca ) :
 	SysADL.types.Vaga {
-		postCondition VagaFromPresenca ( )
+		postCondition VagaFromPresencaEQ ( )
 	}
-	ConstraintDef VagaFromPresenca {
+	ConstraintDef VagaFromPresencaEQ {
 		paramIn {
 			Presenca : SysADL.types.Presenca
 		}
@@ -710,9 +712,15 @@ boundary component def ScannerTicketCP {
 		}
 	}
 	action def GerarCor ( Vaga : SysADL.types.Vaga ) : SysADL.types.CorLed {
-		postCondition CorFromVaga ( )
+		postCondition CorFromVagaEQ ( )
 	}
-	ConstraintDef CorFromVaga {
+	ConstraintDef CorFromVagaEQ {
+		paramIn {
+			Vaga : SysADL.types.Vaga
+		}
+		paramOut {
+			Cor : SysADL.types.CorLed
+		}
 		equation ^true
 	}
 	action def PegarVagaAtualizada ( VagaAtualizada : SysADL.types.Vaga,
@@ -730,18 +738,55 @@ boundary component def ScannerTicketCP {
 			ValorTicket : SysADL.types.ValorPag
 		}
 		acbody body {
+			actions : ActionUse CalcularValor {
+				definition CalcularValor pinIn {
+					Ticket : SysADL.types.Ticket
+				}
+			}
+			delegate Ticket to "CalcularValor.Ticket" delegate ValorTicket to
+			CalcularValor
 		}
 	}
 	action def CalcularValor ( Ticket : SysADL.types.Ticket ) :
 	SysADL.types.ValorPag {
-		postCondition PrecoTicket ( )
+		postCondition PrecoTicketEQ ( )
 	}
-	ConstraintDef PrecoTicket {
+	ConstraintDef PrecoTicketEQ {
 		paramIn {
 			Ticket : SysADL.types.Ticket
 		}
 		paramOut {
 			ValorTicket : SysADL.types.ValorPag
+		}
+		equation ^true
+	}
+	activity def ValidarPrecoPagamentoAC {
+		inParameters {
+			ValorTicket : SysADL.types.ValorPag, ValorPago : SysADL.types.ValorPag
+		}
+		outParameters {
+			ConfPag : SysADL.types.ConfPag
+		}
+		acbody body {
+			actions : ActionUse VerificarPagamento {
+				definition VerificarPagamento pinIn {
+					ValorPago : SysADL.types.ValorPag, ValorTicket : SysADL.types.ValorPag
+				}
+			}
+			delegate ValorTicket to "VerificarPagamento.ValorTicket" delegate ValorPago
+			to "VerificarPagamento.ValorPago" delegate ConfPag to VerificarPagamento
+		}
+	}
+	action def VerificarPagamento ( ValorTicket : SysADL.types.ValorPag,
+	ValorPago : SysADL.types.ValorPag ) : SysADL.types.ConfPag {
+		postCondition PagIgualTicketEQ ( )
+	}
+	ConstraintDef PagIgualTicketEQ {
+		paramIn {
+			ValorTicket : SysADL.types.ValorPag, ValorPago : SysADL.types.ValorPag
+		}
+		paramOut {
+			ConfPag : SysADL.types.ConfPag
 		}
 		equation ^true
 	}
