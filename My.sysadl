@@ -150,9 +150,7 @@ import Ports;
 	import Connectors;
 	import SysADL.types;
 	component def ControladorCorCP {
-		
 	ports 
-		
 		Cor : Ports.CorLedOPT {
 		}
 	Vaga : Ports.VagaIPT {
@@ -168,23 +166,11 @@ import Ports;
 	}
 	component def GerenciadorEstacionamento {
 		configuration {
-			components:
-			
-			
-			
-			
-		
-		
-		
-			
-			
-			
+			components:			
 			GerenciadorVagaCP : GerenciadorVagaCP {
 				using ports 
 				
 			}
-			
-			
 			GerenciadorCancelaCP : GerenciadorCancelaCP {
 				using ports Comando : Ports.ComandoCancelaIPT {
 				}
@@ -255,7 +241,7 @@ import Ports;
 			GerenciadorRelatorioCP.DataFiltro = ControladorGeralCP.DataFiltro
 		}
 	}
-	component def PainelLedCP {
+	boundary component def PainelLedCP {
 		ports QtVagas : Ports.QtVagasIPT {
 		}
 	}
@@ -341,23 +327,6 @@ import Ports;
 		configuration {
 			components:
 			
-			
-			
-			
-			
-		
-			
-			
-			
-			
-			
-			vagas : VagaCP [ 1, 30 ] {
-				using ports 
-				p14 : Ports.CorLedIPT {
-				}
-				p11 : Ports.PresencaOPT {
-				}
-			}
 			PainelLedCP : PainelLedCP {
 				using ports p18 : Ports.QtVagasIPT {
 				}
@@ -369,21 +338,45 @@ import Ports;
 				p33 : Ports.VagaIPT {
 				}
 			}
+			
+			ControladorVagaCP : ControladorVagaCP {
+				using ports Presenca : Ports.PresencaIPT {
+				}
+				VagaIO : Ports.VagaIO1 {
+				}
+				QtVagasOut : Ports.QtVagasOPT {
+				}
+				QtVagasIn : Ports.QtVagasIPT {
+				}
+				VagaOut : Ports.VagaOPT {
+				}
+				CorIn : Ports.CorLedIPT {
+				}
+				CorOut : Ports.CorLedOPT {
+				}
+			}
 			BDVagaCP : BDVagaCP {
-				using ports p17 : Ports.QtVagasOPT {
+				using ports VagaIO : Ports.VagaIO2 {
 				}
-				p12 : Ports.PresencaIPT {
+				QtVagas : Ports.QtVagasOPT {
 				}
-				p32 : Ports.VagaOPT {
+			}
+			VagaCP : VagaCP [ 1, 30 ] {
+				using ports Cor : Ports.CorLedIPT {
+				}
+				Presenca : Ports.PresencaOPT {
 				}
 			}
 			connectors:
-			
-			  c3
-			: Connectors.CorLedCNT bindings ControladorCorCP.p13 = vagas.p14
-		c1 : Connectors.PresencaCNT bindings vagas.p11 = BDVagaCP.p12 c2 :
-			Connectors.VagaCNT bindings BDVagaCP.p32 = ControladorCorCP.p33 c5 :
-			Connectors.QtVagasCNT bindings BDVagaCP.p17 = PainelLedCP.p18
+			VagaIO : Connectors.VagaIOCNT bindings ControladorVagaCP.VagaIO =
+			BDVagaCP.VagaIO QtVagas : Connectors.QtVagasCNT bindings BDVagaCP.QtVagas =
+			ControladorVagaCP.QtVagasIn QtVagas : Connectors.QtVagasCNT bindings
+			ControladorVagaCP.QtVagasOut = PainelLedCP.p18 Cor : Connectors.CorLedCNT
+			bindings ControladorCorCP.p13 = ControladorVagaCP.CorIn Vaga :
+			Connectors.VagaCNT bindings ControladorVagaCP.VagaOut =
+			ControladorCorCP.p33 Cor : Connectors.CorLedCNT bindings
+			ControladorVagaCP.CorOut = VagaCP.Cor Presenca : Connectors.PresencaCNT
+			bindings VagaCP.Presenca = ControladorVagaCP.Presenca
 		}
 	}
 component def GerenciadorRelatorioCP {
@@ -397,14 +390,7 @@ component def GerenciadorRelatorioCP {
 		}
 		
 		configuration {
-			components:
-			
-			
-			
-		
-			
-			
-			
+			components:			
 			InterfaceUsuarioRelatorioCP : InterfaceUsuarioRelatorioCP {
 				using ports p21 : Ports.TipoRelatorioOPT {
 				}
@@ -449,17 +435,20 @@ component def VagaCP {
 		}
 		configuration {
 			components:
-			SensorPresenca : SensorPresencaCP [ 1, 1 ] {
-				using ports p11 : Ports.PresencaOPT {
-				}
-			}
-			LedVaga : LedVagaCP [ 1, 1 ] {
-				using ports P14 : Ports.CorLedIPT {
-				}
-			}
 			
-		delegations:
-			SensorPresenca.p11 to Presenca  LedVaga.P14 to Cor
+			
+			
+		SensorPresencaCP : SensorPresencaCP {
+				using ports Presenca : Ports.PresencaOPT {
+				}
+			}
+			LedVagaCP : LedVagaCP {
+				using ports Cor : Ports.CorLedIPT {
+				}
+			}
+			delegations:
+			  
+		SensorPresencaCP.Presenca to Presenca LedVagaCP.Cor to Cor
 		}
 	}
 	
@@ -523,10 +512,7 @@ component def CentralPagamentoCP {
 			components:
 			
 			
-			LeitorTicketCP : LeitorTicketCP {
-				using ports CodTicket : Ports.CodigoTicketOPT {
-				}
-			}
+			
 			
 			ValidadorPagamentoCP : ValidadorPagamentoCP {
 				using ports ValorPago : Ports.ValorPagIPT {
@@ -536,16 +522,20 @@ component def CentralPagamentoCP {
 				ValorTicket : Ports.ValorPagIPT {
 				}
 			}
+			
 			CaixaPagamentoCP : CaixaPagamentoCP {
 				using ports ValorPago : Ports.ValorPagOPT {
 				}
+				CodTicket : Ports.CodigoTicketOPT {
+				}
 			}
 			connectors:
-			 pagamento : Connectors.ValorPagCNT bindings CaixaPagamentoCP.ValorPago =
+			ValorPago : Connectors.ValorPagCNT bindings CaixaPagamentoCP.ValorPago =
 			ValidadorPagamentoCP.ValorPago delegations:
-			LeitorTicketCP.CodTicket to p29
+			
 		ValidadorPagamentoCP.ValorTicket to ValorTicket ValidadorPagamentoCP.ConfPag
 			to ConfPag
+		CaixaPagamentoCP.CodTicket to p29
 		}
 	}
 	
@@ -584,9 +574,125 @@ component def ControladorGeralCP {
 			}
 		}
 	}
-	
-	
-
+	component def CaixaPagamentoCP {
+		ports ValorPago : Ports.ValorPagOPT {
+		}
+		CodTicket : Ports.CodigoTicketOPT {
+		}
+		configuration {
+			components:
+			ReceptorCartaoCP : ReceptorCartaoCP {
+				using ports ValorPago : Ports.ValorPagOPT {
+				}
+			}
+			ReceptorDinheiroCP : ReceptorDinheiroCP {
+				using ports ValorPago : Ports.ValorPagOPT {
+				}
+			}
+			ScannerTicketCP : ScannerTicketCP {
+				using ports CodTicket : Ports.CodigoTicketOPT {
+				}
+			}
+			delegations:
+			ReceptorCartaoCP.ValorPago to ValorPago ReceptorDinheiroCP.ValorPago to
+			ValorPago
+		ScannerTicketCP.CodTicket to CodTicket
+		}
+	}
+	boundary component def ReceptorDinheiroCP {
+		ports ValorPago : Ports.ValorPagOPT {
+		}
+	}
+	boundary component def ReceptorCartaoCP {
+		ports ValorPago : Ports.ValorPagOPT {
+		}
+	}
+	boundary component def BDTicketCP {
+	}
+	boundary component def BDVagaCP {
+	ports VagaIO : Ports.VagaIO2 {
+		}
+		QtVagas : Ports.QtVagasOPT {
+		}
+	}
+	component def ControladorCancelaCP {
+	}
+	component def ControladorPagamentoCP {
+	}
+	component def ControladorRelatorioCP {
+	}
+boundary component def ScannerTicketCP {
+		ports CodTicket : Ports.CodigoTicketOPT {
+		}
+	}
+	component def ControladorVagaCP {
+		ports Presenca : Ports.PresencaIPT {
+		}
+		VagaIO : Ports.VagaIO1 {
+		}
+		QtVagasOut : Ports.QtVagasOPT {
+		}
+		QtVagasIn : Ports.QtVagasIPT {
+		}
+		VagaOut : Ports.VagaOPT {
+		}
+		CorIn : Ports.CorLedIPT {
+		}
+		CorOut : Ports.CorLedOPT {
+		}
+	}
+	activity def ControladorVagaAC {
+		inParameters {
+			Presenca : SysADL.types.Presenca, VagaAtualizadaIn : SysADL.types.Vaga,
+			QtVagasIn : SysADL.types.Int, CorIn : SysADL.types.CorLed
+		}
+		outParameters {
+			VagaParcial : SysADL.types.Vaga, QtVagasOut : SysADL.types.Int,
+			VagaAtualizadaOut : SysADL.types.Vaga, CorOut : SysADL.types.CorLed
+		}
+		acbody body {
+			actions : ActionUse AtualizarLed {
+				definition AtualizarLed pinIn {
+					Cor : SysADL.types.CorLed
+				}
+			}
+			ActionUse PegarQtVagas {
+				definition PegarQtVagas pinIn {
+					QtVagas : SysADL.types.Int
+				}
+			}
+			ActionUse GerarVagaParcial {
+				definition GerarVagaParcial pinIn {
+					Presenca : SysADL.types.Presenca
+				}
+			}
+			ActionUse PegarVagaAtualizada {
+				definition PegarVagaAtualizada pinIn {
+					VagaAtualizada : SysADL.types.Vaga, VagaParcial : SysADL.types.Vaga
+				}
+			}
+			delegate CorOut to AtualizarLed delegate CorIn to "AtualizarLed.Cor"
+			delegate QtVagasIn to "PegarQtVagas.QtVagas" delegate QtVagasOut to
+			PegarQtVagas delegate VagaParcial to GerarVagaParcial delegate Presenca to
+			"GerarVagaParcial.Presenca" flow from GerarVagaParcial to delegate
+			VagaAtualizadaIn to "PegarVagaAtualizada.VagaAtualizada" delegate
+			VagaAtualizadaOut to PegarVagaAtualizada flow from GerarVagaParcial to
+			"PegarVagaAtualizada.VagaParcial"
+		}
+	}
+	action def GerarVagaParcial ( Presenca : SysADL.types.Presenca ) :
+	SysADL.types.Vaga {
+		postCondition VagaFromPresenca ( )
+	}
+	ConstraintDef VagaFromPresenca {
+		paramIn {
+			Presenca : SysADL.types.Presenca
+		}
+		paramOut {
+			Vaga : SysADL.types.Vaga
+		}
+		equation ^true
+	}
 	activity def ControladorCorAC {
 		inParameters {
 			Vaga : SysADL.types.Vaga
@@ -600,43 +706,44 @@ component def ControladorGeralCP {
 					vaga : SysADL.types.Vaga
 				}
 			}
-			}
-			}
-	component def CaixaPagamentoCP {
-		ports ValorPago : Ports.ValorPagOPT {
-		}
-		configuration {
-			components:
-			ReceptorCartaoCP : ReceptorCartaoCP {
-				using ports ValorPago : Ports.ValorPagOPT {
-				}
-			}
-			ReceptorDinheiroCP : ReceptorDinheiroCP {
-				using ports ValorPago : Ports.ValorPagOPT {
-				}
-			}
-			delegations:
-			ReceptorCartaoCP.ValorPago to ValorPago ReceptorDinheiroCP.ValorPago to
-			ValorPago
+			delegate Vaga to "GerarCor.vaga" delegate Cor to GerarCor
 		}
 	}
-	boundary component def ReceptorDinheiroCP {
-		ports ValorPago : Ports.ValorPagOPT {
+	action def GerarCor ( Vaga : SysADL.types.Vaga ) : SysADL.types.CorLed {
+		postCondition CorFromVaga ( )
+	}
+	ConstraintDef CorFromVaga {
+		equation ^true
+	}
+	action def PegarVagaAtualizada ( VagaAtualizada : SysADL.types.Vaga,
+	VagaParcial : SysADL.types.Vaga ) : SysADL.types.Vaga {
+	}
+	action def AtualizarLed ( Cor : SysADL.types.CorLed ) : SysADL.types.CorLed {
+	}
+	action def PegarQtVagas ( QtVagas : SysADL.types.Int ) : SysADL.types.Int {
+	}
+	activity def CalculadorPrecoPagamentoAC {
+		inParameters {
+			Ticket : SysADL.types.Ticket
+		}
+		outParameters {
+			ValorTicket : SysADL.types.ValorPag
+		}
+		acbody body {
 		}
 	}
-	boundary component def ReceptorCartaoCP {
-		ports ValorPago : Ports.ValorPagOPT {
+	action def CalcularValor ( Ticket : SysADL.types.Ticket ) :
+	SysADL.types.ValorPag {
+		postCondition PrecoTicket ( )
+	}
+	ConstraintDef PrecoTicket {
+		paramIn {
+			Ticket : SysADL.types.Ticket
 		}
-	}
-	component def BDTicketCP {
-	}
-	component def BDVagaCP {
-	}
-	component def ControladorCancelaCP {
-	}
-	component def ControladorPagamentoCP {
-	}
-	component def ControladorRelatorioCP {
+		paramOut {
+			ValorTicket : SysADL.types.ValorPag
+		}
+		equation ^true
 	}
 }
 package Connectors {
@@ -788,6 +895,16 @@ connector def LeitTicketCNT {
 		Ports.DataFiltroIPT.data_inicioIPT SysADL.types.DateTime from
 		Ports.DataFiltroOPT.data_fimOPT to Ports.DataFiltroIPT.data_fimIPT
 	}
+connector def VagaIOCNT {
+		participants ~ p38 : Ports.VagaIO1 {
+		}
+		~ p39 : Ports.VagaIO2 {
+		}
+		configuration {
+		}
+		flows SysADL.types.Vaga from Ports.VagaIO1.vagaOUT to Ports.VagaIO2.vagaIN
+		SysADL.types.Vaga from Ports.VagaIO2.vagaOut to Ports.VagaIO1.vagaIN
+	}
 }
 package Ports {
 import SysADL.types;
@@ -911,6 +1028,18 @@ port def LeitTicketIPT {
 		ports data_inicioIPT : DateTimeIPT {
 		}
 		data_fimIPT : DateTimeIPT {
+		}
+	}
+port def VagaIO1 {
+		ports vagaOUT : VagaOPT {
+		}
+		vagaIN : VagaIPT {
+		}
+	}
+	port def VagaIO2 {
+		ports vagaIN : VagaIPT {
+		}
+		vagaOut : VagaOPT {
 		}
 	}
 }
