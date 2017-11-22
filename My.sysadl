@@ -23,7 +23,7 @@ package SysADL.types {
 	}
 	value type Hora {
 	}
-	enum Cor {
+	enum Cores {
 		Verde, Amarelo, Azul, Vermelho
 	}
 	
@@ -46,7 +46,7 @@ datatype ValorPag {
 		attributes valor : Boolean
 	id_ticket : Int
 	}
-enum TipoVaga {
+enum TiposVaga {
 		Normal, Idoso, Deficiente
 	}
 	
@@ -68,10 +68,10 @@ enum StatusTicket {
 		attributes Acao : AcoesCancela id_cancela : Int
 	}
 datatype CorLed {
-		attributes cor : Cor id_led : Int
+		attributes cor : Cores id_led : Int
 	}
 datatype Vaga {
-		attributes id_vaga : Int tipo : TipoVaga ocupada : Boolean
+		attributes id_vaga : Int tipo : TiposVaga ocupada : Boolean
 	}
 datatype LeitTicket {
 		attributes codigo : CodBarras id_leitora : Int
@@ -566,14 +566,46 @@ component def ControladorGeralCP {
 		}
 		configuration {
 			components:
-			BDTicketCP : BDTicketCP {
-			}
-			ControladorCancelaCP : ControladorCancelaCP {
-			}
-			ControladorPagamentoCP : ControladorPagamentoCP {
+			
+			
+			
+			
+		ControladorCancelaCP : ControladorCancelaCP {
+				using ports ConfImp : Ports.ConfImpTicketIPT {
+				}
+				LeitTicket : Ports.LeitTicketIPT {
+				}
+				Comando : Ports.ComandoCancelaOPT {
+				}
 			}
 			ControladorRelatorioCP : ControladorRelatorioCP {
+				using ports DataFiltro : Ports.DataFiltroIPT {
+				}
+				TipoRelat : Ports.TipoRelatorioIPT {
+				}
+				Uso : Ports.LogUsoOPT {
+				}
 			}
+			BDTicketCP : BDTicketCP {
+			}
+			ControladorTicketCP : ControladorTicketCP {
+				using ports TicketIn : Ports.TicketIPT {
+				}
+				CodTicket : Ports.CodigoTicketIPT {
+				}
+				TicketOut : Ports.TicketOPT {
+				}
+				ConfPag : Ports.ConfPagIPT {
+				}
+			}
+			delegations:
+			ControladorTicketCP.TicketOut to TicketOut ControladorTicketCP.ConfPag to
+			ConfPag ControladorTicketCP.TicketIn to TicketIn
+			ControladorTicketCP.CodTicket to CodTicket
+			ControladorRelatorioCP.DataFiltro to DataFiltro
+			ControladorCancelaCP.Comando to Comando ControladorRelatorioCP.Uso to Uso
+			ControladorRelatorioCP.TipoRelat to TipoRelat ControladorCancelaCP.ConfImp
+			to ConfImp ControladorCancelaCP.LeitTicket to LeitTicket
 		}
 	}
 	component def CaixaPagamentoCP {
@@ -618,10 +650,20 @@ component def ControladorGeralCP {
 		}
 	}
 	component def ControladorCancelaCP {
-	}
-	component def ControladorPagamentoCP {
+	ports ConfImp : Ports.ConfImpTicketIPT {
+		}
+		LeitTicket : Ports.LeitTicketIPT {
+		}
+		Comando : Ports.ComandoCancelaOPT {
+		}
 	}
 	component def ControladorRelatorioCP {
+	ports DataFiltro : Ports.DataFiltroIPT {
+		}
+		TipoRelat : Ports.TipoRelatorioIPT {
+		}
+		Uso : Ports.LogUsoOPT {
+		}
 	}
 boundary component def ScannerTicketCP {
 		ports CodTicket : Ports.CodigoTicketOPT {
@@ -645,12 +687,12 @@ boundary component def ScannerTicketCP {
 	}
 	activity def ControladorVagaAC {
 		inParameters {
-			Presenca : SysADL.types.Presenca, VagaAtualizadaIn : SysADL.types.Vaga,
+			Presenca : SysADL.types.Presenca, VagaOriginal : SysADL.types.Vaga,
 			QtVagasIn : SysADL.types.Int, CorIn : SysADL.types.CorLed
 		}
 		outParameters {
 			VagaParcial : SysADL.types.Vaga, QtVagasOut : SysADL.types.Int,
-			VagaAtualizadaOut : SysADL.types.Vaga, CorOut : SysADL.types.CorLed
+			VagaAtualizada : SysADL.types.Vaga, CorOut : SysADL.types.CorLed
 		}
 		acbody body {
 			actions : ActionUse AtualizarLed {
@@ -677,24 +719,17 @@ boundary component def ScannerTicketCP {
 			delegate QtVagasIn to "PegarQtVagas.QtVagas" delegate QtVagasOut to
 			PegarQtVagas delegate VagaParcial to GerarVagaParcial delegate Presenca to
 			"GerarVagaParcial.Presenca" flow from GerarVagaParcial to delegate
-			VagaAtualizadaIn to "PegarVagaAtualizada.VagaAtualizada" delegate
-			VagaAtualizadaOut to PegarVagaAtualizada flow from GerarVagaParcial to
+			VagaOriginal to "PegarVagaAtualizada.VagaAtualizada" delegate
+			VagaAtualizada to PegarVagaAtualizada flow from GerarVagaParcial to
 			"PegarVagaAtualizada.VagaParcial"
 		}
 	}
 	action def GerarVagaParcial ( Presenca : SysADL.types.Presenca ) :
 	SysADL.types.Vaga {
-		postCondition VagaFromPresencaEQ ( )
+		
+	postCondition VagaFromPresencaEQ ( )
 	}
-	ConstraintDef VagaFromPresencaEQ {
-		paramIn {
-			Presenca : SysADL.types.Presenca
-		}
-		paramOut {
-			Vaga : SysADL.types.Vaga
-		}
-		equation ^true
-	}
+	
 	activity def ControladorCorAC {
 		inParameters {
 			Vaga : SysADL.types.Vaga
@@ -721,10 +756,11 @@ boundary component def ScannerTicketCP {
 		paramOut {
 			Cor : SysADL.types.CorLed
 		}
-		equation ^true
+		equation "(Vaga.ocupada == False -> (Cor.cor == Cores::Vermelho) | Vaga.ocupada == True -> (Vaga.tipo == TipoVaga::Normal -> (Cor.cor == Cores::Verde) | Vaga.tipo == TipoVaga::Deficiente -> (Cor.cor == Cores::Amarelo) | Vaga.tipo == TipoVaga::Idoso -> (Cor.cor == Cores::Azul)))"
 	}
-	action def PegarVagaAtualizada ( VagaAtualizada : SysADL.types.Vaga,
-	VagaParcial : SysADL.types.Vaga ) : SysADL.types.Vaga {
+	action def PegarVagaAtualizada ( VagaParcial : SysADL.types.Vaga , VagaOriginal
+	: SysADL.types.Vaga ) : SysADL.types.Vaga {
+	postCondition VagaAtualizadaEQ ( )
 	}
 	action def AtualizarLed ( Cor : SysADL.types.CorLed ) : SysADL.types.CorLed {
 	}
@@ -758,7 +794,7 @@ boundary component def ScannerTicketCP {
 		paramOut {
 			ValorTicket : SysADL.types.ValorPag
 		}
-		equation ^true
+		equation "(ticket.status == StatusTicket::Pendente -> ValorTicket.valor == 10)"
 	}
 	activity def ValidarPrecoPagamentoAC {
 		inParameters {
@@ -788,7 +824,37 @@ boundary component def ScannerTicketCP {
 		paramOut {
 			ConfPag : SysADL.types.ConfPag
 		}
-		equation ^true
+		equation "(ValorTicket.valor == ValorPago.valor -> ConfPag.valor == True && ConfPag.id_ticket == )"
+	}
+component def ControladorTicketCP {
+		ports TicketIn : Ports.TicketIPT {
+		}
+		CodTicket : Ports.CodigoTicketIPT {
+		}
+		TicketOut : Ports.TicketOPT {
+		}
+		ConfPag : Ports.ConfPagIPT {
+		}
+	}
+	ConstraintDef VagaFromPresencaEQ {
+		paramIn {
+			Presenca : SysADL.types.Presenca
+		}
+		paramOut {
+			VagaParcial : SysADL.types.Vaga
+		}
+		equation
+		"(presenca.valor == True  -> (vaga.id_vaga == presenca.id_sensor && vaga.ocupada == presenca.valor))"
+	}
+	ConstraintDef VagaAtualizadaEQ {
+		paramIn {
+			VagaParcial : SysADL.types.Vaga, VagaOriginal : SysADL.types.Vaga
+		}
+		paramOut {
+			VagaAtualizada : SysADL.types.Vaga
+		}
+		equation
+		"(VagaParcial.id_vaga == VagaOriginal.id_vaga -> (VagaAtualizada.id_vaga == VagaParcial.id_vaga && VagaAtualizada.ocupada == VagaParcial.ocupada && VagaAtualizada.tipo = VagaOriginal.tipo))"
 	}
 }
 package Connectors {
@@ -860,7 +926,7 @@ connector def ConfPagCNT {
 		}
 		~ p16 : Ports.TipoVagaIPT {
 		}
-		flows SysADL.types.TipoVaga from p15 to p16
+		flows SysADL.types.TiposVaga from p15 to p16
 	}
 connector def TipoRelatorioCNT {
 		participants ~ p21 : Ports.TipoRelatorioOPT {
@@ -1013,10 +1079,10 @@ port def PagamentoIPT {
 		flow in SysADL.types.ConfPag
 	}
 	port def TipoVagaIPT {
-		flow in SysADL.types.TipoVaga
+		flow in SysADL.types.TiposVaga
 	}
 	port def TipoVagaOPT {
-		flow out SysADL.types.TipoVaga
+		flow out SysADL.types.TiposVaga
 	}
 port def TipoRelatorioIPT {
 		flow in SysADL.types.TipoRelatorio
