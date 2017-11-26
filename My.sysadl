@@ -81,69 +81,69 @@ value type Any {
 }
 Requirement AbrirCancelaEletronica ( 5.0 ) {
 	text =
-	"A cancela eletrï¿½nica deve abrir automaticamente apï¿½s o motorista recolher o ticket impresso na entrada e no momento em que o motorista apresentar o ticket devidamente paga na saï¿½da do estacionamento"
+	"A cancela eletrônica deve abrir automaticamente após o motorista recolher o ticket impresso na entrada e no momento em que o motorista apresentar o ticket devidamente paga na saída do estacionamento"
 derive "GerenciarEstacionamento.GerenciarEntradadeVeiculos";
 }
 Requirement DetectarVeivulo ( 4.0 ) {
 	text =
-	"Ao se se aproximar com o veï¿½culo da cancela eletrï¿½nica a presenï¿½a do veï¿½culo deve ser detectada de forma automï¿½tica."
+	"Ao se se aproximar com o veículo da cancela eletrônica a presença do veículo deve ser detectada de forma automática."
 derive "GerenciarEstacionamento.GerenciarEntradadeVeiculos";
 }
 
 Requirement GerenciarEstacionamento ( 0.0 ) {
 	text =
-	"tem como objetivo facilitar a busca de vagas disponï¿½veis e proporcionar comodidade e praticidade a seus usuï¿½rios"
+	"tem como objetivo facilitar a busca de vagas disponíveis e proporcionar comodidade e praticidade a seus usuários"
 	Requirement GerenciarVagas ( 01 ) {
-	text = "O sistema deve monitorar cada uma das vagas do estacionamento e sinalizar o status da vaga por meio de lï¿½mpadas, diferenciando as vagas destinadas a idosos e deficientes fï¿½sicos das demais"
+	text = "O sistema deve monitorar cada uma das vagas do estacionamento e sinalizar o status da vaga por meio de lâmpadas, diferenciando as vagas destinadas a idosos e deficientes físicos das demais"
 Requirement SinalizarStatusdaVaga ( 01.1 ) {
-	text = "O status da vaga deve ser representado pela cor da lï¿½mpada associada a ela, a cor vermelha indica que a vaga estï¿½ ocupada, a cor verde indica que a vaga estï¿½ disponï¿½vel, a cor amarela indica que a vaga estï¿½ disponï¿½vel e que ï¿½ destinada a idosos, a cor azul indica que a vaga estï¿½ disponï¿½vel e que ï¿½ destinada ï¿½ deficientes fï¿½sicos."
+	text = "O status da vaga deve ser representado pela cor da lâmpada associada a ela, a cor vermelha indica que a vaga está ocupada, a cor verde indica que a vaga está disponível, a cor amarela indica que a vaga está disponível e que é destinada a idosos, a cor azul indica que a vaga está disponível e que é destinada à deficientes físicos."
 }
 	Requirement DetectarStatusdaVaga ( 01.2 ) {
-	text = "O sistema deve detectar para cada vaga do estacionamento se existe ou nï¿½o um veï¿½culo estacionado"
+	text = "O sistema deve detectar para cada vaga do estacionamento se existe ou não um veículo estacionado"
 }
 Requirement SinalizarQuantidadedeVagasDisponiveis ( 1.3 ) {
 		text =
-		"O sistema deve indicar em painï¿½is a quantidade de vagas disponï¿½veis em cada ala do estacionamento."
+		"O sistema deve indicar em painéis a quantidade de vagas disponíveis em cada ala do estacionamento."
 	}
 }
 	Requirement GerenciarEntradadeVeiculos ( 2.0 ) {
 	text =
-	"O sistema deve controlar a entrada de veï¿½culos por meio de uma cancela eletrï¿½nica. Um ticket com cï¿½digo de barras deve ser impresso para cada motorista antes de  o mesmo entrar no estacionamento."
+	"O sistema deve controlar a entrada de veículos por meio de uma cancela eletrônica. Um ticket com código de barras deve ser impresso para cada motorista antes de  o mesmo entrar no estacionamento."
 	Requirement ImprimirTicket ( 2.1 ) {
 		text =
-		"Antes de o motorista entrar no estacionamento um ticket com cï¿½digo de barras deve ser impresso e recolhido pelo motorista. Associado ao cï¿½digo de barras impresso no ticket o sistema deve armazenar a hora em que o ticket foi gerado."
+		"Antes de o motorista entrar no estacionamento um ticket com código de barras deve ser impresso e recolhido pelo motorista. Associado ao código de barras impresso no ticket o sistema deve armazenar a hora em que o ticket foi gerado."
 	}
 }
 	Requirement GerenciarSaidaVeiculos ( 3.0 ) {
 	text =
-	"O sistema deve gerenciar a saï¿½da de veï¿½culos por meio de uma cancela eletrï¿½nica. Os veï¿½culos poderï¿½o deixar o estacionamento apenas apï¿½s o pagamento da taxa de estacionamento."
+	"O sistema deve gerenciar a saída de veículos por meio de uma cancela eletrônica. Os veículos poderão deixar o estacionamento apenas após o pagamento da taxa de estacionamento."
 	Requirement LerTicket ( 3.1 ) {
 		text =
-		"A partir da leitura do cï¿½digo de barras impresso no ticket o sistema deve recuperar todas as informaï¿½ï¿½es associadas ao ticket (horï¿½rio de entrada\r\nno estacionamento, valor da taxa de estacionamento,  se a taxa foi ou nï¿½o paga, se foi paga o horï¿½rio de pagamento )."
+		"A partir da leitura do código de barras impresso no ticket o sistema deve recuperar todas as informações associadas ao ticket (horário de entrada\r\nno estacionamento, valor da taxa de estacionamento,  se a taxa foi ou não paga, se foi paga o horário de pagamento )."
 	}
 }
 	Requirement AbrirCancelaEmergencial ( 8.0 ) {
 	text =
-	"Em casos de emergï¿½ncia o operador do estacionamento poderï¿½ abrir a cancela de emergï¿½ncia."
+	"Em casos de emergência o operador do estacionamento poderá abrir a cancela de emergência."
 }
 Requirement GerarRelatorio ( 7.0 ) {
 	text =
-	"O sistema deve permitir ao gerente consultar a ocupaï¿½ï¿½o do estacionamento e gerar relatï¿½rios financeiros."
+	"O sistema deve permitir ao gerente consultar a ocupação do estacionamento e gerar relatórios financeiros."
 	Requirement GerarRelatorioFinanceiro ( 7.1 ) {
 		text =
-		"O sistema deve permitir ao gerente gerar relatï¿½rios que detalhem a arrecadaï¿½ï¿½o do estacionamento em perï¿½odos de tempo informados pelo gerente."
+		"O sistema deve permitir ao gerente gerar relatórios que detalhem a arrecadação do estacionamento em períodos de tempo informados pelo gerente."
 	}
 	Requirement ConsultarOcupacao ( 7.2 ) {
 		text =
-		"O sistema deve permitir ao gerente consultar a ocupaï¿½ï¿½o do estacionamento por dia, hora, semana e mï¿½s."
+		"O sistema deve permitir ao gerente consultar a ocupação do estacionamento por dia, hora, semana e mês."
 	}
 }
 	Requirement GerenciarPagamento ( 6.0 ) {
 	text =
-	"O sistema deve permitir ao usuï¿½rio realizar o pagamento da taxa de estacionamento. O pagamento deve ser calculado com base no tempo em que o veï¿½culo esteve no estacionamento."
+	"O sistema deve permitir ao usuário realizar o pagamento da taxa de estacionamento. O pagamento deve ser calculado com base no tempo em que o veículo esteve no estacionamento."
 	Requirement RealizarPagamento ( 6.1 ) {
 		text =
-		"O sistema deve permitir ao usuï¿½rio realizar o pagamento em caixas automï¿½ticos com cartï¿½o ou dinheiro."
+		"O sistema deve permitir ao usuário realizar o pagamento em caixas automáticos com cartão ou dinheiro."
 	}
 }
 }
@@ -334,58 +334,44 @@ import Ports;
 				}
 			}
 			
-			ControladorCorCP : ControladorCorCP {
-				using ports p13 : Ports.CorLedOPT {
-				}
-				p33 : Ports.VagaIPT {
-				}
-			}
 			
-			ControladorVagaCP : ControladorVagaCP {
-				using ports Presenca : Ports.PresencaIPT {
-				}
-				VagaIO : Ports.VagaIO1 {
-				}
-				QtVagasOut : Ports.QtVagasOPT {
-				}
-				QtVagasIn : Ports.QtVagasIPT {
-				}
-				VagaOut : Ports.VagaOPT {
-				}
-				CorIn : Ports.CorLedIPT {
-				}
-				CorOut : Ports.CorLedOPT {
-				}
-			}
-			BDVagaCP : BDVagaCP {
-				using ports VagaIO : Ports.VagaIO2 {
-				}
-				QtVagas : Ports.QtVagasOPT {
-				}
-			}
+			
+			
+			
 			VagaCP : VagaCP [ 1, 30 ] {
 				using ports Cor : Ports.CorLedIPT {
 				}
 				Presenca : Ports.PresencaOPT {
 				}
 			}
+			ControladorVagaCP : ControladorVagaCP {
+				using ports Presenca : Ports.PresencaIPT {
+				}
+				QtVagasOut : Ports.QtVagasOPT {
+				}
+				Cor : Ports.CorLedOPT {
+				}
+				clientPT : Ports.ClientPT {
+				}
+			}
+			BDVagaCP : BDVagaCP {
+				using ports serverPT : Ports.ServerPT {
+				}
+			}
 			connectors:
-			VagaIO : Connectors.VagaIOCNT bindings ControladorVagaCP.VagaIO =
-			BDVagaCP.VagaIO QtVagas : Connectors.QtVagasCNT bindings BDVagaCP.QtVagas =
-			ControladorVagaCP.QtVagasIn QtVagas : Connectors.QtVagasCNT bindings
-			ControladorVagaCP.QtVagasOut = PainelLedCP.p18 Cor : Connectors.CorLedCNT
-			bindings ControladorCorCP.p13 = ControladorVagaCP.CorIn Vaga :
-			Connectors.VagaCNT bindings ControladorVagaCP.VagaOut =
-			ControladorCorCP.p33 Cor : Connectors.CorLedCNT bindings
-			ControladorVagaCP.CorOut = VagaCP.Cor Presenca : Connectors.PresencaCNT
-			bindings VagaCP.Presenca = ControladorVagaCP.Presenca
+			ClientServer : Connectors.ClientServerCN bindings
+			ControladorVagaCP.clientPT = BDVagaCP.serverPT qtVagas :
+			Connectors.QtVagasCNT bindings ControladorVagaCP.QtVagasOut =
+			PainelLedCP.p18 Presenca : Connectors.PresencaCNT bindings VagaCP.Presenca
+			= ControladorVagaCP.Presenca Cor : Connectors.CorLedCNT bindings
+			ControladorVagaCP.Cor = VagaCP.Cor
 		}
 	}
 component def GerenciadorRelatorioCP {
 		ports 
-		p21 : Ports.TipoRelatorioOPT {
+		TipoRelatorio : Ports.TipoRelatorioOPT {
 		}
-		p26 : Ports.LogUsoIPT {
+		Log : Ports.LogUsoIPT {
 		}
 		
 	DataFiltro : Ports.DataFiltroOPT {
@@ -407,7 +393,7 @@ component def GerenciadorRelatorioCP {
 			}
 			delegations:
 			
-			InterfaceUsuarioRelatorioCP.p21 to p21 GeradorRelatorioCP.p26 to p26
+			InterfaceUsuarioRelatorioCP.p21 to TipoRelatorio GeradorRelatorioCP.p26 to Log
 		InterfaceUsuarioRelatorioCP.DataFiltro to Ports.DataFiltroOPT.data_inicioOPT
 			InterfaceUsuarioRelatorioCP.DataFiltro to Ports.DataFiltroOPT.data_fimOPT
 		}
@@ -416,18 +402,19 @@ component def GerenciadorRelatorioCP {
 		ports 
 		
 		
-		p21 : Ports.TipoRelatorioOPT {
+		TipoRelatorio : Ports.TipoRelatorioOPT {
 		}
 		
 		
 	DataFiltro : Ports.DataFiltroOPT {
 		}
-	}
-	
-	boundary component def GeradorRelatorioCP {
-		ports p26 : Ports.LogUsoIPT {
+	Relatorio : Ports.RelatorioIPT {
 		}
-		p19 : Ports.RelatorioOPT {
+	}
+	component def GeradorRelatorioCP {
+		ports Log : Ports.LogUsoIPT {
+		}
+		Relatorio : Ports.RelatorioOPT {
 		}
 	}
 
@@ -564,7 +551,7 @@ component def ControladorGeralCP {
 		}
 		DataFiltro : Ports.DataFiltroIPT {
 		}
-		Uso : Ports.LogUsoOPT {
+		Log : Ports.LogUsoOPT {
 		}
 		configuration {
 			components:
@@ -572,24 +559,10 @@ component def ControladorGeralCP {
 			
 			
 			
-		ControladorCancelaCP : ControladorCancelaCP {
-				using ports ConfImp : Ports.ConfImpTicketIPT {
-				}
-				LeitTicket : Ports.LeitTicketIPT {
-				}
-				Comando : Ports.ComandoCancelaOPT {
-				}
-			}
-			ControladorRelatorioCP : ControladorRelatorioCP {
-				using ports DataFiltro : Ports.DataFiltroIPT {
-				}
-				TipoRelat : Ports.TipoRelatorioIPT {
-				}
-				Uso : Ports.LogUsoOPT {
-				}
-			}
-			BDTicketCP : BDTicketCP {
-			}
+		
+			
+			
+			
 			ControladorTicketCP : ControladorTicketCP {
 				using ports TicketIn : Ports.TicketIPT {
 				}
@@ -599,15 +572,46 @@ component def ControladorGeralCP {
 				}
 				ConfPag : Ports.ConfPagIPT {
 				}
+				ClientPT : Ports.ClientPT {
+				}
 			}
-			delegations:
-			ControladorTicketCP.TicketOut to TicketOut ControladorTicketCP.ConfPag to
-			ConfPag ControladorTicketCP.TicketIn to TicketIn
-			ControladorTicketCP.CodTicket to CodTicket
+			ControladorCancelaCP : ControladorCancelaCP {
+				using ports ConfImp : Ports.ConfImpTicketIPT {
+				}
+				LeitTicket : Ports.LeitTicketIPT {
+				}
+				Comando : Ports.ComandoCancelaOPT {
+				}
+				ClientPT : Ports.ClientPT {
+				}
+			}
+			ControladorRelatorioCP : ControladorRelatorioCP {
+				using ports DataFiltro : Ports.DataFiltroIPT {
+				}
+				TipoRelat : Ports.TipoRelatorioIPT {
+				}
+				Log : Ports.LogUsoOPT {
+				}
+				ClientPT : Ports.ClientPT {
+				}
+			}
+			BDTicketCP : BDTicketCP {
+				using ports ServerPT : Ports.ServerPT {
+				}
+			}
+			connectors:
+			ClientPT : Connectors.ClientServerCN bindings
+			ControladorRelatorioCP.ClientPT = BDTicketCP.ServerPT ClientPT :
+			Connectors.ClientServerCN bindings ControladorCancelaCP.ClientPT =
+			BDTicketCP.ServerPT ClientPT : Connectors.ClientServerCN bindings
+			ControladorTicketCP.ClientPT = BDTicketCP.ServerPT delegations:
 			ControladorRelatorioCP.DataFiltro to DataFiltro
-			ControladorCancelaCP.Comando to Comando ControladorRelatorioCP.Uso to Uso
-			ControladorRelatorioCP.TipoRelat to TipoRelat ControladorCancelaCP.ConfImp
-			to ConfImp ControladorCancelaCP.LeitTicket to LeitTicket
+			ControladorRelatorioCP.TipoRelat to TipoRelat ControladorRelatorioCP.Log to
+			Log ControladorTicketCP.TicketIn to TicketIn ControladorTicketCP.ConfPag to
+			ConfPag ControladorTicketCP.TicketOut to TicketOut
+			ControladorTicketCP.CodTicket to CodTicket ControladorCancelaCP.Comando to
+			Comando ControladorCancelaCP.LeitTicket to LeitTicket
+			ControladorCancelaCP.ConfImp to ConfImp
 		}
 	}
 	component def CaixaPagamentoCP {
@@ -644,11 +648,13 @@ component def ControladorGeralCP {
 		}
 	}
 	boundary component def BDTicketCP {
+	ports ServerPT : Ports.ServerPT {
+		}
 	}
 	boundary component def BDVagaCP {
-	ports VagaIO : Ports.VagaIO2 {
-		}
-		QtVagas : Ports.QtVagasOPT {
+	ports 
+		
+	ServerPT : Ports.ServerPT {
 		}
 	}
 	component def ControladorCancelaCP {
@@ -658,13 +664,17 @@ component def ControladorGeralCP {
 		}
 		Comando : Ports.ComandoCancelaOPT {
 		}
+	ClientPT : Ports.ClientPT {
+		}
 	}
 	component def ControladorRelatorioCP {
 	ports DataFiltro : Ports.DataFiltroIPT {
 		}
 		TipoRelat : Ports.TipoRelatorioIPT {
 		}
-		Uso : Ports.LogUsoOPT {
+		Log : Ports.LogUsoOPT {
+		}
+	ClientPT : Ports.ClientPT {
 		}
 	}
 boundary component def ScannerTicketCP {
@@ -674,82 +684,51 @@ boundary component def ScannerTicketCP {
 	component def ControladorVagaCP {
 		ports Presenca : Ports.PresencaIPT {
 		}
-		VagaIO : Ports.VagaIO1 {
-		}
+		
 		QtVagasOut : Ports.QtVagasOPT {
 		}
-		QtVagasIn : Ports.QtVagasIPT {
-		}
-		VagaOut : Ports.VagaOPT {
-		}
-		CorIn : Ports.CorLedIPT {
-		}
+		
+		
+		
 		CorOut : Ports.CorLedOPT {
 		}
-	}
-	activity def ControladorVagaAC {
-		inParameters {
-			Presenca : SysADL.types.Presenca, VagaOriginal : SysADL.types.Vaga,
-			QtVagasIn : SysADL.types.Int, CorIn : SysADL.types.CorLed
+	ClientPT : Ports.ClientPT {
 		}
-		outParameters {
-			VagaParcial : SysADL.types.Vaga, QtVagasOut : SysADL.types.Int,
-			VagaAtualizada : SysADL.types.Vaga, CorOut : SysADL.types.CorLed
-		}
-		acbody body {
-			actions : ActionUse AtualizarLed {
-				definition AtualizarLed pinIn {
-					Cor : SysADL.types.CorLed
+		configuration {
+			components:
+			ControladorCorCP : ControladorCorCP {
+				using ports Cor : Ports.CorLedOPT {
+				}
+				Vaga : Ports.VagaIPT {
 				}
 			}
-			ActionUse PegarQtVagas {
-				definition PegarQtVagas pinIn {
-					QtVagas : SysADL.types.Int
+			ControladorPresencaCP : ControladorPresencaCP {
+				using ports Presenca : Ports.PresencaIPT {
+				}
+				ClientPT : Ports.ClientPT {
+				}
+				Vaga : Ports.VagaOPT {
+				}
+				AttPainel : Ports.BooleanOPT {
 				}
 			}
-			ActionUse GerarVagaParcial {
-				definition GerarVagaParcial pinIn {
-					Presenca : SysADL.types.Presenca
+			ControladorPainelCP : ControladorPainelCP {
+				using ports AttPainel : Ports.BooleanIPT {
+				}
+				ClientPT : Ports.ClientPT {
+				}
+				QtVagas : Ports.QtVagasOPT {
 				}
 			}
-			ActionUse PegarVagaAtualizada {
-				definition PegarVagaAtualizada pinIn {
-					VagaAtualizada : SysADL.types.Vaga, VagaParcial : SysADL.types.Vaga
-				}
-			}
-			delegate CorOut to AtualizarLed delegate CorIn to "AtualizarLed.Cor"
-			delegate QtVagasIn to "PegarQtVagas.QtVagas" delegate QtVagasOut to
-			PegarQtVagas delegate VagaParcial to GerarVagaParcial delegate Presenca to
-			"GerarVagaParcial.Presenca" flow from GerarVagaParcial to delegate
-			VagaOriginal to "PegarVagaAtualizada.VagaAtualizada" delegate
-			VagaAtualizada to PegarVagaAtualizada flow from GerarVagaParcial to
-			"PegarVagaAtualizada.VagaParcial"
+			connectors:
+			Vaga : Connectors.VagaCNT bindings ControladorPresencaCP.Vaga =
+			ControladorCorCP.Vaga AttPainel : Connectors.BooleanCNT bindings
+			ControladorPresencaCP.AttPainel = ControladorPainelCP.AttPainel
+			delegations:
+			ControladorCorCP.Cor to CorOut ControladorPresencaCP.Presenca to Presenca
+			ControladorPainelCP.QtVagas to QtVagasOut ControladorPainelCP.ClientPT to
+			ClientPT ControladorPresencaCP.ClientPT to ClientPT
 		}
-	}
-	action def GerarVagaParcial ( Presenca : SysADL.types.Presenca ) :
-	SysADL.types.Vaga {
-		
-	postCondition VagaFromPresencaEQ ( )
-	}
-	
-	activity def ControladorCorAC {
-		inParameters {
-			Vaga : SysADL.types.Vaga
-		}
-		outParameters {
-			Cor : SysADL.types.CorLed
-		}
-		acbody body {
-			actions : ActionUse GerarCor {
-				definition GerarCor pinIn {
-					vaga : SysADL.types.Vaga
-				}
-			}
-			delegate Vaga to "GerarCor.vaga" delegate Cor to GerarCor
-		}
-	}
-	action def GerarCor ( Vaga : SysADL.types.Vaga ) : SysADL.types.CorLed {
-		postCondition CorFromVagaEQ ( )
 	}
 	ConstraintDef CorFromVagaEQ {
 		paramIn {
@@ -760,14 +739,9 @@ boundary component def ScannerTicketCP {
 		}
 		equation "(Vaga.ocupada == False -> (Cor.cor == Cores::Vermelho) | Vaga.ocupada == True -> (Vaga.tipo == TipoVaga::Normal -> (Cor.cor == Cores::Verde) | Vaga.tipo == TipoVaga::Deficiente -> (Cor.cor == Cores::Amarelo) | Vaga.tipo == TipoVaga::Idoso -> (Cor.cor == Cores::Azul)))"
 	}
-	action def PegarVagaAtualizada ( VagaParcial : SysADL.types.Vaga , VagaOriginal
-	: SysADL.types.Vaga ) : SysADL.types.Vaga {
-	postCondition VagaAtualizadaEQ ( )
-	}
-	action def AtualizarLed ( Cor : SysADL.types.CorLed ) : SysADL.types.CorLed {
-	}
-	action def PegarQtVagas ( QtVagas : SysADL.types.Int ) : SysADL.types.Int {
-	}
+	
+	
+	
 	activity def CalculadorPrecoPagamentoAC {
 		inParameters {
 			Ticket : SysADL.types.Ticket
@@ -837,6 +811,8 @@ component def ControladorTicketCP {
 		}
 		ConfPag : Ports.ConfPagIPT {
 		}
+	ClientPT : Ports.ClientPT {
+		}
 	}
 	ConstraintDef VagaFromPresencaEQ {
 		paramIn {
@@ -846,17 +822,94 @@ component def ControladorTicketCP {
 			VagaParcial : SysADL.types.Vaga
 		}
 		equation
-		"(presenca.valor == True  -> (vaga.id_vaga == presenca.id_sensor && vaga.ocupada == presenca.valor))"
+		"(vaga.id_vaga == presenca.id_sensor && vaga.ocupada == presenca.valor)"
 	}
-	ConstraintDef VagaAtualizadaEQ {
-		paramIn {
-			VagaParcial : SysADL.types.Vaga, VagaOriginal : SysADL.types.Vaga
+	component def ControladorPresencaCP {
+		ports Presenca : Ports.PresencaIPT {
 		}
-		paramOut {
-			VagaAtualizada : SysADL.types.Vaga
+		ClientPT : Ports.ClientPT {
 		}
-		equation
-		"(VagaParcial.id_vaga == VagaOriginal.id_vaga -> (VagaAtualizada.id_vaga == VagaParcial.id_vaga && VagaAtualizada.ocupada == VagaParcial.ocupada && VagaAtualizada.tipo = VagaOriginal.tipo))"
+		Vaga : Ports.VagaOPT {
+		}
+		AttPainel : Ports.BooleanOPT {
+		}
+	}
+	component def ControladorPainelCP {
+		ports AttPainel : Ports.BooleanIPT {
+		}
+		ClientPT : Ports.ClientPT {
+		}
+		QtVagas : Ports.QtVagasOPT {
+		}
+	}
+	activity def ControlarPresencaAC {
+		inParameters {
+			presenca : SysADL.types.Presenca
+		}
+		outParameters {
+			AttPainel : SysADL.types.Boolean, Vaga : SysADL.types.Vaga
+		}
+		acbody body {
+			actions : ActionUse ClientServerRequest {
+				definition ClientServerRequestVagaAN pinIn {
+					presenca : SysADL.types.Presenca
+				}
+			}
+			ActionUse TriggerAttPainel {
+				definition TriggerAttPainelAN pinIn {
+					Vaga : SysADL.types.Vaga
+				}
+			}
+			delegate presenca to "ClientServerRequest.presenca" delegate Vaga to
+			ClientServerRequest flow from ClientServerRequest to
+			"TriggerAttPainel.Vaga" delegate AttPainel to TriggerAttPainel
+		}
+	}
+	action def ClientServerRequestVagaAN ( presenca : SysADL.types.Presenca ) :
+	SysADL.types.Vaga {
+		postCondition VagaFromPresencaEQ ( )
+	}
+	action def TriggerAttPainelAN ( Vaga : SysADL.types.Vaga ) :
+	SysADL.types.Boolean {
+	}
+	activity def ControlarCorAC {
+		inParameters {
+			Vaga : SysADL.types.Vaga
+		}
+		outParameters {
+			Cor : SysADL.types.CorLed
+		}
+		acbody body {
+			actions : ActionUse EscolherCorAN {
+				definition EscolherCorAN pinIn {
+					Vaga : SysADL.types.Vaga
+				}
+			}
+			delegate Vaga to "EscolherCorAN.Vaga" delegate Cor to EscolherCorAN
+		}
+	}
+	action def EscolherCorAN ( Vaga : SysADL.types.Vaga ) : SysADL.types.CorLed {
+		postCondition CorFromVagaEQ ( )
+	}
+	activity def ControlarPainelAC {
+		inParameters {
+			AttPainel : SysADL.types.Boolean
+		}
+		outParameters {
+			QtVagas : SysADL.types.Int
+		}
+		acbody body {
+			actions : ActionUse ClientServerRequestQtVagasAN {
+				definition ClientServerRequestQtVagasAN pinIn {
+					AttPainel : SysADL.types.Boolean
+				}
+			}
+			delegate AttPainel to "ClientServerRequestQtVagasAN.AttPainel" delegate
+			QtVagas to ClientServerRequestQtVagasAN
+		}
+	}
+	action def ClientServerRequestQtVagasAN ( AttPainel : SysADL.types.Boolean )
+	: SysADL.types.Int {
 	}
 }
 package Connectors {
@@ -1018,6 +1071,38 @@ connector def VagaIOCNT {
 		flows SysADL.types.Vaga from Ports.VagaIO1.vagaOUT to Ports.VagaIO2.vagaIN
 		SysADL.types.Vaga from Ports.VagaIO2.vagaOut to Ports.VagaIO1.vagaIN
 	}
+connector def ClientServerQueryCN {
+		participants ~ querOPT : Ports.QueryOPT {
+		}
+		~ querIPT : Ports.QueryIPT {
+		}
+		flows SysADL.types.Any from querOPT to querIPT
+	}
+	connector def ClientServerAnswerCN {
+		participants ~ ansOPT : Ports.AnswerOPT {
+		}
+		~ ansIPT : Ports.AnswerIPT {
+		}
+		flows SysADL.types.Any from ansOPT to ansIPT
+	}
+	connector def ClientServerCN {
+		participants ~ clientPT : Ports.ClientPT {
+		}
+		~ serverPT : Ports.ServerPT {
+		}
+		configuration {
+		}
+		flows SysADL.types.Any from Ports.ClientPT.QueryOUT to
+		Ports.ServerPT.QueryIN SysADL.types.Any from Ports.ServerPT.AnswerOUT to
+		Ports.ClientPT.AnswerIN
+	}
+	connector def BooleanCNT {
+		participants ~ boolOut : Ports.BooleanOPT {
+		}
+		~ boolIn : Ports.BooleanIPT {
+		}
+		flows SysADL.types.Boolean from boolOut to boolIn
+	}
 }
 package Ports {
 import SysADL.types;
@@ -1153,6 +1238,30 @@ port def VagaIO1 {
 		ports vagaIN : VagaIPT {
 		}
 		vagaOut : VagaOPT {
+		}
+	}
+port def QueryOPT {
+		flow in SysADL.types.Any
+	}
+	port def QueryIPT {
+		flow in SysADL.types.Any
+	}
+	port def AnswerOPT {
+		flow in SysADL.types.Any
+	}
+	port def AnswerIPT {
+		flow in SysADL.types.Any
+	}
+	port def ClientPT {
+		ports AnswerIN : AnswerIPT {
+		}
+		QueryOUT : QueryOPT {
+		}
+	}
+	port def ServerPT {
+		ports AnswerOUT : AnswerOPT {
+		}
+		QueryIN : QueryIPT {
 		}
 	}
 }
