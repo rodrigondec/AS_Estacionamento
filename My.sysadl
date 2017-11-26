@@ -871,6 +871,7 @@ component def ControladorTicketCP {
 	}
 	action def TriggerAttPainelAN ( Vaga : SysADL.types.Vaga ) :
 	SysADL.types.Boolean {
+	postCondition TriggerPainelEQ ( )
 	}
 	activity def ControlarCorAC {
 		inParameters {
@@ -910,6 +911,15 @@ component def ControladorTicketCP {
 	}
 	action def ClientServerRequestQtVagasAN ( AttPainel : SysADL.types.Boolean )
 	: SysADL.types.Int {
+	}
+ConstraintDef TriggerPainelEQ {
+		paramIn {
+			Vaga : SysADL.types.Vaga
+		}
+		paramOut {
+			AttPainel : SysADL.types.Boolean
+		}
+		equation "(AttPainel == True)"
 	}
 }
 package Connectors {
@@ -1011,24 +1021,8 @@ connector def ConfImpTicketCNT {
 		}
 		flows SysADL.types.ConfImpTicket from p27 to p28
 	}
-connector def TicketToComCancelaCNT {
-		participants ~ p1 : Ports.TicketOPT {
-		}
-		~ p10 : Ports.ComandoCancelaIPT {
-		}
-		configuration {
-		}
-		flows SysADL.types.Ticket from p1 to p10
-	}
-	connector def ConfImpToComCancelaCNT {
-		participants ~ p27 : Ports.ConfImpTicketOPT {
-		}
-		~ p10 : Ports.ComandoCancelaIPT {
-		}
-		configuration {
-		}
-		flows SysADL.types.ConfImpTicket from p27 to p10
-	}
+
+	
 	connector def CodigoTicketCNT {
 		participants ~ p29 : Ports.CodigoTicketOPT {
 		}
@@ -1061,16 +1055,7 @@ connector def LeitTicketCNT {
 		Ports.DataFiltroIPT.data_inicioIPT SysADL.types.DateTime from
 		Ports.DataFiltroOPT.data_fimOPT to Ports.DataFiltroIPT.data_fimIPT
 	}
-connector def VagaIOCNT {
-		participants ~ p38 : Ports.VagaIO1 {
-		}
-		~ p39 : Ports.VagaIO2 {
-		}
-		configuration {
-		}
-		flows SysADL.types.Vaga from Ports.VagaIO1.vagaOUT to Ports.VagaIO2.vagaIN
-		SysADL.types.Vaga from Ports.VagaIO2.vagaOut to Ports.VagaIO1.vagaIN
-	}
+
 connector def ClientServerQueryCN {
 		participants ~ querOPT : Ports.QueryOPT {
 		}
@@ -1228,18 +1213,8 @@ port def LeitTicketIPT {
 		data_fimIPT : DateTimeIPT {
 		}
 	}
-port def VagaIO1 {
-		ports vagaOUT : VagaOPT {
-		}
-		vagaIN : VagaIPT {
-		}
-	}
-	port def VagaIO2 {
-		ports vagaIN : VagaIPT {
-		}
-		vagaOut : VagaOPT {
-		}
-	}
+
+	
 port def QueryOPT {
 		flow in SysADL.types.Any
 	}
