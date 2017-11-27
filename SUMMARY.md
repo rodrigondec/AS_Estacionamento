@@ -20,4 +20,6 @@
       * [Controlador Vaga](doc/estrutural/ibd/gerenciador-vaga/controlador-vaga.md)
       * [Vaga](doc/estrutural/ibd/gerenciador-vaga/vaga.md)
     * [Gerenciador Relatorio](doc/estrutural/ibd/gerenciador-relatorio.md)
+* [Comportamental](doc/comportamental.md)
+  * [BDD](doc/comportamental/bdd.md)
 
