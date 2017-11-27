@@ -1,4 +1,2 @@
-![](/doc/img/Package Diagram.jpg)
-
-
+![](/doc/img/Package Diagram.png)
 

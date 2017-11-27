@@ -1,2 +1,2 @@
-![](/doc/img/Ports.jpg)
+![](/doc/img/Ports.png)
 

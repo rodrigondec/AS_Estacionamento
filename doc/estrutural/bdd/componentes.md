@@ -1,4 +1,2 @@
-![](/doc/img/Components.jpg)
-
-
+![](/doc/img/Components Structure.png)
 

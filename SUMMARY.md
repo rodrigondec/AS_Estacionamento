@@ -15,6 +15,7 @@
     * [Gerenciador Cancela](doc/estrutural/ibd/gerenciador-cancela.md)
     * [Gerenciador Pagamento](doc/estrutural/ibd/gerenciador-pagamento.md)
       * [Central Pagamento](doc/estrutural/ibd/gerenciador-pagamento/central-pagamento.md)
+        * [Caixa Pagamento](doc/estrutural/ibd/gerenciador-pagamento/central-pagamento/caixa-pagamento.md)
     * [Gerenciador Vaga](doc/estrutural/ibd/gerenciador-vaga.md)
       * [Vaga](doc/estrutural/ibd/gerenciador-vaga/vaga.md)
     * [Gerenciador Relatorio](doc/estrutural/ibd/gerenciador-relatorio.md)

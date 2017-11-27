@@ -1,4 +1,4 @@
-![](/doc/img/GerenciadorEstacionamento.jpg)
+![](/doc/img/GerenciadorEstacionamento.png)
 
 # **GerenciadorEstacionamento**
 

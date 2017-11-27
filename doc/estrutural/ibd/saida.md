@@ -1,2 +1,2 @@
-![](/doc/img/SaidaCP.jpg)
+![](/doc/img/Estrutural/SaidaCP.png)
 

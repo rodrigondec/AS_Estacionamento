@@ -1,2 +1,2 @@
-![](/doc/img/CentralPagamentoCP.jpg)
+![](/doc/img/Estrutural/CentralPagamentoCP.png)
 
