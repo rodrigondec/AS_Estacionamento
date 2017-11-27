@@ -24,4 +24,8 @@
   * [Controlar Presenca](doc/comportamental/controlar-presenca.md)
     * ClientServerRequest
     * TriggerAttPainel
+* [Atributos de qualidade](doc/atributos-de-qualidade.md)
+  * [Modificabilidade](doc/atributos-de-qualidade/modificabilidade.md)
+  * Escalabilidade
+* [Estilos Arquiteturais](doc/estilos-arquiteturais.md)
 
