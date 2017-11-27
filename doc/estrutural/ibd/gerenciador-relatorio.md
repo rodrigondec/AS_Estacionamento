@@ -1,2 +1,2 @@
-![](/doc/img/GerenciadorRelatorioCP.jpg)
+![](/doc/img/Estrutural/GerenciadorRelatorioCP.png)
 
