@@ -1,6 +1,4 @@
-# IBD
-
-Descrição dos seguintes componentes compostos do BDD
+![](/doc/img/GerenciadorEstacionamento.png)
 
 
 

@@ -9,7 +9,7 @@
     * [Conectores](doc/estrutural/bdd/conectores.md)
     * [Componentes](doc/estrutural/bdd/componentes.md)
   * [IBD](doc/estrutural/ibd.md)
-    * [Gerenciador Estacionamento](doc/estrutural/ibd/gerenciador-estacionamento.md)
+    * [Controlador Geral](doc/estrutural/ibd/controlador-geral.md)
     * [Entrada](doc/estrutural/ibd/entrada.md)
     * [Saída](doc/estrutural/ibd/saida.md)
     * [Gerenciador Cancela](doc/estrutural/ibd/gerenciador-cancela.md)
@@ -17,6 +17,7 @@
       * [Central Pagamento](doc/estrutural/ibd/gerenciador-pagamento/central-pagamento.md)
         * [Caixa Pagamento](doc/estrutural/ibd/gerenciador-pagamento/central-pagamento/caixa-pagamento.md)
     * [Gerenciador Vaga](doc/estrutural/ibd/gerenciador-vaga.md)
+      * [Controlador Vaga](doc/estrutural/ibd/gerenciador-vaga/controlador-vaga.md)
       * [Vaga](doc/estrutural/ibd/gerenciador-vaga/vaga.md)
     * [Gerenciador Relatorio](doc/estrutural/ibd/gerenciador-relatorio.md)
 

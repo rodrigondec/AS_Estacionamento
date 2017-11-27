@@ -1,2 +1,2 @@
-![](/doc/img/GerenciadorVagaCP.jpg)
+![](/doc/img/Estrutural/GerenciadorVagaCP.png)
 
