@@ -21,11 +21,12 @@
       * [Vaga](doc/estrutural/ibd/gerenciador-vaga/vaga.md)
     * [Gerenciador Relatorio](doc/estrutural/ibd/gerenciador-relatorio.md)
 * [Comportamental](doc/comportamental.md)
-  * [Controlar Presenca](doc/comportamental/controlar-presenca.md)
-    * ClientServerRequest
-    * TriggerAttPainel
+  * [ControlarPresencaAC](doc/comportamental/controlarpresencaac.md)
+    * [ClientServerRequestAN](doc/comportamental/controlarpresencaac/clientserverrequestan.md)
+      * [VagaFromPresencaEQ](doc/comportamental/controlarpresencaac/clientserverrequestan/vagafrompresencaeq.md)
+    * [TriggerAttPainelAN](doc/comportamental/controlarpresencaac/triggerattpainelan.md)
 * [Atributos de qualidade](doc/atributos-de-qualidade.md)
   * [Modificabilidade](doc/atributos-de-qualidade/modificabilidade.md)
-  * Escalabilidade
+  * [Escalabilidade](doc/atributos-de-qualidade/escalabilidade.md)
 * [Estilos Arquiteturais](doc/estilos-arquiteturais.md)
 
