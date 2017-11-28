@@ -1,0 +1,2 @@
+![](/doc/img/Comportamental/Actions/VerificarPagamentoAN.png)
+

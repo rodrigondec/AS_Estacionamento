@@ -10,6 +10,10 @@
     * [Componentes](doc/estrutural/bdd/componentes.md)
   * [IBD](doc/estrutural/ibd.md)
     * [Controlador Geral](doc/estrutural/ibd/controlador-geral.md)
+      * [Controlador Relatorio](doc/estrutural/ibd/controlador-geral/controlador-relatorio.md)
+      * [Controlador Cancela](doc/estrutural/ibd/controlador-geral/controlador-cancela.md)
+        * [Controlador Cancela Saida](doc/estrutural/ibd/controlador-geral/controlador-cancela/controlador-cancela-saida.md)
+      * [Controlador Ticket](doc/estrutural/ibd/controlador-geral/controlador-ticket.md)
     * [Entrada](doc/estrutural/ibd/entrada.md)
     * [Saída](doc/estrutural/ibd/saida.md)
     * [Gerenciador Cancela](doc/estrutural/ibd/gerenciador-cancela.md)
@@ -18,13 +22,37 @@
         * [Caixa Pagamento](doc/estrutural/ibd/gerenciador-pagamento/central-pagamento/caixa-pagamento.md)
     * [Gerenciador Vaga](doc/estrutural/ibd/gerenciador-vaga.md)
       * [Controlador Vaga](doc/estrutural/ibd/gerenciador-vaga/controlador-vaga.md)
+        * [Controlador Presença](doc/estrutural/ibd/gerenciador-vaga/controlador-vaga/controlador-presenca.md)
+        * [Controlador Painel](doc/estrutural/ibd/gerenciador-vaga/controlador-vaga/controlador-painel.md)
       * [Vaga](doc/estrutural/ibd/gerenciador-vaga/vaga.md)
     * [Gerenciador Relatorio](doc/estrutural/ibd/gerenciador-relatorio.md)
 * [Comportamental](doc/comportamental.md)
-  * [ControlarPresencaAC](doc/comportamental/controlarpresencaac.md)
-    * [ClientServerRequestAN](doc/comportamental/controlarpresencaac/clientserverrequestan.md)
-      * [VagaFromPresencaEQ](doc/comportamental/controlarpresencaac/clientserverrequestan/vagafrompresencaeq.md)
-    * [TriggerAttPainelAN](doc/comportamental/controlarpresencaac/triggerattpainelan.md)
+  * [ControlarCorAC](doc/comportamental/controlarcorac.md)
+    * [EscolherCorAN](doc/comportamental/controlarcorac/escolhercoran.md)
+  * [TriggerAttPainelAC](doc/comportamental/triggerattpainelac.md)
+    * [EnviarTriggerAN](doc/comportamental/triggerattpainelac/enviartriggeran.md)
+  * [CalculadorPrecoPagamentoAC](doc/comportamental/calculadorprecopagamentoac.md)
+    * [CalcularValorAN](doc/comportamental/calculadorprecopagamentoac/calcularvaloran.md)
+  * [ValidarPrecoPagamentoAC](doc/comportamental/validarprecopagamentoac.md)
+    * [VerificarPagamentoAN](doc/comportamental/validarprecopagamentoac/verificarpagamentoan.md)
+  * [ControlarCancelaEntradaAC](doc/comportamental/controlarcancelaentradaac.md)
+    * [AbrirCancelaEntradaAN](doc/comportamental/controlarcancelaentradaac/abrircancelaentradaan.md)
+  * [ValidarTicketPagoAC](doc/comportamental/validarticketpagoac.md)
+    * [AbrirCancelaSaidaAN](doc/comportamental/validarticketpagoac/abrircancelasaidaan.md)
+  * [ClientServer](doc/comportamental/clientserver.md)
+    * [Querys](doc/comportamental/clientserver/querys.md)
+      * [QueryPresencaAC](doc/comportamental/clientserver/querys/querypresencaac.md)
+      * [QueryQtVagasAC](doc/comportamental/clientserver/querys/queryqtvagasac.md)
+      * [QueryLeitTicketAC](doc/comportamental/clientserver/querys/queryleitticketac.md)
+      * [QueryCodTicketAC](doc/comportamental/clientserver/querys/querycodticketac.md)
+      * QueryTicketAC
+      * QueryConfPagAC
+      * QueryFiltroAC
+    * Answers
+      * AnswerVagaAC
+      * AnswerQtVagasAC
+      * AnswerTicketAC
+      * AnswerLogAC
 * [Atributos de qualidade](doc/atributos-de-qualidade.md)
   * [Modificabilidade](doc/atributos-de-qualidade/modificabilidade.md)
   * [Escalabilidade](doc/atributos-de-qualidade/escalabilidade.md)
