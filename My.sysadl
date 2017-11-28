@@ -700,6 +700,8 @@ component def ControladorGeralCP {
 		}
 	ClientPT : Ports.ClientPT {
 		}
+	configuration {
+		}
 	}
 boundary component def ScannerTicketCP {
 		ports CodTicket : Ports.CodigoTicketOPT {
@@ -977,17 +979,6 @@ component def ControladorCancelaEntradaCP {
 		ClientPT : Ports.ClientPT {
 		}
 	}
-	activity def ControlarCancelaSaidaAC {
-		inParameters {
-			LeitTicket : SysADL.types.LeitTicket
-		}
-		outParameters {
-			Comando : SysADL.types.ComandoCancela
-		}
-		acbody body {
-		}
-	}
-	
 	activity def ControlarCancelaEntradaAC {
 		inParameters {
 			ConfImp : SysADL.types.ConfImpTicket
@@ -1005,13 +996,12 @@ component def ControladorCancelaEntradaCP {
 			AbrirCancelaEntradaAN
 		}
 	}
-	
 	action def AbrirCancelaEntradaAN ( ConfImp : SysADL.types.ConfImpTicket ) :
 	SysADL.types.ComandoCancela {
 		postCondition CmdCancelaFromImpTicketEQ ( ) delegate ConfImp to
 		"CmdCancelaFromImpTicketEQ.ConfImp"
 	}
-ConstraintDef CmdCancelaFromImpTicketEQ {
+	ConstraintDef CmdCancelaFromImpTicketEQ {
 		paramIn {
 			ConfImp : SysADL.types.ConfImpTicket
 		}
@@ -1020,9 +1010,6 @@ ConstraintDef CmdCancelaFromImpTicketEQ {
 		}
 		equation
 		"(ConfImp.valor == True -> (Comando.id_cancela == ConfImp.id_impressora && Comando.Acao == AcoesCancela::Abrir))"
-	}
-	action def ClientServerRequestTicketAN ( LeitTicket : SysADL.types.LeitTicket
-	) : SysADL.types.Ticket {
 	}
 	component def QuitadorTicketCP {
 		ports ConfPag : Ports.ConfPagIPT {
