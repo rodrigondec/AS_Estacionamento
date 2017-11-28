@@ -978,6 +978,36 @@ component def ControladorCancelaEntradaCP {
 		}
 		ClientPT : Ports.ClientPT {
 		}
+	configuration {
+			components:
+			QueryLeitTicketCP : QueryLeitTicketCP {
+				using ports LeitTicket : Ports.LeitTicketIPT {
+				}
+				Query : Ports.QueryOPT {
+				}
+			}
+			AnswerTicketCP : AnswerTicketCP {
+				using ports Answer : Ports.AnswerIPT {
+				}
+				Ticket : Ports.TicketOPT {
+				}
+			}
+			ValidadorTicketPagoCP : ValidadorTicketPagoCP {
+				using ports Ticket : Ports.TicketIPT {
+				}
+				Comando : Ports.ComandoCancelaOPT {
+				}
+				LeitTicket : Ports.LeitTicketIPT {
+				}
+			}
+			connectors:
+			Ticket : Connectors.TicketCNT bindings AnswerTicketCP.Ticket =
+			ValidadorTicketPagoCP.Ticket delegations:
+			QueryLeitTicketCP.LeitTicket to LeitTicket QueryLeitTicketCP.Query to
+			Ports.ClientPT.QueryOUT AnswerTicketCP.Answer to Ports.ClientPT.AnswerIN
+			ValidadorTicketPagoCP.Comando to Comando ValidadorTicketPagoCP.LeitTicket
+			to LeitTicket
+		}
 	}
 	activity def ControlarCancelaEntradaAC {
 		inParameters {
@@ -1069,13 +1099,13 @@ component def ControladorCancelaEntradaCP {
 			Query : SysADL.types.Any
 		}
 		acbody body {
-			actions : ActionUse ConstruirQueryAN {
-				definition ConstruirQueryPresencaAN pinIn {
+			actions : ActionUse ConstruirQueryVagaAN {
+				definition ConstruirQueryVagaAN pinIn {
 					Presenca : SysADL.types.Presenca
 				}
 			}
-			delegate Presenca to "ConstruirQueryAN.Presenca" delegate Query to
-			ConstruirQueryAN
+			delegate Presenca to "ConstruirQueryVagaAN.Presenca" delegate Query to
+			ConstruirQueryVagaAN
 		}
 	}
 	activity def AnswerVagaAC {
@@ -1112,7 +1142,7 @@ component def ControladorCancelaEntradaCP {
 			EnviarTriggerAN
 		}
 	}
-	action def ConstruirQueryPresencaAN ( Presenca : SysADL.types.Presenca ) :
+	action def ConstruirQueryVagaAN ( Presenca : SysADL.types.Presenca ) :
 	SysADL.types.Any {
 	}
 	action def ConstruirVagaAnswerAN ( Answer : SysADL.types.Any ) :
@@ -1161,6 +1191,99 @@ component def ControladorCancelaEntradaCP {
 	}
 	action def ConstruirQtVagasAnswerAN ( Answer : SysADL.types.Any ) :
 	SysADL.types.Int {
+	}
+component def QueryLeitTicketCP {
+		ports LeitTicket : Ports.LeitTicketIPT {
+		}
+		Query : Ports.QueryOPT {
+		}
+	}
+	component def AnswerTicketCP {
+		ports Answer : Ports.AnswerIPT {
+		}
+		Ticket : Ports.TicketOPT {
+		}
+	}
+	component def ValidadorTicketPagoCP {
+		ports Ticket : Ports.TicketIPT {
+		}
+		Comando : Ports.ComandoCancelaOPT {
+		}
+		LeitTicket : Ports.LeitTicketIPT {
+		}
+	}
+	activity def QueryLeitTicketAC {
+		inParameters {
+			LeitTicket : SysADL.types.LeitTicket
+		}
+		outParameters {
+			Query : SysADL.types.Any
+		}
+		acbody body {
+			actions : ActionUse ConstruirQueryTicketAN {
+				definition ConstruirQueryTicketAN pinIn {
+					LeitTicket : SysADL.types.LeitTicket
+				}
+			}
+			delegate LeitTicket to "ConstruirQueryTicketAN.LeitTicket" delegate Query
+			to ConstruirQueryTicketAN
+		}
+	}
+	action def ConstruirQueryTicketAN ( LeitTicket : SysADL.types.LeitTicket ) :
+	SysADL.types.Any {
+	}
+	activity def AnswerTicketAC {
+		inParameters {
+			Answer : SysADL.types.Any
+		}
+		outParameters {
+			Ticket : SysADL.types.Ticket
+		}
+		acbody body {
+			actions : ActionUse ConstruirTicketAnswerAN {
+				definition ConstruirTicketAnswerAN pinIn {
+					Answer : SysADL.types.Any
+				}
+			}
+			delegate Answer to "ConstruirTicketAnswerAN.Answer" delegate Ticket to
+			ConstruirTicketAnswerAN
+		}
+	}
+	action def ConstruirTicketAnswerAN ( Answer : SysADL.types.Any ) :
+	SysADL.types.Ticket {
+	}
+	activity def ValidarTicketPagoAC {
+		inParameters {
+			Ticket : SysADL.types.Ticket, LeitTicket : SysADL.types.LeitTicket
+		}
+		outParameters {
+			Comando : SysADL.types.ComandoCancela
+		}
+		acbody body {
+			actions : ActionUse AbrirCancelaSaidaAN {
+				definition AbrirCancelaSaidaAN pinIn {
+					Ticket : SysADL.types.Ticket
+				}
+			}
+			delegate Ticket to "AbrirCancelaSaidaAN.Ticket" delegate Comando to
+			AbrirCancelaSaidaAN
+		}
+	}
+	action def AbrirCancelaSaidaAN ( Ticket : SysADL.types.Ticket, LeitTicket :
+	SysADL.types.LeitTicket ) : SysADL.types.ComandoCancela {
+		postCondition CmdCancelaFromTicketPagoEQ ( ) delegate Ticket to
+		"CmdCancelaFromTicketPagoEQ.Ticket" delegate LeitTicket to
+		"CmdCancelaFromTicketPagoEQ.LeitTicket"
+	}
+	ConstraintDef CmdCancelaFromTicketPagoEQ {
+		paramIn {
+			Ticket : SysADL.types.Ticket, LeitTicket : SysADL.types.LeitTicket
+		}
+		paramOut {
+			Comando : SysADL.types.ComandoCancela
+		}
+		equation
+		"(Ticket.status == StatusTicket::Pago -> (Comando.id_cancela == LeitTicket.id_leitora && Comando.acao == AcoesCancela::Abrir))"
 	}
 }
 package Connectors {
