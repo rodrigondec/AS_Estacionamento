@@ -39,6 +39,7 @@ package SysADL.types {
 	}
 datatype ValorPag {
 		attributes Valor : Dinheiro
+	id_ticket : Int
 	}
 	value type Dinheiro {
 	}
@@ -666,6 +667,29 @@ component def ControladorGeralCP {
 		}
 	ClientPT : Ports.ClientPT {
 		}
+	configuration {
+			components:
+			ControladorCancelaEntradaCP : ControladorCancelaEntradaCP {
+				using ports ConfImp : Ports.ConfImpTicketIPT {
+				}
+				Comando : Ports.ComandoCancelaOPT {
+				}
+			}
+			ControladorCancelaSaidaCP : ControladorCancelaSaidaCP {
+				using ports LeitTicket : Ports.LeitTicketIPT {
+				}
+				Comando : Ports.ComandoCancelaOPT {
+				}
+				ClientPT : Ports.ClientPT {
+				}
+			}
+			delegations:
+			ControladorCancelaSaidaCP.ClientPT to ClientPT
+			ControladorCancelaSaidaCP.LeitTicket to LeitTicket
+			ControladorCancelaEntradaCP.ConfImp to ConfImp
+			ControladorCancelaEntradaCP.Comando to Comando
+			ControladorCancelaSaidaCP.Comando to Comando
+		}
 	}
 	component def ControladorRelatorioCP {
 	ports DataFiltro : Ports.DataFiltroIPT {
@@ -751,7 +775,7 @@ boundary component def ScannerTicketCP {
 		}
 		acbody body {
 			actions : ActionUse CalcularValor {
-				definition CalcularValor pinIn {
+				definition CalcularValorAN pinIn {
 					Ticket : SysADL.types.Ticket
 				}
 			}
@@ -759,9 +783,10 @@ boundary component def ScannerTicketCP {
 			CalcularValor
 		}
 	}
-	action def CalcularValor ( Ticket : SysADL.types.Ticket ) :
+	action def CalcularValorAN ( Ticket : SysADL.types.Ticket ) :
 	SysADL.types.ValorPag {
 		postCondition PrecoTicketEQ ( )
+	delegate Ticket to "PrecoTicketEQ.Ticket"
 	}
 	ConstraintDef PrecoTicketEQ {
 		paramIn {
@@ -770,7 +795,7 @@ boundary component def ScannerTicketCP {
 		paramOut {
 			ValorTicket : SysADL.types.ValorPag
 		}
-		equation "(ticket.status == StatusTicket::Pendente -> ValorTicket.valor == 10)"
+		equation "(ticket.status == StatusTicket::Pendente -> (ValorTicket.valor == 10))"
 	}
 	activity def ValidarPrecoPagamentoAC {
 		inParameters {
@@ -781,7 +806,7 @@ boundary component def ScannerTicketCP {
 		}
 		acbody body {
 			actions : ActionUse VerificarPagamento {
-				definition VerificarPagamento pinIn {
+				definition VerificarPagamentoAN pinIn {
 					ValorPago : SysADL.types.ValorPag, ValorTicket : SysADL.types.ValorPag
 				}
 			}
@@ -789,9 +814,11 @@ boundary component def ScannerTicketCP {
 			to "VerificarPagamento.ValorPago" delegate ConfPag to VerificarPagamento
 		}
 	}
-	action def VerificarPagamento ( ValorTicket : SysADL.types.ValorPag,
+	action def VerificarPagamentoAN ( ValorTicket : SysADL.types.ValorPag,
 	ValorPago : SysADL.types.ValorPag ) : SysADL.types.ConfPag {
 		postCondition PagIgualTicketEQ ( )
+	delegate ValorTicket to "PagIgualTicketEQ.ValorTicket" delegate ValorPago to
+		"PagIgualTicketEQ.ValorPago"
 	}
 	ConstraintDef PagIgualTicketEQ {
 		paramIn {
@@ -800,7 +827,7 @@ boundary component def ScannerTicketCP {
 		paramOut {
 			ConfPag : SysADL.types.ConfPag
 		}
-		equation "(ValorTicket.valor == ValorPago.valor -> ConfPag.valor == True && ConfPag.id_ticket == )"
+		equation "(ValorTicket.valor == ValorPago.valor -> (ConfPag.valor == True && ConfPag.id_ticket == ValorTicket.id_ticket))"
 	}
 component def ControladorTicketCP {
 		ports TicketIn : Ports.TicketIPT {
@@ -813,16 +840,35 @@ component def ControladorTicketCP {
 		}
 	ClientPT : Ports.ClientPT {
 		}
-	}
-	ConstraintDef VagaFromPresencaEQ {
-		paramIn {
-			Presenca : SysADL.types.Presenca
+	configuration {
+			components:
+			RegatadorTicketCP : RegatadorTicketCP {
+				using ports CodTicket : Ports.CodigoTicketIPT {
+				}
+				ClientPT : Ports.ClientPT {
+				}
+				TicketOut : Ports.TicketOPT {
+				}
+			}
+			RegistradorTicketCP : RegistradorTicketCP {
+				using ports TicketIn : Ports.TicketIPT {
+				}
+				ClientPT : Ports.ClientPT {
+				}
+			}
+			QuitadorTicketCP : QuitadorTicketCP {
+				using ports ConfPag : Ports.ConfPagIPT {
+				}
+				ClientPT : Ports.ClientPT {
+				}
+			}
+			delegations:
+			QuitadorTicketCP.ClientPT to ClientPT RegatadorTicketCP.ClientPT to
+			ClientPT RegistradorTicketCP.ClientPT to ClientPT
+			RegistradorTicketCP.TicketIn to TicketIn QuitadorTicketCP.ConfPag to
+			ConfPag RegatadorTicketCP.TicketOut to TicketOut
+			RegatadorTicketCP.CodTicket to CodTicket
 		}
-		paramOut {
-			VagaParcial : SysADL.types.Vaga
-		}
-		equation
-		"(vaga.id_vaga == presenca.id_sensor && vaga.ocupada == presenca.valor)"
 	}
 	component def ControladorPresencaCP {
 		ports Presenca : Ports.PresencaIPT {
@@ -833,6 +879,33 @@ component def ControladorTicketCP {
 		}
 		AttPainel : Ports.BooleanOPT {
 		}
+	configuration {
+			components:
+			AnswerVagaCP : AnswerVagaCP {
+				using ports Answer : Ports.AnswerIPT {
+				}
+				Vaga : Ports.VagaOPT {
+				}
+			}
+			QueryPresencaCP : QueryPresencaCP {
+				using ports Presenca : Ports.PresencaIPT {
+				}
+				Query : Ports.QueryOPT {
+				}
+			}
+			TriggerAttPainelCP : TriggerAttPainelCP {
+				using ports Vaga : Ports.VagaIPT {
+				}
+				AttPainel : Ports.BooleanOPT {
+				}
+			}
+			connectors:
+			Vaga : Connectors.VagaCNT bindings AnswerVagaCP.Vaga =
+			TriggerAttPainelCP.Vaga delegations:
+			QueryPresencaCP.Presenca to Presenca QueryPresencaCP.Query to
+			Ports.ClientPT.QueryOUT AnswerVagaCP.Answer to Ports.ClientPT.AnswerIN
+			AnswerVagaCP.Vaga to Vaga TriggerAttPainelCP.AttPainel to AttPainel
+		}
 	}
 	component def ControladorPainelCP {
 		ports AttPainel : Ports.BooleanIPT {
@@ -841,37 +914,25 @@ component def ControladorTicketCP {
 		}
 		QtVagas : Ports.QtVagasOPT {
 		}
-	}
-	activity def ControlarPresencaAC {
-		inParameters {
-			presenca : SysADL.types.Presenca
-		}
-		outParameters {
-			AttPainel : SysADL.types.Boolean, Vaga : SysADL.types.Vaga
-		}
-		acbody body {
-			actions : ActionUse ClientServerRequest {
-				definition ClientServerRequestVagaAN pinIn {
-					presenca : SysADL.types.Presenca
+	configuration {
+			components:
+			AnswerQtVagasCP : AnswerQtVagasCP {
+				using ports QtVagas : Ports.QtVagasOPT {
+				}
+				Answer : Ports.AnswerIPT {
 				}
 			}
-			ActionUse TriggerAttPainel {
-				definition TriggerAttPainelAN pinIn {
-					Vaga : SysADL.types.Vaga
+			QueryQtVagasCP : QueryQtVagasCP {
+				using ports AttPainel : Ports.BooleanIPT {
+				}
+				Query : Ports.QueryOPT {
 				}
 			}
-			delegate presenca to "ClientServerRequest.presenca" delegate Vaga to
-			ClientServerRequest flow from ClientServerRequest to
-			"TriggerAttPainel.Vaga" delegate AttPainel to TriggerAttPainel
+			delegations:
+			AnswerQtVagasCP.Answer to Ports.ClientPT.AnswerIN AnswerQtVagasCP.QtVagas
+			to QtVagas QueryQtVagasCP.AttPainel to AttPainel QueryQtVagasCP.Query to
+			Ports.ClientPT.QueryOUT
 		}
-	}
-	action def ClientServerRequestVagaAN ( presenca : SysADL.types.Presenca ) :
-	SysADL.types.Vaga {
-		postCondition VagaFromPresencaEQ ( )
-	}
-	action def TriggerAttPainelAN ( Vaga : SysADL.types.Vaga ) :
-	SysADL.types.Boolean {
-	postCondition TriggerPainelEQ ( )
 	}
 	activity def ControlarCorAC {
 		inParameters {
@@ -891,26 +952,7 @@ component def ControladorTicketCP {
 	}
 	action def EscolherCorAN ( Vaga : SysADL.types.Vaga ) : SysADL.types.CorLed {
 		postCondition CorFromVagaEQ ( )
-	}
-	activity def ControlarPainelAC {
-		inParameters {
-			AttPainel : SysADL.types.Boolean
-		}
-		outParameters {
-			QtVagas : SysADL.types.Int
-		}
-		acbody body {
-			actions : ActionUse ClientServerRequestQtVagasAN {
-				definition ClientServerRequestQtVagasAN pinIn {
-					AttPainel : SysADL.types.Boolean
-				}
-			}
-			delegate AttPainel to "ClientServerRequestQtVagasAN.AttPainel" delegate
-			QtVagas to ClientServerRequestQtVagasAN
-		}
-	}
-	action def ClientServerRequestQtVagasAN ( AttPainel : SysADL.types.Boolean )
-	: SysADL.types.Int {
+	delegate Vaga to "CorFromVagaEQ.Vaga"
 	}
 ConstraintDef TriggerPainelEQ {
 		paramIn {
@@ -920,6 +962,218 @@ ConstraintDef TriggerPainelEQ {
 			AttPainel : SysADL.types.Boolean
 		}
 		equation "(AttPainel == True)"
+	}
+component def ControladorCancelaEntradaCP {
+		ports ConfImp : Ports.ConfImpTicketIPT {
+		}
+		Comando : Ports.ComandoCancelaOPT {
+		}
+	}
+	component def ControladorCancelaSaidaCP {
+		ports LeitTicket : Ports.LeitTicketIPT {
+		}
+		Comando : Ports.ComandoCancelaOPT {
+		}
+		ClientPT : Ports.ClientPT {
+		}
+	}
+	activity def ControlarCancelaSaidaAC {
+		inParameters {
+			LeitTicket : SysADL.types.LeitTicket
+		}
+		outParameters {
+			Comando : SysADL.types.ComandoCancela
+		}
+		acbody body {
+		}
+	}
+	
+	activity def ControlarCancelaEntradaAC {
+		inParameters {
+			ConfImp : SysADL.types.ConfImpTicket
+		}
+		outParameters {
+			Comando : SysADL.types.ComandoCancela
+		}
+		acbody body {
+			actions : ActionUse AbrirCancelaEntradaAN {
+				definition AbrirCancelaEntradaAN pinIn {
+					ConfImp : SysADL.types.ConfImpTicket
+				}
+			}
+			delegate ConfImp to "AbrirCancelaEntradaAN.ConfImp" delegate Comando to
+			AbrirCancelaEntradaAN
+		}
+	}
+	
+	action def AbrirCancelaEntradaAN ( ConfImp : SysADL.types.ConfImpTicket ) :
+	SysADL.types.ComandoCancela {
+		postCondition CmdCancelaFromImpTicketEQ ( ) delegate ConfImp to
+		"CmdCancelaFromImpTicketEQ.ConfImp"
+	}
+ConstraintDef CmdCancelaFromImpTicketEQ {
+		paramIn {
+			ConfImp : SysADL.types.ConfImpTicket
+		}
+		paramOut {
+			Comando : SysADL.types.ComandoCancela
+		}
+		equation
+		"(ConfImp.valor == True -> (Comando.id_cancela == ConfImp.id_impressora && Comando.Acao == AcoesCancela::Abrir))"
+	}
+	action def ClientServerRequestTicketAN ( LeitTicket : SysADL.types.LeitTicket
+	) : SysADL.types.Ticket {
+	}
+	component def QuitadorTicketCP {
+		ports ConfPag : Ports.ConfPagIPT {
+		}
+		ClientPT : Ports.ClientPT {
+		}
+	}
+	component def RegistradorTicketCP {
+		ports TicketIn : Ports.TicketIPT {
+		}
+		ClientPT : Ports.ClientPT {
+		}
+	}
+	component def RegatadorTicketCP {
+		ports CodTicket : Ports.CodigoTicketIPT {
+		}
+		ClientPT : Ports.ClientPT {
+		}
+		TicketOut : Ports.TicketOPT {
+		}
+	}
+	component def QueryPresencaCP {
+		ports Presenca : Ports.PresencaIPT {
+		}
+		Query : Ports.QueryOPT {
+		}
+	}
+	component def AnswerVagaCP {
+		ports Answer : Ports.AnswerIPT {
+		}
+		Vaga : Ports.VagaOPT {
+		}
+	}
+	component def TriggerAttPainelCP {
+		ports Vaga : Ports.VagaIPT {
+		}
+		AttPainel : Ports.BooleanOPT {
+		}
+	}
+	component def QueryQtVagasCP {
+		ports AttPainel : Ports.BooleanIPT {
+		}
+		Query : Ports.QueryOPT {
+		}
+	}
+	component def AnswerQtVagasCP {
+		ports QtVagas : Ports.QtVagasOPT {
+		}
+		Answer : Ports.AnswerIPT {
+		}
+	}
+	activity def QueryPresencaAC {
+		inParameters {
+			Presenca : SysADL.types.Presenca
+		}
+		outParameters {
+			Query : SysADL.types.Any
+		}
+		acbody body {
+			actions : ActionUse ConstruirQueryAN {
+				definition ConstruirQueryPresencaAN pinIn {
+					Presenca : SysADL.types.Presenca
+				}
+			}
+			delegate Presenca to "ConstruirQueryAN.Presenca" delegate Query to
+			ConstruirQueryAN
+		}
+	}
+	activity def AnswerVagaAC {
+		inParameters {
+			Answer : SysADL.types.Any
+		}
+		outParameters {
+			Vaga : SysADL.types.Vaga
+		}
+		acbody body {
+			actions : ActionUse ConstruirVagaAnswerAN {
+				definition ConstruirVagaAnswerAN pinIn {
+					Answer : SysADL.types.Any
+				}
+			}
+			delegate Answer to "ConstruirVagaAnswerAN.Answer" delegate Vaga to
+			ConstruirVagaAnswerAN
+		}
+	}
+	activity def TriggerAttPainelAC {
+		inParameters {
+			Vaga : SysADL.types.Vaga
+		}
+		outParameters {
+			AttPainel : SysADL.types.Boolean
+		}
+		acbody body {
+			actions : ActionUse EnviarTriggerAN {
+				definition EnviarTriggerAN pinIn {
+					Vaga : SysADL.types.Vaga
+				}
+			}
+			delegate Vaga to "EnviarTriggerAN.Vaga" delegate AttPainel to
+			EnviarTriggerAN
+		}
+	}
+	action def ConstruirQueryPresencaAN ( Presenca : SysADL.types.Presenca ) :
+	SysADL.types.Any {
+	}
+	action def ConstruirVagaAnswerAN ( Answer : SysADL.types.Any ) :
+	SysADL.types.Vaga {
+	}
+	action def EnviarTriggerAN ( Vaga : SysADL.types.Vaga ) :
+	SysADL.types.Boolean {
+		postCondition TriggerPainelEQ ( ) delegate Vaga to "TriggerPainelEQ.Vaga"
+	}
+	activity def QueryQtVagasAC {
+		inParameters {
+			AttPainel : SysADL.types.Boolean
+		}
+		outParameters {
+			Query : SysADL.types.Any
+		}
+		acbody body {
+			actions : ActionUse ContruirQueryQtVagasAN {
+				definition ConstruirQueryQtVagasAN pinIn {
+					AttPainel : SysADL.types.Boolean
+				}
+			}
+			delegate AttPainel to "ContruirQueryQtVagasAN.AttPainel" delegate Query to
+			ContruirQueryQtVagasAN
+		}
+	}
+	activity def AnswerQtVagasAC {
+		inParameters {
+			Answer : SysADL.types.Any
+		}
+		outParameters {
+			QtVagas : SysADL.types.Int
+		}
+		acbody body {
+			actions : ActionUse ConstruirQtVagasAnswerAN {
+				definition ConstruirQtVagasAnswerAN pinIn {
+					Answer : SysADL.types.Any
+				}
+			}
+			delegate Answer to "ConstruirQtVagasAnswerAN.Answer" delegate QtVagas to
+			ConstruirQtVagasAnswerAN
+		}
+	}
+	action def ConstruirQueryQtVagasAN ( AttPainel : SysADL.types.Boolean ) :
+	SysADL.types.Any {
+	}
+	action def ConstruirQtVagasAnswerAN ( Answer : SysADL.types.Any ) :
+	SysADL.types.Int {
 	}
 }
 package Connectors {
