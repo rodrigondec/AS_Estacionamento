@@ -1046,11 +1046,35 @@ component def ControladorCancelaEntradaCP {
 		}
 		ClientPT : Ports.ClientPT {
 		}
+	configuration {
+			components:
+			QueryConfPagCP : QueryConfPagCP {
+				using ports ConfPag : Ports.ConfPagIPT {
+				}
+				Query : Ports.QueryOPT {
+				}
+			}
+			delegations:
+			QueryConfPagCP.Query to Ports.ClientPT.QueryOUT QueryConfPagCP.ConfPag to
+			ConfPag
+		}
 	}
 	component def RegistradorTicketCP {
 		ports TicketIn : Ports.TicketIPT {
 		}
 		ClientPT : Ports.ClientPT {
+		}
+	configuration {
+			components:
+			QueryTicketCP : QueryTicketCP {
+				using ports Ticket : Ports.TicketIPT {
+				}
+				Query : Ports.QueryOPT {
+				}
+			}
+			delegations:
+			QueryTicketCP.Ticket to TicketIn QueryTicketCP.Query to
+			Ports.ClientPT.QueryOUT
 		}
 	}
 	component def RegatadorTicketCP {
@@ -1059,6 +1083,25 @@ component def ControladorCancelaEntradaCP {
 		ClientPT : Ports.ClientPT {
 		}
 		TicketOut : Ports.TicketOPT {
+		}
+	configuration {
+			components:
+			QueryCodTicketCP : QueryCodTicketCP {
+				using ports CodTicket : Ports.CodigoTicketIPT {
+				}
+				Query : Ports.QueryOPT {
+				}
+			}
+			AnswerTicketCP : AnswerTicketCP {
+				using ports Answer : Ports.AnswerIPT {
+				}
+				Ticket : Ports.TicketOPT {
+				}
+			}
+			delegations:
+			AnswerTicketCP.Answer to Ports.ClientPT.AnswerIN QueryCodTicketCP.Query to
+			Ports.ClientPT.QueryOUT QueryCodTicketCP.CodTicket to CodTicket
+			AnswerTicketCP.Ticket to TicketOut
 		}
 	}
 	component def QueryPresencaCP {
@@ -1220,17 +1263,17 @@ component def QueryLeitTicketCP {
 			Query : SysADL.types.Any
 		}
 		acbody body {
-			actions : ActionUse ConstruirQueryTicketAN {
-				definition ConstruirQueryTicketAN pinIn {
+			actions : ActionUse ConstruirQueryTicketLeitAN {
+				definition ConstruirQueryTicketLeitAN pinIn {
 					LeitTicket : SysADL.types.LeitTicket
 				}
 			}
-			delegate LeitTicket to "ConstruirQueryTicketAN.LeitTicket" delegate Query
-			to ConstruirQueryTicketAN
+			delegate LeitTicket to "ConstruirQueryTicketLeitAN.LeitTicket" delegate
+			Query to ConstruirQueryTicketLeitAN
 		}
 	}
-	action def ConstruirQueryTicketAN ( LeitTicket : SysADL.types.LeitTicket ) :
-	SysADL.types.Any {
+	action def ConstruirQueryTicketLeitAN ( LeitTicket : SysADL.types.LeitTicket
+	) : SysADL.types.Any {
 	}
 	activity def AnswerTicketAC {
 		inParameters {
@@ -1284,6 +1327,84 @@ component def QueryLeitTicketCP {
 		}
 		equation
 		"(Ticket.status == StatusTicket::Pago -> (Comando.id_cancela == LeitTicket.id_leitora && Comando.acao == AcoesCancela::Abrir))"
+	}
+	component def QueryCodTicketCP {
+		ports CodTicket : Ports.CodigoTicketIPT {
+		}
+		Query : Ports.QueryOPT {
+		}
+	}
+	component def QueryTicketCP {
+		ports Ticket : Ports.TicketIPT {
+		}
+		Query : Ports.QueryOPT {
+		}
+	}
+	component def QueryConfPagCP {
+		ports ConfPag : Ports.ConfPagIPT {
+		}
+		Query : Ports.QueryOPT {
+		}
+	}
+	activity def QueryCodTicketAC {
+		inParameters {
+			CodBarras : SysADL.types.CodBarras
+		}
+		outParameters {
+			Query : SysADL.types.Any
+		}
+		acbody body {
+			actions : ActionUse ConstruirQueryTicketCodAN {
+				definition ConstruirQueryTicketCodAN pinIn {
+					CodBarras : SysADL.types.CodBarras
+				}
+			}
+			delegate CodBarras to "ConstruirQueryTicketCodAN.CodBarras" delegate Query
+			to ConstruirQueryTicketCodAN
+		}
+	}
+	activity def QueryConfPagAC {
+		inParameters {
+			ConfPag : SysADL.types.ConfPag
+		}
+		outParameters {
+			Query : SysADL.types.Any
+		}
+		acbody body {
+			actions : ActionUse ConstruirQueryAlterarTicketAN {
+				definition ConstruirQueryAlterarTicketAN pinIn {
+					ConfPag : SysADL.types.ConfPag
+				}
+			}
+			delegate Query to ConstruirQueryAlterarTicketAN delegate ConfPag to
+			"ConstruirQueryAlterarTicketAN.ConfPag"
+		}
+	}
+	activity def QueryTicketAC {
+		inParameters {
+			Ticket : SysADL.types.Ticket
+		}
+		outParameters {
+			Query : SysADL.types.Any
+		}
+		acbody body {
+			actions : ActionUse ConstruirQuerySalvarTicketAN {
+				definition ConstruirQuerySalvarTicketAN pinIn {
+					Ticket : SysADL.types.Ticket
+				}
+			}
+			delegate Ticket to "ConstruirQuerySalvarTicketAN.Ticket" delegate Query to
+			ConstruirQuerySalvarTicketAN
+		}
+	}
+	action def ConstruirQueryTicketCodAN ( CodBarras : SysADL.types.CodBarras ) :
+	SysADL.types.Any {
+	}
+	action def ConstruirQuerySalvarTicketAN ( Ticket : SysADL.types.Ticket ) :
+	SysADL.types.Any {
+	}
+	action def ConstruirQueryAlterarTicketAN ( ConfPag : SysADL.types.ConfPag ) :
+	SysADL.types.Any {
 	}
 }
 package Connectors {
