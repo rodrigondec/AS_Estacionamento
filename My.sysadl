@@ -389,8 +389,7 @@ component def GerenciadorRelatorioCP {
 			GeradorRelatorioCP : GeradorRelatorioCP {
 				using ports p26 : Ports.LogUsoIPT {
 				}
-				p19 : Ports.RelatorioOPT {
-				}
+				
 			}
 			delegations:
 			
@@ -412,11 +411,10 @@ component def GerenciadorRelatorioCP {
 	Relatorio : Ports.RelatorioIPT {
 		}
 	}
-	component def GeradorRelatorioCP {
+	boundary component def GeradorRelatorioCP {
 		ports Log : Ports.LogUsoIPT {
 		}
-		Relatorio : Ports.RelatorioOPT {
-		}
+		
 	}
 
 component def VagaCP {
@@ -701,6 +699,25 @@ component def ControladorGeralCP {
 	ClientPT : Ports.ClientPT {
 		}
 	configuration {
+		components:
+			QueryFiltroCP : QueryFiltroCP {
+				using ports TipoRelat : Ports.TipoRelatorioIPT {
+				}
+				DataFiltro : Ports.DataFiltroIPT {
+				}
+				Query : Ports.QueryOPT {
+				}
+			}
+			AnswerLogCP : AnswerLogCP {
+				using ports Answer : Ports.AnswerIPT {
+				}
+				Log : Ports.LogUsoOPT {
+				}
+			}
+			delegations:
+			QueryFiltroCP.DataFiltro to DataFiltro QueryFiltroCP.TipoRelat to TipoRelat
+			QueryFiltroCP.Query to Ports.ClientPT.QueryOUT AnswerLogCP.Log to Log
+			AnswerLogCP.Answer to Ports.ClientPT.AnswerIN
 		}
 	}
 boundary component def ScannerTicketCP {
@@ -1405,6 +1422,65 @@ component def QueryLeitTicketCP {
 	}
 	action def ConstruirQueryAlterarTicketAN ( ConfPag : SysADL.types.ConfPag ) :
 	SysADL.types.Any {
+	}
+	component def QueryFiltroCP {
+		ports TipoRelat : Ports.TipoRelatorioIPT {
+		}
+		DataFiltro : Ports.DataFiltroIPT {
+		}
+		Query : Ports.QueryOPT {
+		}
+	}
+	component def AnswerLogCP {
+		ports Answer : Ports.AnswerIPT {
+		}
+		Log : Ports.LogUsoOPT {
+		}
+	}
+	activity def AnswerLogAC {
+		inParameters {
+			Answer : SysADL.types.Any
+		}
+		outParameters {
+			Log : SysADL.types.Log
+		}
+		acbody body {
+			actions : ActionUse ConstruirLogAnswerAN {
+				definition ConstruirLogAnswerAN pinIn {
+					Answer : SysADL.types.Any
+				}
+			}
+			delegate Answer to "ConstruirLogAnswerAN.Answer" delegate Log to
+			ConstruirLogAnswerAN
+		}
+	}
+	activity def QueryFiltroAC {
+		inParameters {
+			Data_Inicio : SysADL.types.DateTime, Data_Fim : SysADL.types.DateTime,
+			TipoRelat : SysADL.types.TipoRelatorio
+		}
+		outParameters {
+			Query : SysADL.types.Any
+		}
+		acbody body {
+			actions : ActionUse ConstruirQueryFiltroAN {
+				definition ConstruirQueryFiltroAN pinIn {
+					Data_Inicio : SysADL.types.DateTime, TipoRelat :
+					SysADL.types.TipoRelatorio, Data_Fim : SysADL.types.DateTime
+				}
+			}
+			delegate Query to ConstruirQueryFiltroAN delegate TipoRelat to
+			"ConstruirQueryFiltroAN.TipoRelat" delegate Data_Fim to
+			"ConstruirQueryFiltroAN.Data_Fim" delegate Data_Inicio to
+			"ConstruirQueryFiltroAN.Data_Inicio"
+		}
+	}
+	action def ConstruirQueryFiltroAN ( Data_Inicio : SysADL.types.DateTime,
+	Data_Fim : SysADL.types.DateTime, TipoRelat : SysADL.types.TipoRelatorio ) :
+	SysADL.types.Any {
+	}
+	action def ConstruirLogAnswerAN ( Answer : SysADL.types.Any ) :
+	SysADL.types.Log {
 	}
 }
 package Connectors {
