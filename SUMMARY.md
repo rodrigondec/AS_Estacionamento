@@ -48,7 +48,7 @@
       * [QueryTicketAC](doc/comportamental/clientserver/querys/queryticketac.md)
       * [QueryConfPagAC](doc/comportamental/clientserver/querys/queryconfpagac.md)
       * [QueryFiltroAC](doc/comportamental/clientserver/querys/queryfiltroac.md)
-    * Answers
+    * [Answers](doc/comportamental/clientserver/answers.md)
       * [AnswerVagaAC](doc/comportamental/clientserver/answervagaac.md)
       * [AnswerQtVagasAC](doc/comportamental/clientserver/answerqtvagasac.md)
       * [AnswerTicketAC](doc/comportamental/clientserver/answerticketac.md)
