@@ -1,2 +1,4 @@
-![](/doc/img/Estrutural/ControladorTicketCP.png)
+# Componente Composto ControladorTicketCP![](/doc/img/Estrutural/ControladorTicketCP.png)
+
+
 

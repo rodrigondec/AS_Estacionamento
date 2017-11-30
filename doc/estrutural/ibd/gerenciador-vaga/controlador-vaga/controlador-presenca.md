@@ -1,2 +1,4 @@
-![](/doc/img/Estrutural/ControladorPresencaCP.png)
+# Componente Composto ControladorPresencaCP![](/doc/img/Estrutural/ControladorPresencaCP.png)
+
+
 

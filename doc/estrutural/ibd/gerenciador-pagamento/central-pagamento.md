@@ -1,2 +1,4 @@
-![](/doc/img/Estrutural/CentralPagamentoCP.png)
+# Componente Composto CentralPagamentoCP![](/doc/img/Estrutural/CentralPagamentoCP.png)
+
+
 

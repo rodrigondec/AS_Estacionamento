@@ -1,2 +1,4 @@
-![](/doc/img/Estrutural/GerenciadorCancelaCP.png)
+# Componente Composto GerenciadorCancelaCP![](/doc/img/Estrutural/GerenciadorCancelaCP.png)
+
+
 

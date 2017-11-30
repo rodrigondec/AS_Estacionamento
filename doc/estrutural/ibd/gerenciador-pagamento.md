@@ -1,2 +1,4 @@
-![](/doc/img/Estrutural/GerenciadorPagamentoCP.png)
+# Componente composto GerenciadorPagamentoCP![](/doc/img/Estrutural/GerenciadorPagamentoCP.png)
+
+
 
