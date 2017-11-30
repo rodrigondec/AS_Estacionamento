@@ -816,7 +816,7 @@ boundary component def ScannerTicketCP {
 		}
 		equation "(ticket.status == StatusTicket::Pendente -> (ValorTicket.valor = 10))"
 	}
-	activity def ValidarPrecoPagamentoAC {
+	activity def ValidadorPrecoPagamentoAC {
 		inParameters {
 			ValorTicket : SysADL.types.ValorPag, ValorPago : SysADL.types.ValorPag
 		}
@@ -953,7 +953,7 @@ component def ControladorTicketCP {
 			Ports.ClientPT.QueryOUT
 		}
 	}
-	activity def ControlarCorAC {
+	activity def ControladorCorAC {
 		inParameters {
 			Vaga : SysADL.types.Vaga
 		}
@@ -1312,7 +1312,7 @@ component def QueryLeitTicketCP {
 	action def ConstruirTicketAnswerAN ( Answer : SysADL.types.Any ) :
 	SysADL.types.Ticket {
 	}
-	activity def ValidarTicketPagoAC {
+	activity def ValidadorTicketPagoAC {
 		inParameters {
 			Ticket : SysADL.types.Ticket, LeitTicket : SysADL.types.LeitTicket
 		}
