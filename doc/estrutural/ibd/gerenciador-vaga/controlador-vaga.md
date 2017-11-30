@@ -1,2 +1,4 @@
-![](/doc/img/Estrutural/ControladorVagaCP.png)
+# Componente Composto ControladorVagaCP![](/doc/img/Estrutural/ControladorVagaCP.png)
+
+
 

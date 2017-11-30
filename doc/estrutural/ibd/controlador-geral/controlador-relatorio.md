@@ -1,2 +1,4 @@
-![](/doc/img/Estrutural/ControladorRelatorioCP.png)
+# Componente Composto ControladorRelatorioCP![](/doc/img/Estrutural/ControladorRelatorioCP.png)
+
+
 

@@ -1,2 +1,4 @@
-![](/doc/img/Estrutural/CaixaPagamentoCP.png)
+# Componente Composto CaixaPagamentoCP![](/doc/img/Estrutural/CaixaPagamentoCP.png)
+
+
 

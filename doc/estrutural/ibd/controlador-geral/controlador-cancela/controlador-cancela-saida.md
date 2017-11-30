@@ -1,2 +1,4 @@
-![](/doc/img/Estrutural/ControladorCancelaSaidaCP.png)
+# Componente Composto ControladorCancelaSaidaCP![](/doc/img/Estrutural/ControladorCancelaSaidaCP.png)
+
+
 
