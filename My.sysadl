@@ -352,16 +352,10 @@ import Ports;
 				}
 				Cor : Ports.CorLedOPT {
 				}
-				clientPT : Ports.ClientPT {
-				}
-			}
-			BDVagaCP : BDVagaCP {
-				using ports serverPT : Ports.ServerPT {
-				}
+				
 			}
 			connectors:
-			ClientServer : Connectors.ClientServerCN bindings
-			ControladorVagaCP.clientPT = BDVagaCP.serverPT qtVagas :
+			 qtVagas :
 			Connectors.QtVagasCNT bindings ControladorVagaCP.QtVagasOut =
 			PainelLedCP.p18 Presenca : Connectors.PresencaCNT bindings VagaCP.Presenca
 			= ControladorVagaCP.Presenca Cor : Connectors.CorLedCNT bindings
@@ -735,8 +729,7 @@ boundary component def ScannerTicketCP {
 		
 		CorOut : Ports.CorLedOPT {
 		}
-	ClientPT : Ports.ClientPT {
-		}
+	
 		configuration {
 			components:
 			ControladorCorCP : ControladorCorCP {
@@ -763,14 +756,19 @@ boundary component def ScannerTicketCP {
 				QtVagas : Ports.QtVagasOPT {
 				}
 			}
+			BDVagaCP : BDVagaCP {
+				using ports ServerPT : Ports.ServerPT {
+				}
+			}
 			connectors:
 			Vaga : Connectors.VagaCNT bindings ControladorPresencaCP.Vaga =
 			ControladorCorCP.Vaga AttPainel : Connectors.BooleanCNT bindings
 			ControladorPresencaCP.AttPainel = ControladorPainelCP.AttPainel
-			delegations:
+			c_qtvagas : Connectors.ClientServerCN bindings ControladorPainelCP.ClientPT =
+			BDVagaCP.ServerPT c_presenca : Connectors.ClientServerCN bindings
+			ControladorPresencaCP.ClientPT = BDVagaCP.ServerPT delegations:
 			ControladorCorCP.Cor to CorOut ControladorPresencaCP.Presenca to Presenca
-			ControladorPainelCP.QtVagas to QtVagasOut ControladorPainelCP.ClientPT to
-			ClientPT ControladorPresencaCP.ClientPT to ClientPT
+			ControladorPainelCP.QtVagas to QtVagasOut  
 		}
 	}
 	ConstraintDef CorFromVagaEQ {
