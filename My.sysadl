@@ -780,7 +780,7 @@ boundary component def ScannerTicketCP {
 		paramOut {
 			Cor : SysADL.types.CorLed
 		}
-		equation "(Vaga.ocupada == False -> (Cor.cor == Cores::Vermelho) | Vaga.ocupada == True -> (Vaga.tipo == TipoVaga::Normal -> (Cor.cor == Cores::Verde) | Vaga.tipo == TipoVaga::Deficiente -> (Cor.cor == Cores::Amarelo) | Vaga.tipo == TipoVaga::Idoso -> (Cor.cor == Cores::Azul)))"
+		equation "(Vaga.ocupada == False -> (Cor.cor = Cores::Vermelho)) | (Vaga.ocupada == True -> ((Vaga.tipo == TipoVaga::Normal -> (Cor.cor = Cores::Verde)) | (Vaga.tipo == TipoVaga::Deficiente -> (Cor.cor = Cores::Amarelo)) | (Vaga.tipo == TipoVaga::Idoso -> (Cor.cor = Cores::Azul))))"
 	}
 	
 	
@@ -814,7 +814,7 @@ boundary component def ScannerTicketCP {
 		paramOut {
 			ValorTicket : SysADL.types.ValorPag
 		}
-		equation "(ticket.status == StatusTicket::Pendente -> (ValorTicket.valor == 10))"
+		equation "(ticket.status == StatusTicket::Pendente -> (ValorTicket.valor = 10))"
 	}
 	activity def ValidarPrecoPagamentoAC {
 		inParameters {
@@ -846,7 +846,7 @@ boundary component def ScannerTicketCP {
 		paramOut {
 			ConfPag : SysADL.types.ConfPag
 		}
-		equation "(ValorTicket.valor == ValorPago.valor -> (ConfPag.valor == True && ConfPag.id_ticket == ValorTicket.id_ticket))"
+		equation "(ValorTicket.valor == ValorPago.valor -> (ConfPag.valor = True && ConfPag.id_ticket = ValorTicket.id_ticket))"
 	}
 component def ControladorTicketCP {
 		ports TicketIn : Ports.TicketIPT {
@@ -980,7 +980,7 @@ ConstraintDef TriggerPainelEQ {
 		paramOut {
 			AttPainel : SysADL.types.Boolean
 		}
-		equation "(AttPainel == True)"
+		equation "(AttPainel = True)"
 	}
 component def ControladorCancelaEntradaCP {
 		ports ConfImp : Ports.ConfImpTicketIPT {
@@ -1056,7 +1056,7 @@ component def ControladorCancelaEntradaCP {
 			Comando : SysADL.types.ComandoCancela
 		}
 		equation
-		"(ConfImp.valor == True -> (Comando.id_cancela == ConfImp.id_impressora && Comando.Acao == AcoesCancela::Abrir))"
+		"(ConfImp.valor == True -> (Comando.id_cancela = ConfImp.id_impressora && Comando.Acao = AcoesCancela::Abrir))"
 	}
 	component def QuitadorTicketCP {
 		ports ConfPag : Ports.ConfPagIPT {
@@ -1343,7 +1343,7 @@ component def QueryLeitTicketCP {
 			Comando : SysADL.types.ComandoCancela
 		}
 		equation
-		"(Ticket.status == StatusTicket::Pago -> (Comando.id_cancela == LeitTicket.id_leitora && Comando.acao == AcoesCancela::Abrir))"
+		"(Ticket.status == StatusTicket::Pago -> (Comando.id_cancela = LeitTicket.id_leitora && Comando.acao = AcoesCancela::Abrir))"
 	}
 	component def QueryCodTicketCP {
 		ports CodTicket : Ports.CodigoTicketIPT {

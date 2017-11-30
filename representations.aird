@@ -16436,7 +16436,7 @@
           <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='BDD.Behavior']/@defaultLayer/@containerMappings[name='BDD.Behavior.Self']/@subContainerMappings[name='BDD.Constraint']/@style"/>
         </ownedStyle>
         <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='BDD.Behavior']/@defaultLayer/@containerMappings[name='BDD.Behavior.Self']/@subContainerMappings[name='BDD.Constraint']"/>
-        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_ZICh8MUbEee7SMu4ekLhgA" name="equation: (Vaga.ocupada == False -> (Cor.cor == Cores::Vermelho) | Vaga.ocupada == True -> (Vaga.tipo == TipoVaga::Normal -> (Cor.cor == Cores::Verde) | Vaga.tipo == TipoVaga::Deficiente -> (Cor.cor == Cores::Amarelo) | Vaga.tipo == TipoVaga::Idoso -> (Cor.cor == Cores::Azul)))">
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_ZICh8MUbEee7SMu4ekLhgA" name="equation: (Vaga.ocupada == False -> (Cor.cor = Cores::Vermelho)) | (Vaga.ocupada == True -> ((Vaga.tipo == TipoVaga::Normal -> (Cor.cor = Cores::Verde)) | (Vaga.tipo == TipoVaga::Deficiente -> (Cor.cor = Cores::Amarelo)) | (Vaga.tipo == TipoVaga::Idoso -> (Cor.cor = Cores::Azul))))">
           <target xmi:type="sysADL_Sintax:ConstraintDef" href="My.sysadl#//@packages[name='Components']/@architectures.30"/>
           <semanticElements xmi:type="sysADL_Sintax:Expression" href="My.sysadl#//@packages[name='Components']/@architectures.30/@equation"/>
           <ownedStyle xmi:type="diagram:Dot" xmi:id="_ZIDJAMUbEee7SMu4ekLhgA" showIcon="false">
@@ -16533,7 +16533,7 @@
           <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='BDD.Behavior']/@defaultLayer/@containerMappings[name='BDD.Behavior.Self']/@subContainerMappings[name='BDD.Constraint']/@style"/>
         </ownedStyle>
         <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='BDD.Behavior']/@defaultLayer/@containerMappings[name='BDD.Behavior.Self']/@subContainerMappings[name='BDD.Constraint']"/>
-        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_bmdvYMUfEee7SMu4ekLhgA" name="equation: (ticket.status == StatusTicket::Pendente -> (ValorTicket.valor == 10))">
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_bmdvYMUfEee7SMu4ekLhgA" name="equation: (ticket.status == StatusTicket::Pendente -> (ValorTicket.valor = 10))">
           <target xmi:type="sysADL_Sintax:ConstraintDef" href="My.sysadl#//@packages[name='Components']/@architectures.33"/>
           <semanticElements xmi:type="sysADL_Sintax:Expression" href="My.sysadl#//@packages[name='Components']/@architectures.33/@equation"/>
           <ownedStyle xmi:type="diagram:Dot" xmi:id="_bmeWcMUfEee7SMu4ekLhgA" showIcon="false">
@@ -16646,7 +16646,7 @@
           <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='BDD.Behavior']/@defaultLayer/@containerMappings[name='BDD.Behavior.Self']/@subContainerMappings[name='BDD.Constraint']/@style"/>
         </ownedStyle>
         <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='BDD.Behavior']/@defaultLayer/@containerMappings[name='BDD.Behavior.Self']/@subContainerMappings[name='BDD.Constraint']"/>
-        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_w_wLsMUgEee7SMu4ekLhgA" name="equation: (ValorTicket.valor == ValorPago.valor -> (ConfPag.valor == True &amp;&amp; ConfPag.id_ticket == ValorTicket.id_ticket))">
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_w_wLsMUgEee7SMu4ekLhgA" name="equation: (ValorTicket.valor == ValorPago.valor -> (ConfPag.valor = True &amp;&amp; ConfPag.id_ticket = ValorTicket.id_ticket))">
           <target xmi:type="sysADL_Sintax:ConstraintDef" href="My.sysadl#//@packages[name='Components']/@architectures.36"/>
           <semanticElements xmi:type="sysADL_Sintax:Expression" href="My.sysadl#//@packages[name='Components']/@architectures.36/@equation"/>
           <ownedStyle xmi:type="diagram:Dot" xmi:id="_w_wywMUgEee7SMu4ekLhgA" showIcon="false">
@@ -16751,7 +16751,7 @@
           <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='BDD.Behavior']/@defaultLayer/@containerMappings[name='BDD.Behavior.Self']/@subContainerMappings[name='BDD.Constraint']/@style"/>
         </ownedStyle>
         <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='BDD.Behavior']/@defaultLayer/@containerMappings[name='BDD.Behavior.Self']/@subContainerMappings[name='BDD.Constraint']"/>
-        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_PdIw8NJjEeeFxvWbunonDA" name="equation: (AttPainel == True)">
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_PdIw8NJjEeeFxvWbunonDA" name="equation: (AttPainel = True)">
           <target xmi:type="sysADL_Sintax:ConstraintDef" href="My.sysadl#//@packages[name='Components']/@architectures.42"/>
           <semanticElements xmi:type="sysADL_Sintax:Expression" href="My.sysadl#//@packages[name='Components']/@architectures.42/@equation"/>
           <ownedStyle xmi:type="diagram:Dot" xmi:id="_PdIw8dJjEeeFxvWbunonDA" showIcon="false">
@@ -16848,7 +16848,7 @@
           <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='BDD.Behavior']/@defaultLayer/@containerMappings[name='BDD.Behavior.Self']/@subContainerMappings[name='BDD.Constraint']/@style"/>
         </ownedStyle>
         <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='BDD.Behavior']/@defaultLayer/@containerMappings[name='BDD.Behavior.Self']/@subContainerMappings[name='BDD.Constraint']"/>
-        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="__Z2TYNPqEeebk5zTgwMA1g" name="equation: (ConfImp.valor == True -> (Comando.id_cancela == ConfImp.id_impressora &amp;&amp; Comando.Acao == AcoesCancela::Abrir))">
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="__Z2TYNPqEeebk5zTgwMA1g" name="equation: (ConfImp.valor == True -> (Comando.id_cancela = ConfImp.id_impressora &amp;&amp; Comando.Acao = AcoesCancela::Abrir))">
           <target xmi:type="sysADL_Sintax:ConstraintDef" href="My.sysadl#//@packages[name='Components']/@architectures.47"/>
           <semanticElements xmi:type="sysADL_Sintax:Expression" href="My.sysadl#//@packages[name='Components']/@architectures.47/@equation"/>
           <ownedStyle xmi:type="diagram:Dot" xmi:id="__Z26cNPqEeebk5zTgwMA1g" showIcon="false">
@@ -17344,7 +17344,7 @@
           <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='BDD.Behavior']/@defaultLayer/@containerMappings[name='BDD.Behavior.Self']/@subContainerMappings[name='BDD.Constraint']/@style"/>
         </ownedStyle>
         <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='BDD.Behavior']/@defaultLayer/@containerMappings[name='BDD.Behavior.Self']/@subContainerMappings[name='BDD.Constraint']"/>
-        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_yHNTcNP8Eeebk5zTgwMA1g" name="equation: (Ticket.status == StatusTicket::Pago -> (Comando.id_cancela == LeitTicket.id_leitora &amp;&amp; Comando.acao == AcoesCancela::Abrir))">
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_yHNTcNP8Eeebk5zTgwMA1g" name="equation: (Ticket.status == StatusTicket::Pago -> (Comando.id_cancela = LeitTicket.id_leitora &amp;&amp; Comando.acao = AcoesCancela::Abrir))">
           <target xmi:type="sysADL_Sintax:ConstraintDef" href="My.sysadl#//@packages[name='Components']/@architectures.75"/>
           <semanticElements xmi:type="sysADL_Sintax:Expression" href="My.sysadl#//@packages[name='Components']/@architectures.75/@equation"/>
           <ownedStyle xmi:type="diagram:Dot" xmi:id="_yHNTcdP8Eeebk5zTgwMA1g" showIcon="false">
