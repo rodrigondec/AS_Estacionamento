@@ -2,7 +2,5 @@
 
 # Modificabilidade
 
-bla
-
-
+Não foram aplicadas boas práticas de modificabilidade para reduzir as propagações de impacto ao aalterar os componentes. Porém devido à modularização do projeto, trocar os componentes é relativamente fácil \(nível de propagação de impacto de aproximadamente 3 modificações\).
 

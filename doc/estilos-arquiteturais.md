@@ -2,7 +2,5 @@
 
 # Estilos Arquiteturais
 
-bla
-
-
+Foi implementado no projeto o estilo arquitetural Cliente-Servidor. Com os servidores sendo os componentes de de banco de dados \(abstração com boundary\)
 
