@@ -1318,13 +1318,16 @@ component def QueryLeitTicketCP {
 			Comando : SysADL.types.ComandoCancela
 		}
 		acbody body {
-			actions : ActionUse AbrirCancelaSaidaAN {
+			actions : 
+			 
+		ActionUse AbrirCancelaSaidaAN {
 				definition AbrirCancelaSaidaAN pinIn {
-					Ticket : SysADL.types.Ticket
+					LeitTicket : SysADL.types.LeitTicket, Ticket : SysADL.types.Ticket
 				}
 			}
-			delegate Ticket to "AbrirCancelaSaidaAN.Ticket" delegate Comando to
-			AbrirCancelaSaidaAN
+			
+			delegate  Ticket to "AbrirCancelaSaidaAN.Ticket"  delegate  LeitTicket to
+			"AbrirCancelaSaidaAN.LeitTicket" delegate Comando to AbrirCancelaSaidaAN
 		}
 	}
 	action def AbrirCancelaSaidaAN ( Ticket : SysADL.types.Ticket, LeitTicket :
