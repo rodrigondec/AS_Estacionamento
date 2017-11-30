@@ -1026,7 +1026,7 @@ component def ControladorCancelaEntradaCP {
 			to LeitTicket
 		}
 	}
-	activity def ControlarCancelaEntradaAC {
+	activity def ControladorCancelaEntradaAC {
 		inParameters {
 			ConfImp : SysADL.types.ConfImpTicket
 		}
