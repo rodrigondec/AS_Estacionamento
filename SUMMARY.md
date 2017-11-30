@@ -53,7 +53,7 @@
       * [AnswerQtVagasAC](doc/comportamental/clientserver/answerqtvagasac.md)
       * [AnswerTicketAC](doc/comportamental/clientserver/answerticketac.md)
       * [AnswerLogAC](doc/comportamental/clientserver/answerlogac.md)
-* [Atributos de qualidade](doc/atributos-de-qualidade.md)
+* [Atributos de Qualidade](doc/atributos-de-qualidade.md)
   * [Modificabilidade](doc/atributos-de-qualidade/modificabilidade.md)
   * [Escalabilidade](doc/atributos-de-qualidade/escalabilidade.md)
 * [Estilos Arquiteturais](doc/estilos-arquiteturais.md)
