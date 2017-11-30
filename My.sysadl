@@ -822,13 +822,13 @@ boundary component def ScannerTicketCP {
 			ConfPag : SysADL.types.ConfPag
 		}
 		acbody body {
-			actions : ActionUse VerificarPagamento {
+			actions : ActionUse VerificarPagamentoAN {
 				definition VerificarPagamentoAN pinIn {
 					ValorPago : SysADL.types.ValorPag, ValorTicket : SysADL.types.ValorPag
 				}
 			}
-			delegate ValorTicket to "VerificarPagamento.ValorTicket" delegate ValorPago
-			to "VerificarPagamento.ValorPago" delegate ConfPag to VerificarPagamento
+			delegate ValorTicket to "VerificarPagamentoAN.ValorTicket" delegate ValorPago
+			to "VerificarPagamentoAN.ValorPago" delegate ConfPag to VerificarPagamentoAN
 		}
 	}
 	action def VerificarPagamentoAN ( ValorTicket : SysADL.types.ValorPag,

@@ -18524,7 +18524,7 @@
         </edges>
       </data>
     </ownedAnnotationEntries>
-    <ownedDiagramElements xmi:type="diagram:DNodeContainer" xmi:id="_P0E0hMUhEee7SMu4ekLhgA" name="act [Behavior] ValidarPrecoPagamentoAC">
+    <ownedDiagramElements xmi:type="diagram:DNodeContainer" xmi:id="_P0E0hMUhEee7SMu4ekLhgA" name="act [Behavior] ValidadorPrecoPagamentoAC">
       <target xmi:type="sysADL_Sintax:ActivityBody" href="My.sysadl#//@packages[name='Components']/@architectures.34/@acbody"/>
       <semanticElements xmi:type="sysADL_Sintax:ActivityBody" href="My.sysadl#//@packages[name='Components']/@architectures.34/@acbody"/>
       <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_P0E0hcUhEee7SMu4ekLhgA" name="ValorPago : ValorPag" outgoingEdges="_Y0LjEMUhEee7SMu4ekLhgA" width="3" height="3" resizeKind="NSEW">
@@ -18567,12 +18567,12 @@
         <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='SysADL.AD']/@defaultLayer/@containerMappings[name='ADNew.Self']/@style"/>
       </ownedStyle>
       <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='SysADL.AD']/@defaultLayer/@containerMappings[name='ADNew.Self']"/>
-      <ownedDiagramElements xmi:type="diagram:DNodeContainer" xmi:id="_TpgN8MUhEee7SMu4ekLhgA" name="&lt;&lt;action>>&#xA;VerificarPagamento : VerificarPagamento">
-        <target xmi:type="sysADL_Sintax:ActionUse" href="My.sysadl#//@packages[name='Components']/@architectures.34/@acbody/@actions[name='VerificarPagamento']"/>
-        <semanticElements xmi:type="sysADL_Sintax:ActionUse" href="My.sysadl#//@packages[name='Components']/@architectures.34/@acbody/@actions[name='VerificarPagamento']"/>
+      <ownedDiagramElements xmi:type="diagram:DNodeContainer" xmi:id="_TpgN8MUhEee7SMu4ekLhgA" name="&lt;&lt;action>>&#xA;VerificarPagamentoAN : VerificarPagamentoAN">
+        <target xmi:type="sysADL_Sintax:ActionUse" href="My.sysadl#//@packages[name='Components']/@architectures.34/@acbody/@actions[name='VerificarPagamentoAN']"/>
+        <semanticElements xmi:type="sysADL_Sintax:ActionUse" href="My.sysadl#//@packages[name='Components']/@architectures.34/@acbody/@actions[name='VerificarPagamentoAN']"/>
         <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_TpjRQcUhEee7SMu4ekLhgA" name=":ConfPag" incomingEdges="_ZjjKgMUhEee7SMu4ekLhgA" width="1" height="1">
-          <target xmi:type="sysADL_Sintax:ActionUse" href="My.sysadl#//@packages[name='Components']/@architectures.34/@acbody/@actions[name='VerificarPagamento']"/>
-          <semanticElements xmi:type="sysADL_Sintax:ActionUse" href="My.sysadl#//@packages[name='Components']/@architectures.34/@acbody/@actions[name='VerificarPagamento']"/>
+          <target xmi:type="sysADL_Sintax:ActionUse" href="My.sysadl#//@packages[name='Components']/@architectures.34/@acbody/@actions[name='VerificarPagamentoAN']"/>
+          <semanticElements xmi:type="sysADL_Sintax:ActionUse" href="My.sysadl#//@packages[name='Components']/@architectures.34/@acbody/@actions[name='VerificarPagamentoAN']"/>
           <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
           <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
           <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
@@ -18582,8 +18582,8 @@
           <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='SysADL.AD']/@defaultLayer/@containerMappings[name='ADNew.Self']/@subContainerMappings[name='ADNew.Actions']/@borderedNodeMappings[name='ADNew.Actions.Output']"/>
         </ownedBorderedNodes>
         <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_TpmUkcUhEee7SMu4ekLhgA" name="ValorPago" incomingEdges="_Y0LjEMUhEee7SMu4ekLhgA" width="1" height="1">
-          <target xmi:type="sysADL_Sintax:Pin" href="My.sysadl#//@packages[name='Components']/@architectures.34/@acbody/@actions[name='VerificarPagamento']/@pinIn.0"/>
-          <semanticElements xmi:type="sysADL_Sintax:Pin" href="My.sysadl#//@packages[name='Components']/@architectures.34/@acbody/@actions[name='VerificarPagamento']/@pinIn.0"/>
+          <target xmi:type="sysADL_Sintax:Pin" href="My.sysadl#//@packages[name='Components']/@architectures.34/@acbody/@actions[name='VerificarPagamentoAN']/@pinIn.0"/>
+          <semanticElements xmi:type="sysADL_Sintax:Pin" href="My.sysadl#//@packages[name='Components']/@architectures.34/@acbody/@actions[name='VerificarPagamentoAN']/@pinIn.0"/>
           <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
           <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
           <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
@@ -18593,8 +18593,8 @@
           <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='SysADL.AD']/@defaultLayer/@containerMappings[name='ADNew.Self']/@subContainerMappings[name='ADNew.Actions']/@borderedNodeMappings[name='ADNew.Actions.Input']"/>
         </ownedBorderedNodes>
         <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_Tpm7oMUhEee7SMu4ekLhgA" name="ValorTicket" incomingEdges="_X_f90MUhEee7SMu4ekLhgA" width="1" height="1">
-          <target xmi:type="sysADL_Sintax:Pin" href="My.sysadl#//@packages[name='Components']/@architectures.34/@acbody/@actions[name='VerificarPagamento']/@pinIn.1"/>
-          <semanticElements xmi:type="sysADL_Sintax:Pin" href="My.sysadl#//@packages[name='Components']/@architectures.34/@acbody/@actions[name='VerificarPagamento']/@pinIn.1"/>
+          <target xmi:type="sysADL_Sintax:Pin" href="My.sysadl#//@packages[name='Components']/@architectures.34/@acbody/@actions[name='VerificarPagamentoAN']/@pinIn.1"/>
+          <semanticElements xmi:type="sysADL_Sintax:Pin" href="My.sysadl#//@packages[name='Components']/@architectures.34/@acbody/@actions[name='VerificarPagamentoAN']/@pinIn.1"/>
           <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
           <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
           <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
@@ -20386,7 +20386,7 @@
         <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='Parametric']/@defaultLayer/@containerMappings[name='Parametric.Activity.Self']/@style"/>
       </ownedStyle>
       <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='Parametric']/@defaultLayer/@containerMappings[name='Parametric.Activity.Self']"/>
-      <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_ovMD6tPrEeebk5zTgwMA1g" name="&lt;&lt;Constraint>>&#xA;:CmdCancelaFromImpTicketEQ&#xA;(ConfImp.valor == True -> (Comando.id_cancela == ConfImp.id_impressora &amp;&amp; Comando.Acao == AcoesCancela::Abrir))" width="12" height="7" resizeKind="NSEW">
+      <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_ovMD6tPrEeebk5zTgwMA1g" name="&lt;&lt;Constraint>>&#xA;:CmdCancelaFromImpTicketEQ&#xA;(ConfImp.valor == True -> (Comando.id_cancela = ConfImp.id_impressora &amp;&amp; Comando.Acao = AcoesCancela::Abrir))" width="12" height="7" resizeKind="NSEW">
         <target xmi:type="sysADL_Sintax:ConstraintUse" href="My.sysadl#//@packages[name='Components']/@architectures.46/@constraints.0"/>
         <semanticElements xmi:type="sysADL_Sintax:ConstraintUse" href="My.sysadl#//@packages[name='Components']/@architectures.46/@constraints.0"/>
         <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_ovMD69PrEeebk5zTgwMA1g" name="ConfImp" incomingEdges="_sD-OYNPrEeebk5zTgwMA1g" width="2" height="2">
@@ -22598,7 +22598,7 @@
         <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='Parametric']/@defaultLayer/@containerMappings[name='Parametric.Activity.Self']/@style"/>
       </ownedStyle>
       <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='Parametric']/@defaultLayer/@containerMappings[name='Parametric.Activity.Self']"/>
-      <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_i5hXatPzEeebk5zTgwMA1g" name="&lt;&lt;Constraint>>&#xA;:CorFromVagaEQ&#xA;(Vaga.ocupada == False -> (Cor.cor == Cores::Vermelho) | Vaga.ocupada == True -> (Vaga.tipo == TipoVaga::Normal -> (Cor.cor == Cores::Verde) | Vaga.tipo == TipoVaga::Deficiente -> (Cor.cor == Cores::Amarelo) | Vaga.tipo == TipoVaga::Idoso -> (Cor.cor == Cores::Azul)))" width="12" height="7" resizeKind="NSEW">
+      <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_i5hXatPzEeebk5zTgwMA1g" name="&lt;&lt;Constraint>>&#xA;:CorFromVagaEQ&#xA;(Vaga.ocupada == False -> (Cor.cor = Cores::Vermelho)) | (Vaga.ocupada == True -> ((Vaga.tipo == TipoVaga::Normal -> (Cor.cor = Cores::Verde)) | (Vaga.tipo == TipoVaga::Deficiente -> (Cor.cor = Cores::Amarelo)) | (Vaga.tipo == TipoVaga::Idoso -> (Cor.cor = Cores::Azul))))" width="12" height="7" resizeKind="NSEW">
         <target xmi:type="sysADL_Sintax:ConstraintUse" href="My.sysadl#//@packages[name='Components']/@architectures.41/@constraints.0"/>
         <semanticElements xmi:type="sysADL_Sintax:ConstraintUse" href="My.sysadl#//@packages[name='Components']/@architectures.41/@constraints.0"/>
         <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_i5hXa9PzEeebk5zTgwMA1g" name="Vaga" incomingEdges="_mp21cNPzEeebk5zTgwMA1g" width="2" height="2">
@@ -22767,7 +22767,7 @@
         <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='Parametric']/@defaultLayer/@containerMappings[name='Parametric.Activity.Self']/@style"/>
       </ownedStyle>
       <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='Parametric']/@defaultLayer/@containerMappings[name='Parametric.Activity.Self']"/>
-      <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_q_rmOtPzEeebk5zTgwMA1g" name="&lt;&lt;Constraint>>&#xA;:TriggerPainelEQ&#xA;(AttPainel == True)" width="12" height="7" resizeKind="NSEW">
+      <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_q_rmOtPzEeebk5zTgwMA1g" name="&lt;&lt;Constraint>>&#xA;:TriggerPainelEQ&#xA;(AttPainel = True)" width="12" height="7" resizeKind="NSEW">
         <target xmi:type="sysADL_Sintax:ConstraintUse" href="My.sysadl#//@packages[name='Components']/@architectures.61/@constraints.0"/>
         <semanticElements xmi:type="sysADL_Sintax:ConstraintUse" href="My.sysadl#//@packages[name='Components']/@architectures.61/@constraints.0"/>
         <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_q_rmO9PzEeebk5zTgwMA1g" name="Vaga" incomingEdges="_u7n3UNPzEeebk5zTgwMA1g" width="2" height="2">
@@ -23320,7 +23320,7 @@
         <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='Parametric']/@defaultLayer/@containerMappings[name='Parametric.Activity.Self']/@style"/>
       </ownedStyle>
       <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='Parametric']/@defaultLayer/@containerMappings[name='Parametric.Activity.Self']"/>
-      <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_M8plitP1Eeebk5zTgwMA1g" name="&lt;&lt;Constraint>>&#xA;:PrecoTicketEQ&#xA;(ticket.status == StatusTicket::Pendente -> ValorTicket.valor == 10)" width="12" height="7" resizeKind="NSEW">
+      <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_M8plitP1Eeebk5zTgwMA1g" name="&lt;&lt;Constraint>>&#xA;:PrecoTicketEQ&#xA;(ticket.status == StatusTicket::Pendente -> (ValorTicket.valor = 10))" width="12" height="7" resizeKind="NSEW">
         <target xmi:type="sysADL_Sintax:ConstraintUse" href="My.sysadl#//@packages[name='Components']/@architectures.32/@constraints.0"/>
         <semanticElements xmi:type="sysADL_Sintax:ConstraintUse" href="My.sysadl#//@packages[name='Components']/@architectures.32/@constraints.0"/>
         <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_M8pli9P1Eeebk5zTgwMA1g" name="Ticket" incomingEdges="_S03WENP1Eeebk5zTgwMA1g" width="2" height="2">
@@ -23538,7 +23538,7 @@
         <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='Parametric']/@defaultLayer/@containerMappings[name='Parametric.Activity.Self']/@style"/>
       </ownedStyle>
       <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/SysADL.viewpoints/description/SysADL_vp.odesign#//@ownedViewpoints[name='SysADL.Behavioral']/@ownedRepresentations[name='Parametric']/@defaultLayer/@containerMappings[name='Parametric.Activity.Self']"/>
-      <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_hnkVbNP1Eeebk5zTgwMA1g" name="&lt;&lt;Constraint>>&#xA;:PagIgualTicketEQ&#xA;(ValorTicket.valor == ValorPago.valor -> (ConfPag.valor == True &amp;&amp; ConfPag.id_ticket == ValorTicket.id_ticket))" width="12" height="7" resizeKind="NSEW">
+      <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_hnkVbNP1Eeebk5zTgwMA1g" name="&lt;&lt;Constraint>>&#xA;:PagIgualTicketEQ&#xA;(ValorTicket.valor == ValorPago.valor -> (ConfPag.valor = True &amp;&amp; ConfPag.id_ticket = ValorTicket.id_ticket))" width="12" height="7" resizeKind="NSEW">
         <target xmi:type="sysADL_Sintax:ConstraintUse" href="My.sysadl#//@packages[name='Components']/@architectures.35/@constraints.0"/>
         <semanticElements xmi:type="sysADL_Sintax:ConstraintUse" href="My.sysadl#//@packages[name='Components']/@architectures.35/@constraints.0"/>
         <ownedBorderedNodes xmi:type="diagram:DNode" xmi:id="_hnkVbdP1Eeebk5zTgwMA1g" name="ValorPago" incomingEdges="_tfovkNP1Eeebk5zTgwMA1g" width="2" height="2">
