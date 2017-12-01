@@ -2,5 +2,9 @@
 
 # Estilos Arquiteturais
 
-Foi implementado no projeto o estilo arquitetural Cliente-Servidor. Com os servidores sendo os componentes de de banco de dados \(abstração com boundary\)
+Foi implementado no projeto o estilo arquitetural Cliente-Servidor. Com os servidores sendo os componentes de banco de dados \(abstração com boundary\), e tendo vários clientes dentro dos componentes compostos de controle.
+
+
+
+Foi considero realizar a implementação dos modelos feedback control loop e tuple space. Porém ao implementar o modelo CLiente-Servidor, a complexidade da estrutura do projeto aumentou muito, dificultando a alteração.
 

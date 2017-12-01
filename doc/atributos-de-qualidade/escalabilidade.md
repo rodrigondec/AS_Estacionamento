@@ -2,5 +2,5 @@
 
 # Escalabilidade
 
-Não foi implementado nenhuma boa prática de escalabilidade do sistema. Então ao incrementar massivamente a quantidade de componentes, o desempenho irá cair \(drasticamente talvez\).
+
 

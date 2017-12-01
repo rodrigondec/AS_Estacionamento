@@ -65,7 +65,5 @@
       * [QueryQtVagasAC](doc/comportamental/gerenciadorvagacp/queryqtvagasac.md)
       * [AnswerQtVagasAC](doc/comportamental/gerenciadorvagacp/answerqtvagasac.md)
 * [Atributos de Qualidade](doc/atributos-de-qualidade.md)
-  * [Modificabilidade](doc/atributos-de-qualidade/modificabilidade.md)
-  * [Escalabilidade](doc/atributos-de-qualidade/escalabilidade.md)
 * [Estilos Arquiteturais](doc/estilos-arquiteturais.md)
 
